@@ -45,8 +45,7 @@ namespace ThongNhat_Hospital.Areas.Identity.Pages.Account
         {
             [Required]
             //[EmailAddress]
-            [Display(Name ="Tên tài khoản hoặc Email")]
-            public string UsernameOrEmail { get; set; }
+            public string EmailOrUserName { get; set; }
 
             [Required]
             [DataType(DataType.Password)]
@@ -83,19 +82,17 @@ namespace ThongNhat_Hospital.Areas.Identity.Pages.Account
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(Input.UsernameOrEmail, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+                var result = await _signInManager.PasswordSignInAsync(Input.EmailOrUserName, Input.Password, Input.RememberMe, lockoutOnFailure: false);
 
-
-                // Lấy Eamil từ userName
-                if (!result.Succeeded)
+                if(!result.Succeeded)
                 {
-                    var user = await _userManager.FindByEmailAsync(Input.UsernameOrEmail);
-                    if(user != null)
+                    var user = await _userManager.FindByEmailAsync(Input.EmailOrUserName);
+                    if (user != null)
                     {
                         result = await _signInManager.PasswordSignInAsync(user.UserName, Input.Password, Input.RememberMe, lockoutOnFailure: false);
-
                     }
                 }
+
 
                 if (result.Succeeded)
                 {
@@ -113,7 +110,7 @@ namespace ThongNhat_Hospital.Areas.Identity.Pages.Account
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Failed");
+                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                     return Page();
                 }
             }
