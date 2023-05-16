@@ -35,7 +35,12 @@ namespace ThongNhat_Hospital
 
             });
             //Đăng ký Identity 
-            services.AddIdentity<User, IdentityRole>()
+            //services.AddIdentity<User, IdentityRole>()
+            //    .AddEntityFrameworkStores<DataBaseContext>()
+            //    .AddDefaultTokenProviders();
+
+
+            services.AddDefaultIdentity<User>()
                 .AddEntityFrameworkStores<DataBaseContext>()
                 .AddDefaultTokenProviders();
 
@@ -64,7 +69,11 @@ namespace ThongNhat_Hospital
                 options.SignIn.RequireConfirmedEmail = true;            // Cấu hình xác thực địa chỉ email (email phải tồn tại)
                 options.SignIn.RequireConfirmedPhoneNumber = false;     // Xác thực số điện thoại
 
+
+                options.SignIn.RequireConfirmedEmail = false;           // Xác thực Eamil
             });
+
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -87,11 +96,14 @@ namespace ThongNhat_Hospital
             app.UseAuthentication();
             app.UseAuthorization();
 
+
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
         }
     }

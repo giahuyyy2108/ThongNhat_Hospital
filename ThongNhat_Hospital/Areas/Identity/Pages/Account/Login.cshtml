@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "/login/"
 @model LoginModel
 
 @{
@@ -10,13 +10,13 @@
     <div class="col-md-4">
         <section>
             <form id="account" method="post">
-                <h4>Use a local account to log in.</h4>
+                <h4>Trang đăng nhập</h4>
                 <hr />
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <div class="form-group">
-                    <label asp-for="Input.Email"></label>
-                    <input asp-for="Input.Email" class="form-control" />
-                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                    <label asp-for="Input.UsernameOrEmail"></label>
+                    <input asp-for="Input.UsernameOrEmail" class="form-control" />
+                    <span asp-validation-for="Input.UsernameOrEmail" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Input.Password"></label>
