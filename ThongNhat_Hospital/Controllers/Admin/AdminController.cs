@@ -13,10 +13,7 @@ namespace ThongNhat_Hospital.Controllers.Admin
             return View();
         }
 
-        public IActionResult Role()
-        {
-            return View();
-        }
+       
 
     }
 }
