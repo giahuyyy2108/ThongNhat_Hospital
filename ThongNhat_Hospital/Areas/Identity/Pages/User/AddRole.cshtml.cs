@@ -38,7 +38,6 @@ namespace ThongNhat_Hospital.Areas.Identity.Pages.Account.Manage1
 
 
         [BindProperty]
-        [DisplayName("Role của User")]
         public string[] Rolename { get; set; }
        
         public User user { get; set; }

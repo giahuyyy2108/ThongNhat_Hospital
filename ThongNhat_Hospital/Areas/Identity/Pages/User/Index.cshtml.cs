@@ -37,7 +37,8 @@ namespace ThongNhat_Hospital.Areas.Identity.Pages.User1
             {
                 Id = u.Id,
                 UserName = u.UserName,
-                Email = u.Email
+                Email = u.Email,
+                hoten = u.hoten
             });
 
             users = await qr1.ToListAsync();
