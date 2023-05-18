@@ -1,0 +1,30 @@
+﻿@page "/login/"
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Log in";
+    Layout = "LoginLayout";
+}
+
+<form method="post" method="post">
+    <div class="form-group has-feedback">
+        <input type="text" asp-for="Input.EmailOrUserName" class="form-control" placeholder="Email hoặc tài khoản" />
+        @*<span asp-validation-for="Input.Email" class="glyphicon glyphicon-envelope form-control-feedback"></span>*@
+    </div>
+    <div class="form-group has-feedback">
+        <input asp-for="Input.Password" type="password" class="form-control" placeholder="Mật khẩu" />
+        @*<span asp-validation-for="Input.Password" class="glyphicon glyphicon-lock form-control-feedback"></span>*@
+    </div>
+    <div class="row">
+        <div class="col-xs-8">
+            <div class="checkbox icheck">
+                <label asp-for="Input.RememberMe">
+                    <input asp-for="Input.RememberMe" type="checkbox"> Remember Me
+                </label>
+            </div>
+        </div><!-- /.col -->
+        <div class="col-xs-4">
+            <button type="submit" class="btn btn-primary btn-block btn-flat">Đăng nhập</button>
+        </div><!-- /.col -->
+    </div>
+</form>

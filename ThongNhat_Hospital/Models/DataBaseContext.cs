@@ -28,6 +28,8 @@ namespace ThongNhat_Hospital.Models
             }
         }
 
+        public DbSet<User> user { get; set; }
+
         public DbSet<PhieuGiaoHang> PhieuGiaoHang { set; get; }
 
         public DbSet<CTDH> ChiTietDonHang { set; get; }
