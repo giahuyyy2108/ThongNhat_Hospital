@@ -40,9 +40,10 @@ namespace ThongNhat_Hospital
             //    .AddDefaultTokenProviders();
 
 
-            services.AddDefaultIdentity<User>()
+            services.AddIdentity<User , IdentityRole>()
                 .AddEntityFrameworkStores<DataBaseContext>()
                 .AddDefaultTokenProviders();
+            
 
 
             // Truy cập IdentityOptions
@@ -73,7 +74,7 @@ namespace ThongNhat_Hospital
                 options.SignIn.RequireConfirmedEmail = false;           // Xác thực Eamil
             });
 
-            
+            services.AddRazorPages();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

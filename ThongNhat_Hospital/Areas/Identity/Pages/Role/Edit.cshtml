@@ -1,0 +1,27 @@
+﻿@page "/admin/role/edit-role/{roleid}"
+@model ThongNhat_Hospital.Areas.Identity.Pages.Role.EditModel
+@{
+    Layout = "Admin/_Dashboard";
+}
+
+<div class="box box-primary">
+    <div class="box-header">
+        <h3 class="box-title">Chỉnh sửa Role</h3>
+    </div><!-- /.box-header -->
+    <!-- form start -->
+    <form role="form" method="post">
+        <div class="box-body">
+            <div class="form-group">
+                <label >Tên role</label>
+                <input asp-for="Input.Name" class="form-control" id="exampleInputEmail1" placeholder="Tên Role">
+                <span asp-validation-for="Input.Name" class="text-danger"></span>
+            </div>
+        </div><!-- /.box-body -->
+
+        <div class="box-footer">
+            <button type="submit" class="btn btn-primary">Tạo Role</button>
+        </div>
+    </form>
+</div><!-- /.box -->
+
+
