@@ -1,5 +1,5 @@
-﻿@page "/admin/role"
-@model ThongNhat_Hospital.Areas.Identity.Pages.Role.IndexModel
+﻿@page "/admin/user"
+@model ThongNhat_Hospital.Areas.Identity.Pages.User1.IndexModel
 
 
 @using Microsoft.AspNetCore.Identity
@@ -73,7 +73,7 @@
     <section class="content-header">
         
 <div>
-    <a href="./role/Create"  class="btn btn-block btn-primary">Thêm Role</a>
+    <a href="./role/Create"  class="btn btn-block btn-primary">Thêm người dùng</a>
 </div>
 
        
@@ -93,27 +93,58 @@
                             <thead>
                                 <tr>
                                     <th>STT</th>
-                                    <th>Tên</th>
-                                    <th>Normalized Name</th>
-                                    <th>CHức năng</th>
+                                    <th>vai trò</th>
+                                    <th>Tên đăng nhập</th>
+                                    <th>Email</th>
+                                    <th>Trạng thái</th>
+                                    <th>Chức năng</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @{
                                     int stt = 1;
                                 }
-                                @foreach(var role in Model.role)
+                                @foreach(var user in Model.users)
                                 {
-                                    <tr>
-                                        <td>@stt</td>
-                                        <td>@role.Name</td>
-                                        <td>@role.NormalizedName</td>
-                                        <td>
-                                            <a class="btn btn-success btn-sm" asp-page="./Edit" asp-route-roleid ="@role.Id">Cập nhật</a>
-                                            <a class="btn btn-success btn-sm" asp-page="./Delete" asp-route-roleid="@role.Id">Xóa</a>
-                                        </td>
-                                    </tr>
-                                     stt = stt + 1;
+                                    @if (user.UserName == "Admin")
+                                    {
+                                        @*<tr>
+                                            <td>@stt</td>
+                                            <td>@user.Rolenames</td>
+                                            <td>@user.UserName</td>
+                                            <td>@user.Email</td>
+                                            <td></td>
+                                            <td>
+                                                <a class="btn btn-success btn-sm disabled" asp-page="./SetPassword" asp-route-id="@user.Id">Cập nhật</a>
+                                                <a class="btn btn-success btn-sm disabled" asp-page="./Delete" asp-route-id="@user.Id">Xóa</a>
+                                                <a class="btn btn-success btn-sm" asp-page="./AddRole" asp-route-id="@user.Id">Thêm role</a>
+                                            </td>
+                                        </tr>*@
+
+                                    }
+
+                                    else
+                                    {
+                                        <tr>
+                                            <td>@stt</td>
+                                            <td>@user.Rolenames</td>
+                                            <td>@user.UserName</td>
+                                            <td>@user.Email</td>
+                                            @if(@user.LockoutEnabled == true){
+                                                <td>Hoạt động</td>
+                                            }
+                                            else
+                                            {
+                                                <td>không hoạt động</td>
+                                            }
+                                            <td>
+                                                <a class="btn btn-success btn-sm" asp-page="./SetPassword" asp-route-id="@user.Id">Cập nhật</a>
+                                                <a class="btn btn-success btn-sm" asp-page="./AddRole" asp-route-id="@user.Id">Them Role</a>
+                                            </td>
+                                        </tr>
+                                        stt = stt + 1;
+                                    }
+                                    
                                 }
                                 
                             </tbody>
