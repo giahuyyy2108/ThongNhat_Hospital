@@ -13,19 +13,19 @@
         <div class="box-body">
             <div class="form-group">
                 <label>Email</label>
-                <input asp-for="Input.Email" class="form-control"  placeholder="Tên Role">
+                <input asp-for="Input.Email" class="form-control"  placeholder="Tên Role" type="email">
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label>Tên role</label>
+                <label>Họ và Tên</label>
                 <input asp-for="Input.Hoten" class="form-control" placeholder="Nhập họ tên">
                 <span asp-validation-for="Input.Hoten" class="text-danger"></span>
             </div>
-            <div class="form-group">
+           @* <div class="form-group">
                 <label >Tên role</label>
                 <input asp-for="Input.UserName" class="form-control"  placeholder="Nhập tài khoản">
                 <span asp-validation-for="Input.UserName" class="text-danger"></span>
-            </div>
+            </div>*@
         </div><!-- /.box-body -->
 
         <div class="box-footer">
