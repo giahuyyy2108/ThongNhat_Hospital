@@ -11,7 +11,7 @@ using ThongNhat_Hospital.Models;
 namespace ThongNhat_Hospital.Areas.Identity.Pages.Role
 {
     //[Authorize(Roles = "admin")]
-    public class IndexModel : RolePageModel
+    public class IndexModel : UserPageModel
     {
         public IndexModel(RoleManager<IdentityRole> rolemanager, DataBaseContext context) : base(rolemanager, context)
         {

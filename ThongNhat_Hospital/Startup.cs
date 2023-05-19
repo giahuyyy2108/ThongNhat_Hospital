@@ -71,7 +71,7 @@ namespace ThongNhat_Hospital
                 options.SignIn.RequireConfirmedPhoneNumber = false;     // Xác thực số điện thoại
 
 
-                options.SignIn.RequireConfirmedEmail = false;           // Xác thực Eamil
+                options.SignIn.RequireConfirmedEmail = true;           // Xác thực Eamil
             });
 
             services.AddRazorPages();

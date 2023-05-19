@@ -8,7 +8,7 @@ using ThongNhat_Hospital.Models;
 
 namespace ThongNhat_Hospital.Areas.Identity.Pages.Role
 {
-    public class EditModel : RolePageModel
+    public class EditModel : UserPageModel
     {
         public EditModel(RoleManager<IdentityRole> rolemanager, DataBaseContext context) : base(rolemanager, context)
         {
