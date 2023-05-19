@@ -3,7 +3,7 @@ using System;
 
 namespace ThongNhat_Hospital.Migrations
 {
-    public partial class UserSeed : Migration
+    public partial class updatedatabase1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,34 +11,32 @@ namespace ThongNhat_Hospital.Migrations
             {
                 migrationBuilder.InsertData(
                     "Users",
-                    columns: new[] {
+                    columns: new[]
+                    {
                         "Id",
+                        "img",
+                        "hoten",
                         "UserName",
                         "Email",
-                        "SecurityStamp",
                         "EmailConfirmed",
                         "PhoneNumberConfirmed",
                         "TwoFactorEnabled",
                         "LockoutEnabled",
                         "AccessFailedCount",
-                        "img",
-                        "PasswordHash"
                     },
                     values: new object[]
                     {
                         Guid.NewGuid().ToString(),
+                        "...@!...",
                         "user-"+i.ToString("D3"),
-                        $"email{i.ToString()}@examble.com",
-                        Guid.NewGuid().ToString(),
+                        "user-"+i.ToString("D3"),
+                        $"user-{i.ToString()}@example.com",
                         true,
                         false,
                         false,
                         false,
-                        0,
-                        "...@#%..",
-                        "AQAAAAEAACcQAAAAEJb/+iKC2lQkYrQJc1/7kKHH0V4WjgwikJQBBgUO3hah20M+yU5BqtuBHtuAthOwDA=="
+                        0
                     }
-
                     );
             }
         }

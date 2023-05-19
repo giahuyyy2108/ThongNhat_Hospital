@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ThongNhat_Hospital.Migrations
 {
-    public partial class adddatabase : Migration
+    public partial class updatedatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -32,20 +32,6 @@ namespace ThongNhat_Hospital.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PhieuGiaoHang",
-                columns: table => new
-                {
-                    ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ngaygiao = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    chuky = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PhieuGiaoHang", x => x.ID);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Roles",
                 columns: table => new
                 {
@@ -65,6 +51,7 @@ namespace ThongNhat_Hospital.Migrations
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     img = table.Column<string>(type: "nvarchar(400)", maxLength: 400, nullable: true),
+                    hoten = table.Column<string>(type: "nvarchar(400)", maxLength: 400, nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -86,6 +73,27 @@ namespace ThongNhat_Hospital.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "PhieuGiaoHang",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ngaygiao = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Note = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Id_LoaiHang = table.Column<string>(type: "varchar(400)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PhieuGiaoHang", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_PhieuGiaoHang_LoaiHang_Id_LoaiHang",
+                        column: x => x.Id_LoaiHang,
+                        principalTable: "LoaiHang",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "RoleClaims",
                 columns: table => new
                 {
@@ -104,46 +112,6 @@ namespace ThongNhat_Hospital.Migrations
                         principalTable: "Roles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ChiTietDonHang",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "varchar(400)", maxLength: 400, nullable: false),
-                    Note = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    Id_LoaiHang = table.Column<string>(type: "varchar(400)", nullable: true),
-                    Id_HinhThuc = table.Column<string>(type: "varchar(400)", nullable: true),
-                    Id_PhieuGiao = table.Column<int>(type: "int", nullable: false),
-                    Id_User = table.Column<string>(type: "nvarchar(450)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ChiTietDonHang", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ChiTietDonHang_HinhThuc_Id_HinhThuc",
-                        column: x => x.Id_HinhThuc,
-                        principalTable: "HinhThuc",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_ChiTietDonHang_LoaiHang_Id_LoaiHang",
-                        column: x => x.Id_LoaiHang,
-                        principalTable: "LoaiHang",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_ChiTietDonHang_PhieuGiaoHang_Id_PhieuGiao",
-                        column: x => x.Id_PhieuGiao,
-                        principalTable: "PhieuGiaoHang",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ChiTietDonHang_Users_Id_User",
-                        column: x => x.Id_User,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -231,15 +199,43 @@ namespace ThongNhat_Hospital.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "ChiTietDonHang",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "varchar(400)", maxLength: 400, nullable: false),
+                    Id_HinhThuc = table.Column<string>(type: "varchar(400)", nullable: true),
+                    Id_PhieuGiao = table.Column<int>(type: "int", nullable: false),
+                    Id_User = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    chuky = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ChiTietDonHang", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ChiTietDonHang_HinhThuc_Id_HinhThuc",
+                        column: x => x.Id_HinhThuc,
+                        principalTable: "HinhThuc",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_ChiTietDonHang_PhieuGiaoHang_Id_PhieuGiao",
+                        column: x => x.Id_PhieuGiao,
+                        principalTable: "PhieuGiaoHang",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ChiTietDonHang_Users_Id_User",
+                        column: x => x.Id_User,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_ChiTietDonHang_Id_HinhThuc",
                 table: "ChiTietDonHang",
                 column: "Id_HinhThuc");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ChiTietDonHang_Id_LoaiHang",
-                table: "ChiTietDonHang",
-                column: "Id_LoaiHang");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ChiTietDonHang_Id_PhieuGiao",
@@ -250,6 +246,11 @@ namespace ThongNhat_Hospital.Migrations
                 name: "IX_ChiTietDonHang_Id_User",
                 table: "ChiTietDonHang",
                 column: "Id_User");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PhieuGiaoHang_Id_LoaiHang",
+                table: "PhieuGiaoHang",
+                column: "Id_LoaiHang");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RoleClaims_RoleId",
@@ -315,9 +316,6 @@ namespace ThongNhat_Hospital.Migrations
                 name: "HinhThuc");
 
             migrationBuilder.DropTable(
-                name: "LoaiHang");
-
-            migrationBuilder.DropTable(
                 name: "PhieuGiaoHang");
 
             migrationBuilder.DropTable(
@@ -325,6 +323,9 @@ namespace ThongNhat_Hospital.Migrations
 
             migrationBuilder.DropTable(
                 name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "LoaiHang");
         }
     }
 }

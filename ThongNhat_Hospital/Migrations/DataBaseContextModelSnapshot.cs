@@ -159,24 +159,18 @@ namespace ThongNhat_Hospital.Migrations
                     b.Property<string>("Id_HinhThuc")
                         .HasColumnType("varchar(400)");
 
-                    b.Property<string>("Id_LoaiHang")
-                        .HasColumnType("varchar(400)");
-
                     b.Property<int>("Id_PhieuGiao")
                         .HasColumnType("int");
 
                     b.Property<string>("Id_User")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Note")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                    b.Property<string>("chuky")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("Id_HinhThuc");
-
-                    b.HasIndex("Id_LoaiHang");
 
                     b.HasIndex("Id_PhieuGiao");
 
@@ -222,13 +216,19 @@ namespace ThongNhat_Hospital.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("chuky")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("Id_LoaiHang")
+                        .HasColumnType("varchar(400)");
+
+                    b.Property<string>("Note")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime>("ngaygiao")
                         .HasColumnType("datetime2");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("Id_LoaiHang");
 
                     b.ToTable("PhieuGiaoHang");
                 });
@@ -363,10 +363,6 @@ namespace ThongNhat_Hospital.Migrations
                         .WithMany("CTDH")
                         .HasForeignKey("Id_HinhThuc");
 
-                    b.HasOne("ThongNhat_Hospital.Models.LoaiHang", "loaihang")
-                        .WithMany("CTDH")
-                        .HasForeignKey("Id_LoaiHang");
-
                     b.HasOne("ThongNhat_Hospital.Models.PhieuGiaoHang", "phieugiao")
                         .WithMany("CTDH")
                         .HasForeignKey("Id_PhieuGiao")
@@ -379,11 +375,18 @@ namespace ThongNhat_Hospital.Migrations
 
                     b.Navigation("hinhthuc");
 
-                    b.Navigation("loaihang");
-
                     b.Navigation("phieugiao");
 
                     b.Navigation("user");
+                });
+
+            modelBuilder.Entity("ThongNhat_Hospital.Models.PhieuGiaoHang", b =>
+                {
+                    b.HasOne("ThongNhat_Hospital.Models.LoaiHang", "loaihang")
+                        .WithMany("PhieuGiao")
+                        .HasForeignKey("Id_LoaiHang");
+
+                    b.Navigation("loaihang");
                 });
 
             modelBuilder.Entity("ThongNhat_Hospital.Models.HinhThuc", b =>
@@ -393,7 +396,7 @@ namespace ThongNhat_Hospital.Migrations
 
             modelBuilder.Entity("ThongNhat_Hospital.Models.LoaiHang", b =>
                 {
-                    b.Navigation("CTDH");
+                    b.Navigation("PhieuGiao");
                 });
 
             modelBuilder.Entity("ThongNhat_Hospital.Models.PhieuGiaoHang", b =>
