@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ThongNhat_Hospital.Models;
+using ThongNhat_Hospital.Service;
 
 namespace ThongNhat_Hospital
 {
@@ -71,8 +73,15 @@ namespace ThongNhat_Hospital
                 options.SignIn.RequireConfirmedPhoneNumber = false;     // Xác thực số điện thoại
 
 
-                options.SignIn.RequireConfirmedEmail = false;           // Xác thực Eamil
+                options.SignIn.RequireConfirmedEmail = true;           // Xác thực Eamil
             });
+
+
+            services.AddOptions();                                        // Kích hoạt Options
+            var mailsettings = Configuration.GetSection("MailSettings");  // đọc config
+            services.Configure<MailSettings>(mailsettings);               // đăng ký để Inject
+
+            services.AddTransient<IEmailSender, SendMailService>();
 
             services.AddRazorPages();
         }

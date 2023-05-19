@@ -8,7 +8,7 @@ using ThongNhat_Hospital.Models;
 
 namespace ThongNhat_Hospital.Areas.Identity.Pages.Role
 {
-    public class DeletetModel : RolePageModel
+    public class DeletetModel : UserPageModel
     {
         public DeletetModel(RoleManager<IdentityRole> rolemanager, DataBaseContext context) : base(rolemanager, context)
         {
