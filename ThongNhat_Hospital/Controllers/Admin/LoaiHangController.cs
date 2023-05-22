@@ -45,7 +45,7 @@ namespace ThongNhat_Hospital.Controllers.Admin
         // GET: LoaiHang/Create
         public IActionResult Create()
         {
-            return View();
+            return PartialView("Create", new LoaiHang());
         }
 
         // POST: LoaiHang/Create
@@ -60,9 +60,9 @@ namespace ThongNhat_Hospital.Controllers.Admin
             {
                 _context.Add(loaiHang);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return View(loaiHang);
             }
-            return View(loaiHang);
+            return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "Create", loaiHang) });
         }
 
         // GET: LoaiHang/Edit/5
