@@ -10,7 +10,7 @@ namespace ThongNhat_Hospital.Models
         [StringLength(400)]
         public string Id { get; set; }
         public string Id_HinhThuc { get; set; }
-        public int Id_PhieuGiao { get; set; }
+        public string Id_PhieuGiao { get; set; }
         public string Id_User { get; set; }
         public string chuky { set; get; }
 

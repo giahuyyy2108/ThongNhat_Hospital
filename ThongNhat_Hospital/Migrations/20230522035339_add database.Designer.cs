@@ -10,8 +10,8 @@ using ThongNhat_Hospital.Models;
 namespace ThongNhat_Hospital.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    [Migration("20230519083755_update database")]
-    partial class updatedatabase
+    [Migration("20230522035339_add database")]
+    partial class adddatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -161,8 +161,8 @@ namespace ThongNhat_Hospital.Migrations
                     b.Property<string>("Id_HinhThuc")
                         .HasColumnType("varchar(400)");
 
-                    b.Property<int>("Id_PhieuGiao")
-                        .HasColumnType("int");
+                    b.Property<string>("Id_PhieuGiao")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Id_User")
                         .HasColumnType("nvarchar(450)");
@@ -213,10 +213,8 @@ namespace ThongNhat_Hospital.Migrations
 
             modelBuilder.Entity("ThongNhat_Hospital.Models.PhieuGiaoHang", b =>
                 {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Id_LoaiHang")
                         .HasColumnType("varchar(400)");
@@ -228,7 +226,7 @@ namespace ThongNhat_Hospital.Migrations
                     b.Property<DateTime>("ngaygiao")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.HasIndex("Id_LoaiHang");
 
@@ -367,9 +365,7 @@ namespace ThongNhat_Hospital.Migrations
 
                     b.HasOne("ThongNhat_Hospital.Models.PhieuGiaoHang", "phieugiao")
                         .WithMany("CTDH")
-                        .HasForeignKey("Id_PhieuGiao")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Id_PhieuGiao");
 
                     b.HasOne("ThongNhat_Hospital.Models.User", "user")
                         .WithMany("CTDH")

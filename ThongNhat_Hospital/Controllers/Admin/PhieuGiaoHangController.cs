@@ -9,22 +9,23 @@ using ThongNhat_Hospital.Models;
 
 namespace ThongNhat_Hospital.Controllers.Admin
 {
-    public class LoaiHangController : Controller
+    public class PhieuGiaoHangController : Controller
     {
         private readonly DataBaseContext _context;
 
-        public LoaiHangController(DataBaseContext context)
+        public PhieuGiaoHangController(DataBaseContext context)
         {
             _context = context;
         }
 
-        // GET: LoaiHang
+        // GET: PhieuGiaoHang
         public async Task<IActionResult> Index()
         {
-            return View(await _context.LoaiHang.ToListAsync());
+            var dataBaseContext = _context.PhieuGiaoHang.Include(p => p.loaihang);
+            return View(await dataBaseContext.ToListAsync());
         }
 
-        // GET: LoaiHang/Details/5
+        // GET: PhieuGiaoHang/Details/5
         public async Task<IActionResult> Details(string id)
         {
             if (id == null)
@@ -32,40 +33,43 @@ namespace ThongNhat_Hospital.Controllers.Admin
                 return NotFound();
             }
 
-            var loaiHang = await _context.LoaiHang
+            var phieuGiaoHang = await _context.PhieuGiaoHang
+                .Include(p => p.loaihang)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (loaiHang == null)
+            if (phieuGiaoHang == null)
             {
                 return NotFound();
             }
 
-            return View(loaiHang);
+            return View(phieuGiaoHang);
         }
 
-        // GET: LoaiHang/Create
+        // GET: PhieuGiaoHang/Create
         public IActionResult Create()
         {
+            ViewData["Id_LoaiHang"] = new SelectList(_context.LoaiHang, "Id", "Name");
             return View();
         }
 
-        // POST: LoaiHang/Create
+        // POST: PhieuGiaoHang/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name")] LoaiHang loaiHang)
+        public async Task<IActionResult> Create([Bind("ngaygiao,Note,Id_LoaiHang")] PhieuGiaoHang phieuGiaoHang)
         {
-            loaiHang.Id = Guid.NewGuid().ToString();
+            phieuGiaoHang.Id = Guid.NewGuid().ToString();
             if (ModelState.IsValid)
             {
-                _context.Add(loaiHang);
+                _context.Add(phieuGiaoHang);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(loaiHang);
+            ViewData["Id_LoaiHang"] = new SelectList(_context.LoaiHang, "Id", "Id", phieuGiaoHang.Id_LoaiHang);
+            return View(phieuGiaoHang);
         }
 
-        // GET: LoaiHang/Edit/5
+        // GET: PhieuGiaoHang/Edit/5
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -73,22 +77,23 @@ namespace ThongNhat_Hospital.Controllers.Admin
                 return NotFound();
             }
 
-            var loaiHang = await _context.LoaiHang.FindAsync(id);
-            if (loaiHang == null)
+            var phieuGiaoHang = await _context.PhieuGiaoHang.FindAsync(id);
+            if (phieuGiaoHang == null)
             {
                 return NotFound();
             }
-            return View(loaiHang);
+            ViewData["Id_LoaiHang"] = new SelectList(_context.LoaiHang, "Id", "Id", phieuGiaoHang.Id_LoaiHang);
+            return View(phieuGiaoHang);
         }
 
-        // POST: LoaiHang/Edit/5
+        // POST: PhieuGiaoHang/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,Name")] LoaiHang loaiHang)
+        public async Task<IActionResult> Edit(string id, [Bind("Id,ngaygiao,Note,Id_LoaiHang")] PhieuGiaoHang phieuGiaoHang)
         {
-            if (id != loaiHang.Id)
+            if (id != phieuGiaoHang.Id)
             {
                 return NotFound();
             }
@@ -97,12 +102,12 @@ namespace ThongNhat_Hospital.Controllers.Admin
             {
                 try
                 {
-                    _context.Update(loaiHang);
+                    _context.Update(phieuGiaoHang);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!LoaiHangExists(loaiHang.Id))
+                    if (!PhieuGiaoHangExists(phieuGiaoHang.Id))
                     {
                         return NotFound();
                     }
@@ -113,10 +118,11 @@ namespace ThongNhat_Hospital.Controllers.Admin
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(loaiHang);
+            ViewData["Id_LoaiHang"] = new SelectList(_context.LoaiHang, "Id", "Id", phieuGiaoHang.Id_LoaiHang);
+            return View(phieuGiaoHang);
         }
 
-        // GET: LoaiHang/Delete/5
+        // GET: PhieuGiaoHang/Delete/5
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
@@ -124,30 +130,31 @@ namespace ThongNhat_Hospital.Controllers.Admin
                 return NotFound();
             }
 
-            var loaiHang = await _context.LoaiHang
+            var phieuGiaoHang = await _context.PhieuGiaoHang
+                .Include(p => p.loaihang)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (loaiHang == null)
+            if (phieuGiaoHang == null)
             {
                 return NotFound();
             }
 
-            return View(loaiHang);
+            return View(phieuGiaoHang);
         }
 
-        // POST: LoaiHang/Delete/5
+        // POST: PhieuGiaoHang/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            var loaiHang = await _context.LoaiHang.FindAsync(id);
-            _context.LoaiHang.Remove(loaiHang);
+            var phieuGiaoHang = await _context.PhieuGiaoHang.FindAsync(id);
+            _context.PhieuGiaoHang.Remove(phieuGiaoHang);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool LoaiHangExists(string id)
+        private bool PhieuGiaoHangExists(string id)
         {
-            return _context.LoaiHang.Any(e => e.Id == id);
+            return _context.PhieuGiaoHang.Any(e => e.Id == id);
         }
     }
 }
