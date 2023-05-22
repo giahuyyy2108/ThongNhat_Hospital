@@ -25,6 +25,7 @@ namespace ThongNhat_Hospital.Models
                 {
                     entityType.SetTableName(tablbename.Substring(6));
                 }
+
             }
         }
 

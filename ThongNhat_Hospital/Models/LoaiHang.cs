@@ -16,7 +16,7 @@ namespace ThongNhat_Hospital.Models
         [StringLength(50)]
         public string Name { get; set; }
 
-        public ICollection<CTDH> CTDH { get; set; }
+        public ICollection<PhieuGiaoHang> PhieuGiao { get; set; }
 
     }
 }

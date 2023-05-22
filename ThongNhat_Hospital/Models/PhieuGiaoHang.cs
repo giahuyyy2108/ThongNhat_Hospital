@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ThongNhat_Hospital.Models
 {
@@ -12,8 +13,20 @@ namespace ThongNhat_Hospital.Models
         [DataType(DataType.Date)]
         public DateTime ngaygiao { get; set; }
 
-        public string chuky { set; get; }
+
+        [Column(TypeName = "nvarchar")]
+        [StringLength(50)]
+        public string Note { get; set; }
+
+        public string Id_LoaiHang { get; set; }
+
+
+        [ForeignKey("Id_LoaiHang")]
+        public LoaiHang loaihang { get; set; }
 
         public ICollection<CTDH> CTDH { get; set; }
+
+
+        
     }
 }

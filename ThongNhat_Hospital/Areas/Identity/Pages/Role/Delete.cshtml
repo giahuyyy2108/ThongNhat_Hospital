@@ -1,0 +1,27 @@
+﻿@page "/admin/role/delete-role/{roleid}"
+@model ThongNhat_Hospital.Areas.Identity.Pages.Role.DeletetModel
+@{
+    Layout = "Admin/_Dashboard";
+}
+
+<div class="box box-primary">
+    <div class="box-header">
+        <h3 class="box-title">Chỉnh sửa Role</h3>
+    </div><!-- /.box-header -->
+    <!-- form start -->
+    <form role="form" method="post">
+        <div class="box-body">
+            <div class="form-group">
+                <label >Bạn có chắc chắn muốn xóa <strong>@Model.role.Name</strong></label>
+               
+            </div>
+        </div><!-- /.box-body -->
+
+        <div class="box-footer">
+            <button type="submit" class="btn btn-danger">Xóa</button>
+            <a class="btn btn-primary" asp-page="./Index">Danh sách Role</a>
+        </div>
+    </form>
+</div><!-- /.box -->
+
+

@@ -1,0 +1,45 @@
+﻿@page "admin/user/set-role/{id}"
+@model ThongNhat_Hospital.Areas.Identity.Pages.Account.Manage1.AddRoleModel
+@{
+    ViewData["Title"] = "Đặt lại mật khẩu";
+}
+@{
+
+    
+
+}
+
+<h4>Set your password</h4>
+<h4>Thiết lập quyền cho User: @Model.user.UserName</h4>
+<div class="row">
+    <div class="col-md-6">
+        <form id="set-password-form" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                @Html.ListBoxFor(m => m.Rolename, @Model.allRoles ,new {
+                    id =    "id-select-role",
+                    @class ="w-100"
+                })
+                <span asp-validation-for="Rolename" class="text-danger"></span>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Thiết lập</button>
+            <a asp-page="./Index"></a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/lib/multiple-select/multiple-select.min.js"></script>
+    <link rel="stylesheet" href="~/lib/multiple-select/multiple-select.min.css"/>
+
+    <script>
+        $("#id-select-role").multipleSelect({
+            selectAll: false,
+            keepOpen: false,
+            isOpen: false,
+        });
+    </script>
+
+    <partial name="_ValidationScriptsPartial" />
+}

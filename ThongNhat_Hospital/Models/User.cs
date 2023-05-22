@@ -12,6 +12,10 @@ namespace ThongNhat_Hospital.Models
         [StringLength(400)]
         public string img { get; set; }
 
+        [Column(TypeName = "nvarchar")]
+        [StringLength(400)]
+        public string hoten { get; set; }
+
         public ICollection<CTDH> CTDH { get; set; }
 
 

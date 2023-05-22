@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewData["Title"] = "GIAO HÀNG ";
+    Layout = "~/Views/Shared/User/_LayoutUser.cshtml";
+}
+
+<div class="col-md-12">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            Điền thông tin phiếu giao hàng
+        </div>
+        <div class="panel-body">
+            <form role="form">
+                <div class="form-group">
+                    <label>Email:</label>
+                    <input class="form-control" type="text">
+                    
+                </div>
+              
+                 <div class="form-group">
+                    <label>Tên hàng:</label>
+                    <input class="form-control" type="text">
+                
+                </div>
+                <div class="form-group">
+                    <label>Loại hàng</label>
+                    <select class="form-control">
+                        <option>Tài liệu</option>
+                        <option>Thiết bị</option>
+                        <option>Khác</option>
+
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Nhập lời nhắn:</label>
+                    <textarea class="form-control" rows="3"></textarea>
+                </div>
+
+
+                <button type="submit" class="btn btn-info btn-pull-right">Xác nhận</button>
+
+            </form>
+        </div>
+    </div>
+</div>
+

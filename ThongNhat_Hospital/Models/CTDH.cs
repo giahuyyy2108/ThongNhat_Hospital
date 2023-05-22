@@ -9,21 +9,10 @@ namespace ThongNhat_Hospital.Models
         [Column(TypeName = "varchar")]
         [StringLength(400)]
         public string Id { get; set; }
-
-        [Column(TypeName = "nvarchar")]
-        [StringLength(50)]
-        public string Note { get; set; }
-
-        public string Id_LoaiHang { get; set; }
-
         public string Id_HinhThuc { get; set; }
-
         public int Id_PhieuGiao { get; set; }
-
         public string Id_User { get; set; }
-
-        [ForeignKey("Id_LoaiHang")]
-        public LoaiHang loaihang { get; set; }
+        public string chuky { set; get; }
 
         [ForeignKey("Id_HinhThuc")]
         public HinhThuc hinhthuc { get; set; }
