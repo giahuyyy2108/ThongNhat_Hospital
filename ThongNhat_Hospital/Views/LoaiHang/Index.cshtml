@@ -99,7 +99,7 @@
                             <thead>
                                 <tr>
                                     <th>
-                                        @Html.DisplayNameFor(model => model.Id)
+                                       STT
                                     </th>
                                     <th>
                                         @Html.DisplayNameFor(model => model.Name)
@@ -108,11 +108,14 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @{
+                                    int stt = 1;
+                                }
                                 @foreach (var item in Model)
                                 {
                                     <tr>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.Id)
+                                            @stt
                                         </td>
                                         <td>
                                             @Html.DisplayFor(modelItem => item.Name)
@@ -122,6 +125,7 @@
                                             <a class="btn btn-success btn-sm" asp-action="Delete" asp-route-id="@item.Id">Xóa</a>
                                         </td>
                                     </tr>
+                                    stt = stt + 1;
                                 }
                             </tbody>
                         </table>

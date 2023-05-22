@@ -9,23 +9,23 @@ using ThongNhat_Hospital.Models;
 
 namespace ThongNhat_Hospital.Controllers.Admin
 {
-    public class PhieuGiaoHangController : Controller
+    public class CTDHController : Controller
     {
         private readonly DataBaseContext _context;
 
-        public PhieuGiaoHangController(DataBaseContext context)
+        public CTDHController(DataBaseContext context)
         {
             _context = context;
         }
 
-        // GET: PhieuGiaoHang
+        // GET: CTDH
         public async Task<IActionResult> Index()
         {
-            var dataBaseContext = _context.PhieuGiaoHang.Include(p => p.loaihang);
+            var dataBaseContext = _context.ChiTietDonHang.Include(c => c.hinhthuc).Include(c => c.phieugiao).Include(c => c.user);
             return View(await dataBaseContext.ToListAsync());
         }
 
-        // GET: PhieuGiaoHang/Details/5
+        // GET: CTDH/Details/5
         public async Task<IActionResult> Details(string id)
         {
             if (id == null)
@@ -33,43 +33,49 @@ namespace ThongNhat_Hospital.Controllers.Admin
                 return NotFound();
             }
 
-            var phieuGiaoHang = await _context.PhieuGiaoHang
-                .Include(p => p.loaihang)
+            var cTDH = await _context.ChiTietDonHang
+                .Include(c => c.hinhthuc)
+                .Include(c => c.phieugiao)
+                .Include(c => c.user)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (phieuGiaoHang == null)
+            if (cTDH == null)
             {
                 return NotFound();
             }
 
-            return View(phieuGiaoHang);
+            return View(cTDH);
         }
 
-        // GET: PhieuGiaoHang/Create
+        // GET: CTDH/Create
         public IActionResult Create()
         {
-            ViewData["Id_LoaiHang"] = new SelectList(_context.LoaiHang, "Id", "Name");
+            ViewData["Id_HinhThuc"] = new SelectList(_context.HinhThuc, "Id", "Name");
+            ViewData["Id_PhieuGiao"] = new SelectList(_context.PhieuGiaoHang, "Id", "Id");
+            ViewData["Id_User"] = new SelectList(_context.user, "Id", "UserName");
             return View();
         }
 
-        // POST: PhieuGiaoHang/Create
+        // POST: CTDH/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ngaygiao,Note,Id_LoaiHang")] PhieuGiaoHang phieuGiaoHang)
+        public async Task<IActionResult> Create([Bind("Id_HinhThuc,Id_PhieuGiao,Id_User,chuky")] CTDH cTDH)
         {
-            phieuGiaoHang.Id = Guid.NewGuid().ToString();
+            cTDH.Id = Guid.NewGuid().ToString();
             if (ModelState.IsValid)
             {
-                _context.Add(phieuGiaoHang);
+                _context.Add(cTDH);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Id_LoaiHang"] = new SelectList(_context.LoaiHang, "Id", "Id", phieuGiaoHang.Id_LoaiHang);
-            return View(phieuGiaoHang);
+            ViewData["Id_HinhThuc"] = new SelectList(_context.HinhThuc, "Id", "Id", cTDH.Id_HinhThuc);
+            ViewData["Id_PhieuGiao"] = new SelectList(_context.PhieuGiaoHang, "Id", "Id", cTDH.Id_PhieuGiao);
+            ViewData["Id_User"] = new SelectList(_context.user, "Id", "Id", cTDH.Id_User);
+            return View(cTDH);
         }
 
-        // GET: PhieuGiaoHang/Edit/5
+        // GET: CTDH/Edit/5
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -77,23 +83,25 @@ namespace ThongNhat_Hospital.Controllers.Admin
                 return NotFound();
             }
 
-            var phieuGiaoHang = await _context.PhieuGiaoHang.FindAsync(id);
-            if (phieuGiaoHang == null)
+            var cTDH = await _context.ChiTietDonHang.FindAsync(id);
+            if (cTDH == null)
             {
                 return NotFound();
             }
-            ViewData["Id_LoaiHang"] = new SelectList(_context.LoaiHang, "Id", "Name ", phieuGiaoHang.Id_LoaiHang);
-            return View(phieuGiaoHang);
+            ViewData["Id_HinhThuc"] = new SelectList(_context.HinhThuc, "Id", "Id", cTDH.Id_HinhThuc);
+            ViewData["Id_PhieuGiao"] = new SelectList(_context.PhieuGiaoHang, "Id", "Id", cTDH.Id_PhieuGiao);
+            ViewData["Id_User"] = new SelectList(_context.user, "Id", "Id", cTDH.Id_User);
+            return View(cTDH);
         }
 
-        // POST: PhieuGiaoHang/Edit/5
+        // POST: CTDH/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,ngaygiao,Note,Id_LoaiHang")] PhieuGiaoHang phieuGiaoHang)
+        public async Task<IActionResult> Edit(string id, [Bind("Id,Id_HinhThuc,Id_PhieuGiao,Id_User,chuky")] CTDH cTDH)
         {
-            if (id != phieuGiaoHang.Id)
+            if (id != cTDH.Id)
             {
                 return NotFound();
             }
@@ -102,12 +110,12 @@ namespace ThongNhat_Hospital.Controllers.Admin
             {
                 try
                 {
-                    _context.Update(phieuGiaoHang);
+                    _context.Update(cTDH);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PhieuGiaoHangExists(phieuGiaoHang.Id))
+                    if (!CTDHExists(cTDH.Id))
                     {
                         return NotFound();
                     }
@@ -118,11 +126,13 @@ namespace ThongNhat_Hospital.Controllers.Admin
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Id_LoaiHang"] = new SelectList(_context.LoaiHang, "Id", "Id", phieuGiaoHang.Id_LoaiHang);
-            return View(phieuGiaoHang);
+            ViewData["Id_HinhThuc"] = new SelectList(_context.HinhThuc, "Id", "Id", cTDH.Id_HinhThuc);
+            ViewData["Id_PhieuGiao"] = new SelectList(_context.PhieuGiaoHang, "Id", "Id", cTDH.Id_PhieuGiao);
+            ViewData["Id_User"] = new SelectList(_context.user, "Id", "Id", cTDH.Id_User);
+            return View(cTDH);
         }
 
-        // GET: PhieuGiaoHang/Delete/5
+        // GET: CTDH/Delete/5
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
@@ -130,31 +140,33 @@ namespace ThongNhat_Hospital.Controllers.Admin
                 return NotFound();
             }
 
-            var phieuGiaoHang = await _context.PhieuGiaoHang
-                .Include(p => p.loaihang)
+            var cTDH = await _context.ChiTietDonHang
+                .Include(c => c.hinhthuc)
+                .Include(c => c.phieugiao)
+                .Include(c => c.user)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (phieuGiaoHang == null)
+            if (cTDH == null)
             {
                 return NotFound();
             }
 
-            return View(phieuGiaoHang);
+            return View(cTDH);
         }
 
-        // POST: PhieuGiaoHang/Delete/5
+        // POST: CTDH/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            var phieuGiaoHang = await _context.PhieuGiaoHang.FindAsync(id);
-            _context.PhieuGiaoHang.Remove(phieuGiaoHang);
+            var cTDH = await _context.ChiTietDonHang.FindAsync(id);
+            _context.ChiTietDonHang.Remove(cTDH);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool PhieuGiaoHangExists(string id)
+        private bool CTDHExists(string id)
         {
-            return _context.PhieuGiaoHang.Any(e => e.Id == id);
+            return _context.ChiTietDonHang.Any(e => e.Id == id);
         }
     }
 }
