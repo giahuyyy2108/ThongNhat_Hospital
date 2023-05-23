@@ -1,4 +1,4 @@
-﻿@model ThongNhat_Hospital.Models.CTDH
+﻿@model ThongNhat_Hospital.Models.ViewModel.CTDHViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -14,14 +14,6 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Id_HinhThuc" class="control-label"></label>
-                <select asp-for="Id_HinhThuc" class ="form-control" asp-items="ViewBag.Id_HinhThuc"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="Id_PhieuGiao" class="control-label"></label>
-                <select asp-for="Id_PhieuGiao" class ="form-control" asp-items="ViewBag.Id_PhieuGiao"></select>
-            </div>
-            <div class="form-group">
                 <label asp-for="Id_User" class="control-label"></label>
                 <select asp-for="Id_User" class ="form-control" asp-items="ViewBag.Id_User"></select>
             </div>
@@ -29,6 +21,15 @@
                 <label asp-for="chuky" class="control-label"></label>
                 <input asp-for="chuky" class="form-control" />
                 <span asp-validation-for="chuky" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="id_LoaiHang" class="control-label"></label>
+                <select asp-for="id_LoaiHang" class="form-control" asp-items="ViewBag.Id_LoaiHang"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="note" class="control-label"></label>
+                <input asp-for="note" class="form-control" />
+                <span asp-validation-for="note" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />

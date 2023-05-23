@@ -82,7 +82,7 @@ namespace ThongNhat_Hospital.Controllers.Admin
             {
                 return NotFound();
             }
-            ViewData["Id_LoaiHang"] = new SelectList(_context.LoaiHang, "Id", "Name ", phieuGiaoHang.Id_LoaiHang);
+            ViewData["Id_LoaiHang"] = new SelectList(_context.LoaiHang, "Id", "Name", phieuGiaoHang.Id_LoaiHang);
             return View(phieuGiaoHang);
         }
 

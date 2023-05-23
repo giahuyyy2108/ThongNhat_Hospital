@@ -18,6 +18,8 @@ namespace ThongNhat_Hospital.Models
         [StringLength(50)]
         public string Note { get; set; }
 
+        public int tinhtrang { get; set; }
+
         public string Id_LoaiHang { get; set; }
 
 
