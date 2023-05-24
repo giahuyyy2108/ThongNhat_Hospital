@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ThongNhat_Hospital.Migrations
 {
-    public partial class updatedatabase : Migration
+    public partial class adddatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -76,15 +76,14 @@ namespace ThongNhat_Hospital.Migrations
                 name: "PhieuGiaoHang",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ngaygiao = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Note = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     Id_LoaiHang = table.Column<string>(type: "varchar(400)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PhieuGiaoHang", x => x.ID);
+                    table.PrimaryKey("PK_PhieuGiaoHang", x => x.Id);
                     table.ForeignKey(
                         name: "FK_PhieuGiaoHang_LoaiHang_Id_LoaiHang",
                         column: x => x.Id_LoaiHang,
@@ -205,7 +204,7 @@ namespace ThongNhat_Hospital.Migrations
                 {
                     Id = table.Column<string>(type: "varchar(400)", maxLength: 400, nullable: false),
                     Id_HinhThuc = table.Column<string>(type: "varchar(400)", nullable: true),
-                    Id_PhieuGiao = table.Column<int>(type: "int", nullable: false),
+                    Id_PhieuGiao = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     Id_User = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     chuky = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -222,8 +221,8 @@ namespace ThongNhat_Hospital.Migrations
                         name: "FK_ChiTietDonHang_PhieuGiaoHang_Id_PhieuGiao",
                         column: x => x.Id_PhieuGiao,
                         principalTable: "PhieuGiaoHang",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_ChiTietDonHang_Users_Id_User",
                         column: x => x.Id_User,

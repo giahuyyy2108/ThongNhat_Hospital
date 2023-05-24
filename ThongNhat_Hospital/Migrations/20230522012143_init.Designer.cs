@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ThongNhat_Hospital.Models;
 
 namespace ThongNhat_Hospital.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    partial class DataBaseContextModelSnapshot : ModelSnapshot
+    [Migration("20230522012143_init")]
+    partial class init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -159,21 +161,24 @@ namespace ThongNhat_Hospital.Migrations
                     b.Property<string>("Id_HinhThuc")
                         .HasColumnType("varchar(400)");
 
-                    b.Property<string>("Id_PhieuGiao")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<string>("Id_LoaiHang")
+                        .HasColumnType("varchar(400)");
+
+                    b.Property<int>("Id_PhieuGiao")
+                        .HasColumnType("int");
 
                     b.Property<string>("Id_User")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("Thoigian")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("chuky")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("Note")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("Id_HinhThuc");
+
+                    b.HasIndex("Id_LoaiHang");
 
                     b.HasIndex("Id_PhieuGiao");
 
@@ -214,25 +219,18 @@ namespace ThongNhat_Hospital.Migrations
 
             modelBuilder.Entity("ThongNhat_Hospital.Models.PhieuGiaoHang", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Id_LoaiHang")
-                        .HasColumnType("varchar(400)");
-
-                    b.Property<string>("Note")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                    b.Property<string>("chuky")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("ngaygiao")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("tinhtrang")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Id_LoaiHang");
+                    b.HasKey("ID");
 
                     b.ToTable("PhieuGiaoHang");
                 });
@@ -367,9 +365,15 @@ namespace ThongNhat_Hospital.Migrations
                         .WithMany("CTDH")
                         .HasForeignKey("Id_HinhThuc");
 
+                    b.HasOne("ThongNhat_Hospital.Models.LoaiHang", "loaihang")
+                        .WithMany("CTDH")
+                        .HasForeignKey("Id_LoaiHang");
+
                     b.HasOne("ThongNhat_Hospital.Models.PhieuGiaoHang", "phieugiao")
                         .WithMany("CTDH")
-                        .HasForeignKey("Id_PhieuGiao");
+                        .HasForeignKey("Id_PhieuGiao")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ThongNhat_Hospital.Models.User", "user")
                         .WithMany("CTDH")
@@ -377,18 +381,11 @@ namespace ThongNhat_Hospital.Migrations
 
                     b.Navigation("hinhthuc");
 
+                    b.Navigation("loaihang");
+
                     b.Navigation("phieugiao");
 
                     b.Navigation("user");
-                });
-
-            modelBuilder.Entity("ThongNhat_Hospital.Models.PhieuGiaoHang", b =>
-                {
-                    b.HasOne("ThongNhat_Hospital.Models.LoaiHang", "loaihang")
-                        .WithMany("PhieuGiao")
-                        .HasForeignKey("Id_LoaiHang");
-
-                    b.Navigation("loaihang");
                 });
 
             modelBuilder.Entity("ThongNhat_Hospital.Models.HinhThuc", b =>
@@ -398,7 +395,7 @@ namespace ThongNhat_Hospital.Migrations
 
             modelBuilder.Entity("ThongNhat_Hospital.Models.LoaiHang", b =>
                 {
-                    b.Navigation("PhieuGiao");
+                    b.Navigation("CTDH");
                 });
 
             modelBuilder.Entity("ThongNhat_Hospital.Models.PhieuGiaoHang", b =>

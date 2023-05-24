@@ -2,3 +2,87 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
+showInPopup = (url, title) => {
+    $.ajax({
+        type: 'GET',
+        url: url,
+        success: function (res) {
+            $('#form-modal .modal-body').html(res);
+            $('#form-modal .modal-title').html(title);
+            $('#form-modal').modal('show');
+
+            // to make popup draggable
+            //$('.modal-dialog').draggable({
+            //    handle: ".modal-header"
+            //});
+        }
+    }).done(function (res) {
+        setTimeout(function () {
+            $('#form-modal').on('hidden.bs.modal', function () {
+                location.reload();
+            });
+        }, 500);
+    });
+
+    // Hide modal on page reload
+    $('#form-modal').on('hide.bs.modal', function () {
+        history.replaceState(null, null, location.href);
+    });
+
+};
+
+
+jQueryAjaxPost = form => {
+    try {
+        $.ajax({
+            type: 'POST',
+            url: form.action,
+            data: new FormData(form),
+            contentType: false,
+            processData: false,
+            success: function (res) {
+                if (res.isValid) {
+                    $('#view-all').html(res.html)
+                    $('#form-modal .modal-body').html('');
+                    $('#form-modal .modal-title').html('');
+                    $('#form-modal').modal('hide');
+                }
+                else
+                    $('#form-modal .modal-body').html(res.html);
+            },
+            error: function (err) {
+                console.log(err)
+            }
+        })
+        //to prevent default form submit event
+        return false;
+    } catch (ex) {
+        console.log(ex)
+    }
+}
+
+jQueryAjaxDelete = form => {
+    if (confirm('Bạn có chắc muốn xóa?')) {
+        try {
+            $.ajax({
+                type: 'POST',
+                url: form.action,
+                data: new FormData(form),
+                contentType: false,
+                processData: false,
+                success: function (res) {
+                    $('#view-all').html(res.html);
+                    window.location.reload(); // reload the page
+                },
+                error: function (err) {
+                    console.log(err)
+                }
+            })
+        } catch (ex) {
+            console.log(ex)
+        }
+    }
+
+    //prevent default form submit event
+    return false;
+}

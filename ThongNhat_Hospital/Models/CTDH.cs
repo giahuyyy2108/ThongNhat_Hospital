@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using System;
 
 namespace ThongNhat_Hospital.Models
 {
@@ -10,9 +11,11 @@ namespace ThongNhat_Hospital.Models
         [StringLength(400)]
         public string Id { get; set; }
         public string Id_HinhThuc { get; set; }
-        public int Id_PhieuGiao { get; set; }
+        public string Id_PhieuGiao { get; set; }
         public string Id_User { get; set; }
         public string chuky { set; get; }
+
+        public DateTime Thoigian { set; get; }
 
         [ForeignKey("Id_HinhThuc")]
         public HinhThuc hinhthuc { get; set; }

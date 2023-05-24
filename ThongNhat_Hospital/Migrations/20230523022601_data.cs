@@ -3,7 +3,7 @@ using System;
 
 namespace ThongNhat_Hospital.Migrations
 {
-    public partial class updatedatabase1 : Migration
+    public partial class data : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -38,7 +38,9 @@ namespace ThongNhat_Hospital.Migrations
                         0
                     }
                     );
+                
             }
+
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

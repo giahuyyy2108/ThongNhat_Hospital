@@ -1,0 +1,96 @@
+﻿@model IEnumerable<ThongNhat_Hospital.Models.LoaiHang>
+
+
+@using Microsoft.AspNetCore.Identity
+@using ThongNhat_Hospital.Models
+
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/Admin/_Dashboard.cshtml";
+}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap.min.css">
+
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+
+
+<!-- Right side column. Contains the navbar and content of the page -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+
+        <th>
+            <a onclick="showInPopup('@Url.Action("Create","LoaiHang",null,Context.Request.Scheme)','Thêm loại hàng')" class="btn btn-success text-white"><i class="fas fa-add"></i> Thêm loại hàng</a>
+        </th>
+
+
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">Loại hàng</h3>
+                    </div><!-- /.box-header -->
+                    <div class="box-body">
+                        <table class="table table-bordered table-striped" id="table-data">
+                            <thead>
+                                <tr>
+                                    
+                                    <th style="width: 70%;">
+                                        @Html.DisplayNameFor(model => model.Name)
+                                    </th>
+                                    <th>Chức năng</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    int stt = 1;
+                                }
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+
+                                        <td style="width: 70%;">
+                                            @Html.DisplayFor(modelItem => item.Name)
+                                        </td>
+                                        <td>
+                                            <div style="display:flex; flex-direction:row;">
+                                                <a onclick="showInPopup('@Url.Action("Edit","LoaiHang",new {id=item.Id},Context.Request.Scheme)','Chỉnh sửa loại hàng')" class="btn btn-info text-white"><i class="fas fa-pencil-alt"></i> Cập nhật</a>
+                                                <form asp-action="Delete" asp-route-id="@item.Id" onsubmit="return jQueryAjaxDelete(this)" class="d-inline" style="margin-left:10px;">
+                                                    <input type="hidden" asp-for="@item.Id" />
+                                                    <input type="submit" value="Xóa" class="btn btn-danger" />
+                                                </form>
+                                            </div>
+
+                                        </td>
+                                    </tr>
+                                    stt = stt + 1;
+                                }
+                            </tbody>
+                        </table>
+                    </div><!-- /.box-body -->
+                </div><!-- /.box -->
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </section><!-- /.content -->
+    @section Scripts{
+        <script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap.min.js"></script>
+
+        <script>
+            $(document).ready(function () {
+                $('#table-data').DataTable();
+            });
+        </script>
+    }
+

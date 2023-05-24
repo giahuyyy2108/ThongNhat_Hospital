@@ -8,7 +8,7 @@ namespace ThongNhat_Hospital.Models
 {
     public class PhieuGiaoHang
     {
-        public int ID { get; set; }
+        public string Id { get; set; }
 
         [DataType(DataType.Date)]
         public DateTime ngaygiao { get; set; }
@@ -17,6 +17,8 @@ namespace ThongNhat_Hospital.Models
         [Column(TypeName = "nvarchar")]
         [StringLength(50)]
         public string Note { get; set; }
+
+        public int tinhtrang { get; set; }
 
         public string Id_LoaiHang { get; set; }
 

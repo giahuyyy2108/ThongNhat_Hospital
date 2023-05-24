@@ -1,0 +1,67 @@
+﻿@model IEnumerable<ThongNhat_Hospital.Models.PhieuGiaoHang>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Số phiếu
+            </th>
+            <th>
+                Ngày
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Note)
+            </th>
+            <th>
+                Loại hàng
+            </th>
+            <th>
+                Tình trạng
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Id)</a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ngaygiao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Note)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.loaihang.Name)
+            </td>
+            @if(item.tinhtrang == 0)
+            {
+                <td>
+                    Chưa hoàn thành
+                </td>
+            }
+            else
+            {
+                 <td>
+                    Hoàn thành
+                </td>   
+            }
+            <td>
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
