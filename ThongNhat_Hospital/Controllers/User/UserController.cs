@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace ThongNhat_Hospital.Controllers.User
+namespace ThongNhat_Hospital.Controllers.User1
 {
     public class UserController : Controller
     {

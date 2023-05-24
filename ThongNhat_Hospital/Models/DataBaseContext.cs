@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection.Emit;
+using ThongNhat_Hospital.Models.ViewModel;
 
 namespace ThongNhat_Hospital.Models
 {
@@ -38,6 +39,7 @@ namespace ThongNhat_Hospital.Models
         public DbSet<HinhThuc> HinhThuc { set; get; }
 
         public DbSet<LoaiHang> LoaiHang { set; get; }
+
 
 
     }

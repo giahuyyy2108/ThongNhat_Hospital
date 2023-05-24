@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ThongNhat_Hospital.Models;
 
 namespace ThongNhat_Hospital.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    partial class DataBaseContextModelSnapshot : ModelSnapshot
+    [Migration("20230523034703_add tt")]
+    partial class addtt
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -164,9 +166,6 @@ namespace ThongNhat_Hospital.Migrations
 
                     b.Property<string>("Id_User")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("Thoigian")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("chuky")
                         .HasColumnType("nvarchar(max)");
