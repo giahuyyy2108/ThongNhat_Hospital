@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<ThongNhat_Hospital.Models.CTDH>
 @using Microsoft.AspNetCore.Identity
+@using System.Globalization;
 @using ThongNhat_Hospital.Models
 
 @inject SignInManager<User> SignInManager
@@ -25,7 +26,7 @@
                 Mã phiếu
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.chuky)
+                Chữ ký
             </th>
             
             <th>
@@ -46,37 +47,38 @@
             {
                 @if(item.Id_HinhThuc == "2")
                 {
-                    <tr>
-                        <td>
-                            @stt
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.phieugiao.Id)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.chuky)
-                        </td>
-                    
-                    
-                        @if(item.chuky == null)
-                        {
+                    @if( item.phieugiao.ngaygiao.Date == DateTime.Now.Date )
+                    {
+                        <tr>
                             <td>
+                                @stt
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.phieugiao.Id)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.chuky)
+                            </td>
 
-                            </td>
-                         }
-                        else
-                        {
+                            @if (item.chuky == null)
+                            {
+                                <td>
+                                </td>
+                            }
+                            else
+                            {
+                                <td>
+                                    @item.Thoigian.ToString("dd/MM/yyyy H:mm",CultureInfo.GetCultureInfo("vi-VN"))
+                                </td>
+                            }
                             <td>
-                                @Html.DisplayFor(modelItem => item.Thoigian)
+                                <a asp-action="Confirm" asp-route-id="@item.Id">Xác nhận</a>
+                                @*<a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
                             </td>
-                        }
-                        <td>
-                            <a asp-action="Confirm" asp-route-id="@item.Id">Xác nhận</a>
-                            @*<a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
-                        </td>
-                    </tr>
-                    stt = stt + 1;
+                        </tr>
+                        stt = stt + 1;
+                    }
                 }
             }
         }

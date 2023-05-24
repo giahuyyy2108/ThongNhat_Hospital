@@ -25,7 +25,10 @@ namespace ThongNhat_Hospital.Controllers.User1
 
         public async Task<IActionResult> ListNhanhang()
         {
-            var dataBaseContext = _context.ChiTietDonHang.Include(c => c.hinhthuc).Include(c => c.phieugiao).Include(c => c.user);
+            var dataBaseContext = _context.ChiTietDonHang
+                                            .Include(c => c.hinhthuc)
+                                            .Include(c => c.phieugiao)
+                                            .Include(c => c.user);
             return View(await dataBaseContext.ToListAsync());
         }
 

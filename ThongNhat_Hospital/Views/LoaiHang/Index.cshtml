@@ -42,7 +42,7 @@
                         <h3 class="box-title">Loại hàng</h3>
                     </div><!-- /.box-header -->
                     <div class="box-body">
-                        <table class="table table-bordered table-striped" id="table-data">
+                        <table class="table table-bordered table-striped" id="table1">
                             <thead>
                                 <tr>
                                     
@@ -83,14 +83,33 @@
             </div><!-- /.col -->
         </div><!-- /.row -->
     </section><!-- /.content -->
-    @section Scripts{
-        <script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
-        <script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap.min.js"></script>
+    <div class="modal" tabindex="-1" role="dialog" id="form-modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-        <script>
-            $(document).ready(function () {
-                $('#table-data').DataTable();
-            });
-        </script>
-    }
+<!--datatable-->
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 
+<script src="https://cdn.datatables.net/1.10.8/js/jquery.dataTables.min.js" defer="defer"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        debugger;
+        $('#table1').DataTable({
+            bPaginate:true
+        })
+
+    });
+</script>
