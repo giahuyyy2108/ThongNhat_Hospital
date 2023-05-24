@@ -1,0 +1,50 @@
+﻿@model ThongNhat_Hospital.Models.CTDH
+
+@{
+    ViewData["Title"] = "Confirm";
+    Layout = "~/Views/Shared/User/_LayoutUser.cshtml";
+}
+
+<h2>Confirm</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Confirm">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <select asp-for="Id_HinhThuc" class="form-control hidden" asp-items="ViewBag.Id_HinhThuc"></select>
+                <span asp-validation-for="Id_HinhThuc" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <select asp-for="Id_PhieuGiao" class="form-control hidden" asp-items="ViewBag.Id_PhieuGiao"></select>
+                <span asp-validation-for="Id_PhieuGiao" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <select asp-for="Id_User" class="form-control hidden" asp-items="ViewBag.Id_User"></select>
+                <span asp-validation-for="Id_User" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Xác nhận</label>
+                <input asp-for="chuky" class="form-control" />
+                <span asp-validation-for="chuky" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input asp-for="Thoigian" class="form-control hidden" />
+                <span asp-validation-for="Thoigian" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@*@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}*@

@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/User/_LayoutUser.cshtml";
 }
 
-@*<div class="col-md-12">
+<div class="col-md-12">
     <div class="panel panel-info">
         <div class="panel-heading">
             Điền thông tin phiếu giao hàng
@@ -16,11 +16,11 @@
                     <label>Người dùng:</label>
                     <select asp-for="Id_User" class="form-control" asp-items="ViewBag.Id_User"></select>
                 </div>
-              
+
                 <div class="form-group">
-                    <label>Tên hàng:</label>
-                    <input class="form-control" type="text">
-                
+                    <label>Chữ ký</label>
+                    <input asp-for="chuky" class="form-control" />
+                    <span asp-validation-for="chuky" class="text-danger"></span>
                 </div>
 
                 <div class="form-group">
@@ -40,8 +40,8 @@
 
 
 
-            
+
         </div>
     </div>
-</div>*@
+</div>
 

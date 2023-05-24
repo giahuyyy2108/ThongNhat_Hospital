@@ -40,6 +40,8 @@ namespace ThongNhat_Hospital.Models
 
         public DbSet<LoaiHang> LoaiHang { set; get; }
 
+        //public DbSet<ThongNhat_Hospital.Models.ViewModel.CTDHViewModel> CTDHViewModel { get; set; }
+
 
 
     }

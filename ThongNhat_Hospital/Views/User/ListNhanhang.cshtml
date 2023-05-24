@@ -1,0 +1,84 @@
+﻿@model IEnumerable<ThongNhat_Hospital.Models.CTDH>
+@using Microsoft.AspNetCore.Identity
+@using ThongNhat_Hospital.Models
+
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/User/_LayoutUser.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                STT
+            </th>
+            <th>
+                Mã phiếu
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.chuky)
+            </th>
+            
+            <th>
+                Cập nhật
+            </th>
+            <th>
+                
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int stt = 1;
+        }
+        @foreach (var item in Model)
+        {
+            @if(item.user.UserName == User.Identity.Name)
+            {
+                @if(item.Id_HinhThuc == "2")
+                {
+                    <tr>
+                        <td>
+                            @stt
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.phieugiao.Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.chuky)
+                        </td>
+                    
+                    
+                        @if(item.chuky == null)
+                        {
+                            <td>
+
+                            </td>
+                         }
+                        else
+                        {
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Thoigian)
+                            </td>
+                        }
+                        <td>
+                            <a asp-action="Confirm" asp-route-id="@item.Id">Xác nhận</a>
+                            @*<a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
+                        </td>
+                    </tr>
+                    stt = stt + 1;
+                }
+            }
+        }
+    </tbody>
+</table>
