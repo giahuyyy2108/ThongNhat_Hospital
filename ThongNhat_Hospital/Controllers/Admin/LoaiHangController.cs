@@ -60,7 +60,7 @@ namespace ThongNhat_Hospital.Controllers.Admin
             {
                 _context.Add(loaiHang);
                 await _context.SaveChangesAsync();
-                return View(loaiHang);
+                return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "Create", _context.LoaiHang.ToList()) });
             }
             return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "Create", loaiHang) });
         }
@@ -78,7 +78,7 @@ namespace ThongNhat_Hospital.Controllers.Admin
             {
                 return NotFound();
             }
-            return View(loaiHang);
+            return PartialView(loaiHang);
         }
 
         // POST: LoaiHang/Edit/5
@@ -111,9 +111,9 @@ namespace ThongNhat_Hospital.Controllers.Admin
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "Edit", _context.LoaiHang.ToList()) });
             }
-            return View(loaiHang);
+            return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "Edit", loaiHang) });
         }
 
         // GET: LoaiHang/Delete/5
@@ -142,7 +142,7 @@ namespace ThongNhat_Hospital.Controllers.Admin
             var loaiHang = await _context.LoaiHang.FindAsync(id);
             _context.LoaiHang.Remove(loaiHang);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return Json(new { html = Helper.RenderRazorViewToString(this, "Index", _context.LoaiHang.ToList()) });
         }
 
         private bool LoaiHangExists(string id)

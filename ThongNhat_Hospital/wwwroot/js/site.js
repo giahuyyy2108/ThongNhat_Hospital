@@ -10,14 +10,27 @@ showInPopup = (url, title) => {
             $('#form-modal .modal-body').html(res);
             $('#form-modal .modal-title').html(title);
             $('#form-modal').modal('show');
+
             // to make popup draggable
             //$('.modal-dialog').draggable({
             //    handle: ".modal-header"
             //});
         }
+    }).done(function (res) {
+        setTimeout(function () {
+            $('#form-modal').on('hidden.bs.modal', function () {
+                location.reload();
+            });
+        }, 500);
     });
-    
-}
+
+    // Hide modal on page reload
+    $('#form-modal').on('hide.bs.modal', function () {
+        history.replaceState(null, null, location.href);
+    });
+
+};
+
 
 jQueryAjaxPost = form => {
     try {
@@ -46,4 +59,30 @@ jQueryAjaxPost = form => {
     } catch (ex) {
         console.log(ex)
     }
+}
+
+jQueryAjaxDelete = form => {
+    if (confirm('Bạn có chắc muốn xóa?')) {
+        try {
+            $.ajax({
+                type: 'POST',
+                url: form.action,
+                data: new FormData(form),
+                contentType: false,
+                processData: false,
+                success: function (res) {
+                    $('#view-all').html(res.html);
+                    window.location.reload(); // reload the page
+                },
+                error: function (err) {
+                    console.log(err)
+                }
+            })
+        } catch (ex) {
+            console.log(ex)
+        }
+    }
+
+    //prevent default form submit event
+    return false;
 }
