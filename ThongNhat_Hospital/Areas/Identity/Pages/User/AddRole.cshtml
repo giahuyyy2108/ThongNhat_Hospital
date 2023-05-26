@@ -4,11 +4,7 @@
     ViewData["Title"] = "Đặt lại mật khẩu";
     Layout = "Admin/_Dashboard";
 }
-@{
 
-    
-
-}
 
 <!-- Right side column. Contains the navbar and content of the page -->
 <div class="content-wrapper">
@@ -31,11 +27,11 @@
                     <form role="form" method="post">
                         <div class="box-body">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                            <div class="form-group">
-                                @Html.ListBoxFor(m => m.Rolename, @Model.allRoles ,new {
-                                    id = "id-select-role",
-                                @class ="form-control"
-                                })
+                            <div class="form-group" @Html.ListBoxFor(m => m.Rolename, @Model.allRoles ,new {
+                                 id = "id-select-role",
+                                 @class ="form-control"
+                                 }) style="width:100px">
+                                
                                 <span asp-validation-for="Rolename" class="text-danger"></span>
                             </div>
                         </div><!-- /.box-body -->
@@ -52,12 +48,9 @@
     </section><!-- /.content -->
 
 </div><!-- /.content-wrapper -->
-
-
-
 @section Scripts {
     <script src="~/lib/multiple-select/multiple-select.min.js"></script>
-    <link rel="stylesheet" href="~/lib/multiple-select/multiple-select.min.css"/>
+    <link rel="stylesheet" href="~/lib/multiple-select/multiple-select.min.css" />
 
     <script>
         $("#id-select-role").multipleSelect({
