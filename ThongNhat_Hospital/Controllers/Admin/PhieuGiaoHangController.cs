@@ -1,21 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using ThongNhat_Hospital.Interface;
 using ThongNhat_Hospital.Models;
+using ThongNhat_Hospital.Models.ViewModel;
 
 namespace ThongNhat_Hospital.Controllers.Admin
 {
     public class PhieuGiaoHangController : Controller
     {
         private readonly DataBaseContext _context;
+        private readonly IReport _service;
 
-        public PhieuGiaoHangController(DataBaseContext context)
+        public PhieuGiaoHangController(DataBaseContext context,IReport service)
         {
             _context = context;
+            _service = service;
         }
 
         // GET: PhieuGiaoHang
@@ -155,6 +162,22 @@ namespace ThongNhat_Hospital.Controllers.Admin
         private bool PhieuGiaoHangExists(string id)
         {
             return _context.PhieuGiaoHang.Any(e => e.Id == id);
+        }
+
+
+        [HttpGet]
+        public ContentResult GetLoaiHang()
+        {
+            var listmodel = _service.ThongkheLoaiHang();
+
+            List<DataPoint> dataPoints = new List<DataPoint>();
+
+            foreach (var item in listmodel)
+            {
+                dataPoints.Add(new DataPoint(item.name, item.count));
+            }
+            JsonSerializerSettings _jsonSetting = new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore };
+            return Content(JsonConvert.SerializeObject(dataPoints, _jsonSetting), "application/json");
         }
     }
 }

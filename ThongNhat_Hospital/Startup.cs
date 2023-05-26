@@ -11,7 +11,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ThongNhat_Hospital.Interface;
 using ThongNhat_Hospital.Models;
+using ThongNhat_Hospital.Models.ViewModel;
 using ThongNhat_Hospital.Service;
 
 namespace ThongNhat_Hospital
@@ -28,6 +30,9 @@ namespace ThongNhat_Hospital
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddScoped<IReport, ThongkeLoaiHangSvc>();
+
             services.AddControllersWithViews();
             //đăng ký dịch vụ kết nối DB
             services.AddDbContext<DataBaseContext>(options => {

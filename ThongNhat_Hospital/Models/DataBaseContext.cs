@@ -28,6 +28,8 @@ namespace ThongNhat_Hospital.Models
                 }
 
             }
+
+            modelbuilder.Entity<ThongkeViewModel>(entity => entity.HasNoKey().ToView(null));
         }
 
         public DbSet<User> user { get; set; }
@@ -40,9 +42,7 @@ namespace ThongNhat_Hospital.Models
 
         public DbSet<LoaiHang> LoaiHang { set; get; }
 
-        //public DbSet<ThongNhat_Hospital.Models.ViewModel.CTDHViewModel> CTDHViewModel { get; set; }
-
-
+        public virtual DbSet<ThongkeViewModel> ThongkeViewModel { get; set;}
 
     }
 }
