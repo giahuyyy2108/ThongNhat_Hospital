@@ -39,7 +39,8 @@
         @{
             int stt = 1;
         }
-@foreach (var item in Model) {
+    @foreach (var item in Model) {
+
         <tr>
             <td>
                 @stt
@@ -66,6 +67,6 @@
             </td>
             </tr>
             stt = stt + 1;
-        }
+    }
     </tbody>
 </table>

@@ -165,19 +165,6 @@ namespace ThongNhat_Hospital.Controllers.Admin
         }
 
 
-        [HttpGet]
-        public ContentResult GetLoaiHang()
-        {
-            var listmodel = _service.ThongkheLoaiHang();
-
-            List<DataPoint> dataPoints = new List<DataPoint>();
-
-            foreach (var item in listmodel)
-            {
-                dataPoints.Add(new DataPoint(item.name, item.count));
-            }
-            JsonSerializerSettings _jsonSetting = new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore };
-            return Content(JsonConvert.SerializeObject(dataPoints, _jsonSetting), "application/json");
-        }
+        
     }
 }

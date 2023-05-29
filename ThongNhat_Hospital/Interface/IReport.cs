@@ -7,6 +7,8 @@ namespace ThongNhat_Hospital.Interface
 {
     public interface IReport
     {
-        List<ThongkeViewModel> ThongkheLoaiHang();
+        List<ThongkeViewModel> ThongkeLoaiHang();
+
+        List<ThongkeViewModel> ThongkeTinhTrangPhieu();
     }
 }

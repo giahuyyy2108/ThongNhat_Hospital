@@ -1,5 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,16 +17,26 @@ namespace ThongNhat_Hospital.Service
         {
             _context = context;
         }
-        public List<ThongkeViewModel> ThongkheLoaiHang()
+
+
+        public List<ThongkeViewModel> ThongkeTinhTrangPhieu()
         {
-            //List<SqlParameter> parameter = new List<SqlParameter>
-            //{
-
-            //};
-
-            List<ThongkeViewModel> result =  _context.ThongkeViewModel.FromSqlRaw("EXEC GetReportLoaiHangByDate '25/04/2023' ,'25/05/2023'").ToList();
+            List<ThongkeViewModel> result = _context.ThongkeViewModel.FromSqlRaw($"EXEC GETReportTinhTrang").ToList();
 
             return result;
         }
+
+        public List<ThongkeViewModel> ThongkeLoaiHang()
+        {
+            List<SqlParameter> parameter = new List<SqlParameter>
+            {
+                new SqlParameter("dateto", DateTime.Now),
+            };
+
+            List<ThongkeViewModel> result =  _context.ThongkeViewModel.FromSqlRaw($"EXEC GetReportLoaiHangByDate '25/04/2023' , dateto").ToList();
+
+            return result;
+        }
+
     }
 }
