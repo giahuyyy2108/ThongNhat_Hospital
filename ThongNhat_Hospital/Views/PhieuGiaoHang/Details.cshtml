@@ -21,14 +21,14 @@
     
     @foreach (var item in Model.CTphieu)
     {
-        @if(item.Id_HinhThuc == "2")
+        @if(item.Id_HinhThuc == "1")
         {
             <section class="invoice">
                 <!-- title row -->
                 <div class="row">
                     <div class="col-xs-12">
                         <h2 class="page-header">
-                            <i class="fa fa-globe"></i> AdminLTE, Inc.
+                            <i class="fa fa-globe"></i> Bệnh viện Thống Nhất.
                             <small class="pull-right"> @DateTime.Now.ToString("dd/MM/yyyy H:mm",CultureInfo.GetCultureInfo("vi-VN"))</small>
                         </h2>
                     </div><!-- /.col -->
@@ -41,7 +41,7 @@
                         <address>
                             <strong>@Model.nguoigui</strong><br>
                             @Model.email_usergui<br>
-                            ký ngày: @Model.ngay_usergui
+                            Ngày giao: @Model.ngay_usergui
                         </address>
 
 
@@ -52,7 +52,7 @@
                         <address>
                             <strong>@Model.nguoinhan</strong><br>
                             @Model.email_usernhan<br>
-                            ký ngày: @Model.ngay_usernhan
+                            Ngày nhận: @Model.ngay_usernhan
                         </address>
 
                     </div><!-- /.col -->
@@ -66,44 +66,21 @@
                 <!-- Table row -->
                 <div class="row">
                     <div class="col-xs-12 table-responsive">
-                        <table class="table table-striped">
+                        <table class="table ">
                             <thead>
                                 <tr>
-                                    <th>Qty</th>
-                                    <th>Product</th>
-                                    <th>Serial #</th>
-                                    <th>Description</th>
-                                    <th>Subtotal</th>
+                                    <th>    Chữ ký người gửi </th>
+                                    <th>    Chữ ký người nhận </th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>1</td>
-                                    <td>Call of Duty</td>
-                                    <td>455-981-221</td>
-                                    <td>El snort testosterone trophy driving gloves handsome</td>
-                                    <td>$64.50</td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Need for Speed IV</td>
-                                    <td>247-925-726</td>
-                                    <td>Wes Anderson umami biodiesel</td>
-                                    <td>$50.00</td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Monsters DVD</td>
-                                    <td>735-845-642</td>
-                                    <td>Terry Richardson helvetica tousled street art master</td>
-                                    <td>$10.70</td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Grown Ups Blue Ray</td>
-                                    <td>422-568-642</td>
-                                    <td>Tousled lomo letterpress</td>
-                                    <td>$25.99</td>
+                                    <td>
+                                        <img src="@Model.chuky_usergui" width=400 height=200 />
+                                    </td>
+                                    <td>
+                                        <img src="@Model.chuky_usernhan" width=400 height=200 />
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -115,9 +92,9 @@
                 <!-- this row will not appear when printing -->
                 <div class="row no-print">
                     <div class="col-xs-12">
-                        <a href="invoice-print.html" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Print</a>
-                        <button class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Submit Payment</button>
-                        <button class="btn btn-primary pull-right" style="margin-right: 5px;"><i class="fa fa-download"></i> Generate PDF</button>
+                        <a href="#" onclick="window.print()" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> In</a>
+                        @*<button class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Submit Payment</button>
+                        <button class="btn btn-primary pull-right" style="margin-right: 5px;"><i class="fa fa-download"></i> Generate PDF</button>*@
                     </div>
                 </div>
             </section>

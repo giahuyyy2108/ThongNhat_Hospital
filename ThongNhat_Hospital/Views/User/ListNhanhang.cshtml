@@ -10,11 +10,8 @@
     Layout = "~/Views/Shared/User/_LayoutUser.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Xem đơn hàng trong ngày</h2>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 
 <table class="table">
     <thead>
@@ -26,7 +23,7 @@
                 Mã phiếu
             </th>
             <th>
-                Chữ ký
+                Xác nhận
             </th>
             
             <th>
@@ -56,26 +53,37 @@
                             <td>
                                 @Html.DisplayFor(modelItem => item.phieugiao.Id)
                             </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.chuky)
-                            </td>
+                            
 
                             @if (item.chuky == null)
                             {
                                 <td>
+                                    Chưa xác nhận
                                 </td>
-                            }
-                            else
-                            {
                                 <td>
-                                    @item.Thoigian.ToString("dd/MM/yyyy H:mm",CultureInfo.GetCultureInfo("vi-VN"))
+
                                 </td>
-                            }
-                            <td>
+                                <td>
                                 <a asp-action="Confirm" asp-route-id="@item.Id">Xác nhận</a>
                                 @*<a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
                             </td>
+                            }
+                            else
+                            {
+                                <td>
+                                    Đã xác nhận
+                                </td>
+                                <td>
+                                    @item.Thoigian.ToString("dd/MM/yyyy H:mm",CultureInfo.GetCultureInfo("vi-VN"))
+                                </td>
+                                <td>
+                                @*<a asp-action="Confirm" asp-route-id="@item.Id">Xác nhận</a>*@
+                                @*<a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
+                            </td>
+                            }
+                            
                         </tr>
                         stt = stt + 1;
                     }
@@ -84,3 +92,89 @@
         }
     </tbody>
 </table>
+
+
+
+<h2>Xem đơn gửi trong ngày</h2>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                STT
+            </th>
+            <th>
+                Mã phiếu
+            </th>
+            <th>
+                Xác nhận
+            </th>
+
+            <th>
+                Cập nhật
+            </th>
+            <th>
+
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int s = 1;
+        }
+        @foreach (var item in Model)
+        {
+            @if (item.user.UserName == User.Identity.Name)
+            {
+                @if (item.Id_HinhThuc == "1")
+                {
+                    @if (item.phieugiao.ngaygiao.Date == DateTime.Now.Date)
+                    {
+                        <tr>
+                            <td>
+                                @s
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.phieugiao.Id)
+                            </td>
+
+
+                            @if (item.chuky == null)
+                            {
+                                <td>
+                                    Chưa xác nhận
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                    @*<a asp-action="Confirm" asp-route-id="@item.Id">Xác nhận</a>*@
+                                    @*<a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
+                                </td>
+                            }
+                            else
+                            {
+                                <td>
+                                    Đã xác nhận
+                                </td>
+                                <td>
+                                    @item.Thoigian.ToString("dd/MM/yyyy H:mm",CultureInfo.GetCultureInfo("vi-VN"))
+                                </td>
+                                <td>
+                                    @*<a asp-action="Confirm" asp-route-id="@item.Id">Xác nhận</a>*@
+                                    @*<a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
+                                </td>
+                            }
+
+                        </tr>
+                        s = s + 1;
+                    }
+                }
+            }
+        }
+    </tbody>
+</table>
+
+
