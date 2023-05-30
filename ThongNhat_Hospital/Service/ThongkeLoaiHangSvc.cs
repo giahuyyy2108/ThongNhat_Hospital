@@ -21,21 +21,23 @@ namespace ThongNhat_Hospital.Service
 
         public List<ThongkeViewModel> ThongkeTinhTrangPhieu()
         {
+
             List<ThongkeViewModel> result = _context.ThongkeViewModel.FromSqlRaw($"EXEC GETReportTinhTrang").ToList();
 
             return result;
         }
 
-        public List<ThongkeViewModel> ThongkeLoaiHang()
+        public async Task<List<ThongkeViewModel>> ThongkeLoaiHang(DateTime ngayBatDau, DateTime ngayKetThuc)
         {
             List<SqlParameter> parameter = new List<SqlParameter>
             {
-                new SqlParameter("dateto", DateTime.Now),
+                new SqlParameter { ParameterName = "@ngaybatdau", Value= ngayBatDau },
+                new SqlParameter { ParameterName = "@ngaykethuc", Value= ngayKetThuc },
             };
 
-            List<ThongkeViewModel> result =  _context.ThongkeViewModel.FromSqlRaw($"EXEC GetReportLoaiHangByDate '25/04/2023' , dateto").ToList();
-
+            var result = await _context.ThongkeViewModel.FromSqlRaw("EXEC GetReportLoaiHangByDate @ngaybatdau,@ngaykethuc", parameter.ToArray()).ToListAsync();
             return result;
+            
         }
 
     }

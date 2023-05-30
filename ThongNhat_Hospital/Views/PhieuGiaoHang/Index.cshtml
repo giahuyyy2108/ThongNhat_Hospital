@@ -4,7 +4,65 @@
     ViewData["Title"] = "Index";
     Layout = "Admin/_Dashboard";
 }
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap.min.css">
+<style>
+    .box {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, .05);
+    }
 
+    .box-item {
+        margin-right: 15px;
+    }
+
+        .box-item input.form-control {
+            height: 38px;
+        }
+
+    .btn-primary {
+        background-color: #007bff;
+        color: #fff;
+        border-color: #007bff;
+        padding: 8px 16px;
+        font-size: 16px;
+        border-radius: 4px;
+    }
+
+        .btn-primary:hover {
+            background-color: #0069d9;
+            border-color: #0062cc;
+        }
+
+    .content-wrapper {
+        padding: 20px;
+    }
+
+    .table-responsive {
+        overflow-x: auto;
+    }
+
+    th {
+        text-align: center;
+    }
+
+    .modal-header {
+        border-bottom: 0 none;
+    }
+
+    .modal-footer {
+        border-top: 0 none;
+        text-align: right;
+    }
+
+        .modal-footer button {
+            margin-left: 10px;
+        }
+</style>
 
 <!-- Right side column. Contains the navbar and content of the page -->
 <div class="content-wrapper">
@@ -21,92 +79,96 @@
     <!-- Main content -->
     <section class="content">
         <div class="row">
-            <div class="col-xs-12">
+            <div class="col-md-12">
                 <div class="box">
-                    <div class="box-header">
-                        <h3 class="box-title">Thống kê đơn hàng</h3>
-                        @*
-                        <p>
-                        <a asp-action="Create">Create New</a>
-                        </p>*@
-
-                    </div><!-- /.box-header -->
+                   
                     <div class="box-body">
-
-
-                        @*<canvas id="myChart" style="width:100%;max-width:700px"></canvas>*@
-
-                        <div class="box">
-                            <div class="box-item">
-                                <div id="chartContainer" style="height: 270px; width: auto;"></div>
-                            </div>
-                            <div class="box-item">
-                                <div id="chartContainer1" style="height: 270px; width: auto;"></div>
+                        
+                            <div class="col-md-12">
+                                <div class="box">
+                                    <div class="box-item" style="width: 50%;">
+                                        <div id="chartContainer" style="height: 270px; width: auto;"></div>
+                                    </div>
+                              
+                            
+                                    <div class="box-item" style="width: 50%;">
+                                        <div id="chartContainer1" style="height: 270px; width: auto;"></div>
+                                    </div>
                             </div>
                         </div>
+                        
 
-                        <table id="table1" class="table table-bordered table-striped">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        Số phiếu
-                                    </th>
-                                    <th>
-                                        Ngày
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.Note)
-                                    </th>
-                                    <th>
-                                        Loại hàng
-                                    </th>
-                                    <th>
-                                        Tình trạng
-                                    </th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var item in Model)
-                                {
-                                    <tr>
-                                        <td>
-                                            <a asp-action="Edit" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Id)</a>
-                                        </td>
-                                        <td>
-                                            @item.ngaygiao.ToString("dd/MM/yyyy H:mm",CultureInfo.GetCultureInfo("vi-VN"))
-                                            @*@Html.DisplayFor(modelItem => item.ngaygiao)*@
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Note)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.loaihang.Name)
-                                        </td>
-                                        @if (item.tinhtrang == 0)
-                                        {
-                                            <td>
-                                                Chưa hoàn thành
-                                            </td>
-                                        }
-                                        else
-                                        {
-                                            <td>
-                                                Hoàn thành
-                                            </td>
-                                        }
-                                        <td>
-                                            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                                        </td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
+                      
+                            <div class="col-md-12">
+                                <div class="box">
+                                    <div class="box-item" style="width:100%">
+                                        <table id="table1" class="table table-bordered table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>
+                                                        Số phiếu
+                                                    </th>
+                                                    <th>
+                                                        Ngày
+                                                    </th>
+                                                    <th>
+                                                        @Html.DisplayNameFor(model => model.Note)
+                                                    </th>
+                                                    <th>
+                                                        Loại hàng
+                                                    </th>
+                                                    <th>
+                                                        Tình trạng
+                                                    </th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in Model)
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            <a asp-action="Edit" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Id)</a>
+                                                        </td>
+                                                        <td>
+                                                            @item.ngaygiao.ToString("dd/MM/yyyy H:mm",CultureInfo.GetCultureInfo("vi-VN"))
+                                                            @*@Html.DisplayFor(modelItem => item.ngaygiao)*@
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.Note)
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.loaihang.Name)
+                                                        </td>
+                                                        @if (item.tinhtrang == 0)
+                                                        {
+                                                            <td>
+                                                                Chưa hoàn thành
+                                                            </td>
+                                                        }
+                                                        else
+                                                        {
+                                                            <td>
+                                                                Hoàn thành
+                                                            </td>
+                                                        }
+                                                        <td>
+                                                            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div><!-- /.box-body -->
+                                </div><!-- /.box -->
+                            </div><!-- /.col -->
+                      
                     </div><!-- /.box-body -->
                 </div><!-- /.box -->
-            </div><!-- /.col -->
+            </div><!--/.col -->
         </div><!-- /.row -->
+
     </section><!-- /.content -->
 
 </div><!-- /.content-wrapper -->
