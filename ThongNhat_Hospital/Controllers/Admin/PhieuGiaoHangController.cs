@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using Org.BouncyCastle.Crypto.Tls;
 using ThongNhat_Hospital.Interface;
 using ThongNhat_Hospital.Models;
 using ThongNhat_Hospital.Models.ViewModel;
@@ -40,15 +42,59 @@ namespace ThongNhat_Hospital.Controllers.Admin
                 return NotFound();
             }
 
-            var phieuGiaoHang = await _context.PhieuGiaoHang
-                .Include(p => p.loaihang)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var phieuGiaoHang = await _context.ChiTietDonHang
+                .Include(p=>p.user)
+                .Include(p=>p.phieugiao)
+                .Where(p=>p.Id_PhieuGiao == id) 
+                .ToListAsync();
+            string usergui = "";
+            string usernhan = "";
+            string chuky_gui = "";
+            string chuky_nhan = "";
+            string email_gui = "";
+            string email_nhan = "";
+            string ngay_nhan = "";
+            string ngay_gui = "";
+
+
+            foreach (var item in phieuGiaoHang)
+            {
+                if (item.Id_HinhThuc == "1")
+                {
+                    usergui = item.user.UserName;
+                    chuky_gui = item.chuky;
+                    email_gui = item.user.Email;
+                    ngay_gui = item.Thoigian.ToString("dd/MM/yyyy H:mm", CultureInfo.GetCultureInfo("vi-VN"));
+
+                }else if(item.Id_HinhThuc == "2")
+                {
+                    usernhan = item.user.UserName;
+                    chuky_nhan = item.chuky;
+                    email_nhan = item.user.Email;
+                    ngay_nhan = item.Thoigian.ToString("dd/MM/yyyy H:mm", CultureInfo.GetCultureInfo("vi-VN"));
+                }
+            }
+
+
+            PhieuViewModel phieuView = new PhieuViewModel()
+            {
+                CTphieu = phieuGiaoHang,
+                nguoigui = usergui,
+                nguoinhan = usernhan,
+                chuky_usergui= chuky_gui,
+                chuky_usernhan= chuky_nhan,
+                email_usergui= email_gui,
+                email_usernhan = email_nhan,
+                ngay_usergui= ngay_gui,
+                ngay_usernhan= ngay_nhan,
+            };
+            
             if (phieuGiaoHang == null)
             {
                 return NotFound();
             }
 
-            return View(phieuGiaoHang);
+            return View(phieuView);
         }
 
         // GET: PhieuGiaoHang/Create
