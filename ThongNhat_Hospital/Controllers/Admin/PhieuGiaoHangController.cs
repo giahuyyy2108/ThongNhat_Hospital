@@ -61,14 +61,14 @@ namespace ThongNhat_Hospital.Controllers.Admin
             {
                 if (item.Id_HinhThuc == "1")
                 {
-                    usergui = item.user.UserName;
+                    usergui = item.user.hoten;
                     chuky_gui = item.chuky;
                     email_gui = item.user.Email;
                     ngay_gui = item.Thoigian.ToString("dd/MM/yyyy H:mm", CultureInfo.GetCultureInfo("vi-VN"));
 
                 }else if(item.Id_HinhThuc == "2")
                 {
-                    usernhan = item.user.UserName;
+                    usernhan = item.user.hoten;
                     chuky_nhan = item.chuky;
                     email_nhan = item.user.Email;
                     ngay_nhan = item.Thoigian.ToString("dd/MM/yyyy H:mm", CultureInfo.GetCultureInfo("vi-VN"));

@@ -5,15 +5,18 @@
     ViewData["Title"] = "Log in";
     Layout = "LoginLayout";
 }
-
+<div asp-validation-summary="All" class="text-danger"></div>
 <form method="post" method="post">
     <div class="form-group has-feedback">
         <input type="text" asp-for="Input.EmailOrUserName" class="form-control" placeholder="Email hoặc tài khoản" />
-        @*<span asp-validation-for="Input.Email" class="glyphicon glyphicon-envelope form-control-feedback"></span>*@
+        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+        @*<span asp-validation-for="Input.EmailOrUserName" ></span>*@
     </div>
     <div class="form-group has-feedback">
         <input asp-for="Input.Password" type="password" class="form-control" placeholder="Mật khẩu" />
-        @*<span asp-validation-for="Input.Password" class="glyphicon glyphicon-lock form-control-feedback"></span>*@
+        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+        @*<span asp-validation-for="Input.Password"></span>*@
+        
     </div>
     <div class="row">
         <div class="col-xs-8">

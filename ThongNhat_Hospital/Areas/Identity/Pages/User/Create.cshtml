@@ -22,17 +22,17 @@
                         <h3 class="box-title">Thêm người dùng</h3>
                     </div><!-- /.box-header -->
                     <!-- form start -->
+                    <div asp-validation-summary="All" class="text-danger"></div>
+
                     <form role="form" method="post">
                         <div class="box-body">
                             <div class="form-group">
                                 <label>Email</label>
                                 <input asp-for="Input.Email" class="form-control" placeholder="Email" type="email">
-                                <span asp-validation-for="Input.Email" class="text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <label>Họ và Tên</label>
                                 <input asp-for="Input.Hoten" class="form-control" placeholder="Nhập họ tên">
-                                <span asp-validation-for="Input.Hoten" class="text-danger"></span>
                             </div>
                             @* <div class="form-group">
                             <label >Tên role</label>
