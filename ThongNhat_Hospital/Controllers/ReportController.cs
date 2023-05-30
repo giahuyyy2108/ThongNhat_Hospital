@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using ThongNhat_Hospital.Interface;
 using ThongNhat_Hospital.Models;
 using ThongNhat_Hospital.Models.ViewModel;
@@ -23,9 +25,14 @@ namespace ThongNhat_Hospital.Controllers
 
 
         [HttpGet]
-        public ContentResult GetLoaiHang()
+        public async Task<ContentResult> GetLoaiHang(DateTime? ngayBatDau, DateTime? ngayKetThuc)
         {
-            var listmodel = _service.ThongkeLoaiHang();
+            if (ngayBatDau == null && ngayKetThuc == null)
+            {
+                ngayBatDau = DateTime.Now.AddMonths(-4);
+                ngayKetThuc = DateTime.Now;
+            }
+            var listmodel = await _service.ThongkeLoaiHang((DateTime)ngayBatDau, (DateTime)ngayKetThuc);
 
             List<DataPoint> dataPoints = new List<DataPoint>();
 
