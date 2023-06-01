@@ -99,9 +99,46 @@ namespace ThongNhat_Hospital.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation("User logged in.");
-                    //var user = await 
+                    var user = await _userManager.FindByNameAsync(Input.EmailOrUserName);
+                    if (user != null)
+                    {
+                        var rolename = await _userManager.GetRolesAsync(user);
+                        foreach (var item in rolename)
+                        {
+                            if (item.Equals("admin"))
+                            {
+                                _logger.LogInformation("User logged in.");
+                                return LocalRedirect("/admin/");
+                            }
+                            if (item.Equals("user"))
+                            {
+                                _logger.LogInformation("User logged in.");
+                                return LocalRedirect("/user/");
+                            }
+                        }
+                    }
+                    else
+                    {
+                        var emailuser = await _userManager.FindByEmailAsync(Input.EmailOrUserName);
+                        var user1 = await _userManager.FindByNameAsync(emailuser.UserName);
+                        var rolename2 = await _userManager.GetRolesAsync(user1);
+                        foreach (var item in rolename2)
+                        {
+                            if (item.Equals("admin"))
+                            {
+                                _logger.LogInformation("User logged in.");
+                                return LocalRedirect("/admin/");
+                            }
+                            if (item.Equals("user"))
+                            {
+                                _logger.LogInformation("User logged in.");
+                                return LocalRedirect("/user/");
+                            }
+                        }
+                    }
 
+
+                    _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)

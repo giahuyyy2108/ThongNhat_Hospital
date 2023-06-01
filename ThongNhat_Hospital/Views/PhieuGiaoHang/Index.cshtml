@@ -5,7 +5,6 @@
     Layout = "Admin/_Dashboard";
 }
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap.min.css">
-<script src="~/js/datepicker-vi.js"></script>
 
 <style>
     .box {
@@ -90,8 +89,19 @@
                             </div>
                             <div class="box-item">
                                 <p>Ngày kết thúc:</p>
-                                <input value="@DateTime.Now.AddHours(12).ToString("yyyy-MM-dd")" id="ngayKetThuc" @*type="date"*@ class="form-control" aria-describedby="basic-addon1">
+                                <input value="@DateTime.Now.AddHours(12).ToString("yyyy-MM-dd")" id="ngayKetThuc" type="date" class="form-control" aria-describedby="basic-addon1">
                             </div>
+                            @*<div class="box-item">
+                                <div class="form-group">
+                                    <label>Date and time range:</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-clock-o"></i>
+                                        </div>
+                                        <input type="text" class="form-control pull-right" id="reservationtime"/>
+                                    </div><!-- /.input group -->
+                                  </div><!-- /.form group -->
+                            </div>*@
                             <div class="box-item">
 
                                 <button class="btn btn-primary" style="margin-right: 30px;" onclick="ReloadPage()"><i class="fa fa-eye text-white"></i>&nbsp;Thống kê</button>
@@ -297,19 +307,10 @@
 
     });
 
-
+    //Date range picker with time picker
+    $('#reservationtime').daterangepicker({ timePicker: true, timePickerIncrement: 30, format: 'dd/MM/YYYY h:mm A' z});
 </script>
 
-<script>
-    $(function () {
-        // Reset language
-        $.datepicker.setDefaults($.datepicker.regional["vn"]);
-
-        // Initialize
-        $('#ngayKetThuc').datepicker();
-
-    });
-</script>
 
 
 @*@section scripts {

@@ -1,4 +1,4 @@
-// moment.js
+﻿// moment.js
 // version : 2.1.0
 // author : Tim Wood
 // license : MIT
@@ -39,16 +39,16 @@
         this.applyClass = 'btn-success';
         this.cancelClass = 'btn-default';
 
-        this.format = 'MM/DD/YYYY';
+        this.format = 'dd/MM/YYYY';
         this.separator = ' - ';
 
         this.locale = {
-            applyLabel: 'Apply',
-            cancelLabel: 'Cancel',
-            fromLabel: 'From',
-            toLabel: 'To',
-            weekLabel: 'W',
-            customRangeLabel: 'Custom Range',
+            applyLabel: 'Xác nhận',
+            cancelLabel: 'Hủy',
+            fromLabel: 'Từ',
+            toLabel: 'Đến',
+            weekLabel: 'T',
+            customRangeLabel: 'Chọn ngày',
             daysOfWeek: moment()._lang._weekdaysMin.slice(),
             monthNames: moment()._lang._monthsShort.slice(),
             firstDay: 0
