@@ -1,0 +1,107 @@
+﻿@model ThongNhat_Hospital.Models.CTDH
+
+@{
+    ViewData["Title"] = "Confirm";
+    Layout = "~/Views/Shared/User/_LayoutUser.cshtml";
+}
+<style>
+    .wrapper {
+  position: relative;
+  width: 400px;
+  height: 200px;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+img {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.signature-pad {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width:400px;
+  height:200px;
+}
+</style>
+
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Confirm" id="myform">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <select asp-for="Id_HinhThuc" class="form-control hidden" asp-items="ViewBag.Id_HinhThuc"></select>
+                <span asp-validation-for="Id_HinhThuc" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <select asp-for="Id_PhieuGiao" class="form-control hidden" asp-items="ViewBag.Id_PhieuGiao"></select>
+                <span asp-validation-for="Id_PhieuGiao" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <select asp-for="Id_User" class="form-control hidden" asp-items="ViewBag.Id_User"></select>
+                <span asp-validation-for="Id_User" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Xác nhận</label>
+                <input asp-for="chuky" class="form-control hidden" id="signature-data" />
+                <span asp-validation-for="chuky" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input asp-for="Thoigian" class="form-control hidden" />
+                <span asp-validation-for="Thoigian" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="button" value="Xác nhận" class="btn btn-default" id="save"/>
+                <input type="button" value="Reset" class="btn btn-default" id="clear" />
+            </div>
+        </form>
+        <h1>
+            Ký tên dưới đây
+        </h1>
+        <div class="wrapper">
+            <img src="" width=400 height=200 />
+            <canvas id="signature-pad" class="signature-pad" width=400 height=200></canvas>
+        </div>
+        
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@*@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}*@
+<script>
+    var signaturePad = new SignaturePad(document.getElementById('signature-pad'), {
+        backgroundColor: 'rgba(255, 255, 255, 0)',
+        penColor: 'rgb(0, 0, 0)'
+    });
+    var signatureData = document.getElementById('signature-data');
+    var saveButton = document.getElementById('save');
+    var cancelButton = document.getElementById('clear');
+
+    saveButton.addEventListener('click', function(event) {
+        var data = signaturePad.toDataURL('image/png');
+        console.log(data);
+        signatureData.value=data;
+        if(signaturePad.isEmpty()){
+            alert("Phải ký tên");
+
+        }else{
+            document.getElementById('myform').submit();
+        }
+    });
+
+    cancelButton.addEventListener('click', function(event) {
+        signaturePad.clear();
+});
+</script>

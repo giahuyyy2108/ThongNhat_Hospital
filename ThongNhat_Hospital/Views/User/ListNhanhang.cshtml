@@ -1,0 +1,206 @@
+﻿@model IEnumerable<ThongNhat_Hospital.Models.CTDH>
+@using Microsoft.AspNetCore.Identity
+@using System.Globalization;
+@using ThongNhat_Hospital.Models
+
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/User/_LayoutUser.cshtml";
+}
+
+<h2>Xem đơn hàng trong ngày</h2>
+
+<link href="https://cdn.datatables.net/v/dt/dt-1.13.4/datatables.min.css" rel="stylesheet" />
+
+
+<table class="table table-bordered table-striped" id="table1">
+    <thead>
+        <tr>
+            <th>
+                STT
+            </th>
+            <th>
+                Mã phiếu
+            </th>
+            <th>
+                Xác nhận
+            </th>
+            
+            <th>
+                Cập nhật
+            </th>
+            <th>
+                
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int stt = 1;
+        }
+        @foreach (var item in Model)
+        {
+            @if(item.user.UserName == User.Identity.Name)
+            {
+                @if(item.Id_HinhThuc == "2")
+                {
+                    @if( item.phieugiao.ngaygiao.Date == DateTime.Now.Date )
+                    {
+                        <tr>
+                            <td>
+                                @stt
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.phieugiao.Id)
+                            </td>
+                            
+
+                            @if (item.phieugiao.tinhtrang == 0)
+                            {
+                                <td>
+                                    Chưa xác nhận
+                                </td>
+                                <td>
+
+                                </td>
+                                <td>
+                                <a asp-action="Confirm" asp-route-id="@item.Id">Xác nhận</a>
+                                @*<a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
+                            </td>
+                            }
+                            else
+                            {
+                                <td>
+                                    Đã xác nhận
+                                </td>
+                                <td>
+                                    @item.Thoigian.ToString("dd/MM/yyyy H:mm",CultureInfo.GetCultureInfo("vi-VN"))
+                                </td>
+                                <td>
+                                @*<a asp-action="Confirm" asp-route-id="@item.Id">Xác nhận</a>*@
+                                @*<a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
+                            </td>
+                            }
+                            
+                        </tr>
+                        stt = stt + 1;
+                    }
+                }
+            }
+        }
+    </tbody>
+</table>
+
+
+
+<h2>Xem đơn gửi trong ngày</h2>
+
+
+<table class="table table-bordered table-striped" id="table2">
+    <thead>
+        <tr>
+            <th>
+                STT
+            </th>
+            <th>
+                Mã phiếu
+            </th>
+            <th>
+                Xác nhận
+            </th>
+
+            <th>
+                Ngày lập phiếu
+            </th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int s = 1;
+        }
+        @foreach (var item in Model)
+        {
+            @if (item.user.UserName == User.Identity.Name)
+            {
+                @if (item.Id_HinhThuc == "1")
+                {
+                    @if (item.phieugiao.ngaygiao.Date == DateTime.Now.Date)
+                    {
+                        <tr>
+                            <td>
+                                @s
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.phieugiao.Id)
+                            </td>
+
+
+                            @if (item.phieugiao.tinhtrang == 0)
+                            {
+                                <td>
+                                    Chưa xác nhận
+                                </td>
+                                @*<td>
+                                </td>*@
+                               @* <td>
+                                    <a asp-action="Confirm" asp-route-id="@item.Id">Xác nhận</a>
+                                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                                </td>*@
+                            }
+                            else
+                            {
+                                <td>
+                                    Đã xác nhận
+                                </td>
+                                @*<td>
+                                    @item.Thoigian.ToString("dd/MM/yyyy H:mm",CultureInfo.GetCultureInfo("vi-VN"))
+                                </td>*@
+                                @*<td>
+                                    <a asp-action="Confirm" asp-route-id="@item.Id">Xác nhận</a>
+                                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                                </td>*@
+                            }
+                            <td>
+                                @item.phieugiao.ngaygiao.ToString("dd/MM/yyyy H:mm",CultureInfo.GetCultureInfo("vi-VN"))
+                            </td>
+                        </tr>
+                        s = s + 1;
+                    }
+                }
+            }
+        }
+    </tbody>
+</table>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<script src="https://cdn.datatables.net/1.10.8/js/jquery.dataTables.min.js" defer="defer"></script>
+
+
+<script type="text/javascript">
+
+
+    $(document).ready(function () {
+        $('#table1').DataTable({
+            bPaginate: true
+        })
+
+    });
+    $(document).ready(function () {
+        $('#table2').DataTable({
+            bPaginate: true
+        })
+
+    });
+
+
+</script>
+
+

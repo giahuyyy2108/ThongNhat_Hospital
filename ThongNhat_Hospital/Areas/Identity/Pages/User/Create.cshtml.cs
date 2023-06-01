@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.WebUtilities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
@@ -15,6 +17,8 @@ using static ThongNhat_Hospital.Areas.Identity.Pages.User1.IndexModel;
 
 namespace ThongNhat_Hospital.Areas.Identity.Pages.User1
 {
+    [Authorize(Roles = "admin")]
+
     public class CreateModel : PageModel
     {
         private readonly UserManager<User> _userManager;
@@ -34,7 +38,6 @@ namespace ThongNhat_Hospital.Areas.Identity.Pages.User1
 
         public class InputModel
         {
-            [Display(Name= "Nhập họ tên")]
             [Required(ErrorMessage = "Phải nhập tên {0}")]
             public string Hoten { get; set; }
 
@@ -42,12 +45,12 @@ namespace ThongNhat_Hospital.Areas.Identity.Pages.User1
             //[Required(ErrorMessage = "Phải nhập tên {0}")]
             //public string UserName { get; set; }
 
-            [Display(Name = "Nhập Email")]
-            [Required(ErrorMessage = "Phải nhập tên {0}")]
+            [Required(ErrorMessage = "Phải nhập Email {0}")]
             public string Email { get; set; }
 
         }
         public User user { get; set; }
+
         [BindProperty]
         public InputModel Input { get; set; }
 
@@ -73,17 +76,17 @@ namespace ThongNhat_Hospital.Areas.Identity.Pages.User1
 
         public async Task<IActionResult> OnPostAsync()
         {
-
-            String[] parts = Input.Email.Split(new[] { '@' });
-
-            Random random = new Random();
-
             if (!ModelState.IsValid)
             {
                 return Page();
             }
+            String[] parts = Input.Email.Split(new[] { '@' });
+
+            Random random = new Random();
+
+            
             string mk = GetRandomPassword(9);
-            var user = new User { UserName = parts[0], Email = Input.Email };
+            var user = new User { UserName = parts[0], Email = Input.Email,hoten = Input.Hoten };
             var result = await _userManager.CreateAsync(user,mk);
             if(result.Succeeded)
             {
@@ -95,7 +98,7 @@ namespace ThongNhat_Hospital.Areas.Identity.Pages.User1
                     values: new { area = "Identity", userId = user.Id, code = code},
                     protocol: Request.Scheme);
 
-                await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+                await _emailSender.SendEmailAsync(Input.Email, "Xác nhận Email",
                     $"Hãy xác nhận mail sau để đăng nhập tài khoản <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>Xác nhận</a>.<br>" +
                     $"Tài khoản: {user.UserName}<br>" +
                     $"Mật khẩu: {mk}");

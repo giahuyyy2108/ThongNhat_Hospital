@@ -19,14 +19,17 @@ namespace ThongNhat_Hospital.Areas.Identity.Pages.Account
     public class LoginModel : PageModel
     {
         private readonly UserManager<User> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly SignInManager<User> _signInManager;
         private readonly ILogger<LoginModel> _logger;
 
         public LoginModel(SignInManager<User> signInManager, 
             ILogger<LoginModel> logger,
-            UserManager<User> userManager)
+            UserManager<User> userManager,
+            RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
+            _roleManager = roleManager;
             _signInManager = signInManager;
             _logger = logger;
         }
@@ -43,11 +46,11 @@ namespace ThongNhat_Hospital.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
+            [Required(ErrorMessage ="Phải nhập tên đăng nhập")]
             //[EmailAddress]
             public string EmailOrUserName { get; set; }
 
-            [Required]
+            [Required(ErrorMessage ="Phải nhập mật khẩu")]
             [DataType(DataType.Password)]
             public string Password { get; set; }
 
@@ -96,6 +99,45 @@ namespace ThongNhat_Hospital.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
+                    var user = await _userManager.FindByNameAsync(Input.EmailOrUserName);
+                    if (user != null)
+                    {
+                        var rolename = await _userManager.GetRolesAsync(user);
+                        foreach (var item in rolename)
+                        {
+                            if (item.Equals("admin"))
+                            {
+                                _logger.LogInformation("User logged in.");
+                                return LocalRedirect("/admin/");
+                            }
+                            if (item.Equals("user"))
+                            {
+                                _logger.LogInformation("User logged in.");
+                                return LocalRedirect("/user/");
+                            }
+                        }
+                    }
+                    else
+                    {
+                        var emailuser = await _userManager.FindByEmailAsync(Input.EmailOrUserName);
+                        var user1 = await _userManager.FindByNameAsync(emailuser.UserName);
+                        var rolename2 = await _userManager.GetRolesAsync(user1);
+                        foreach (var item in rolename2)
+                        {
+                            if (item.Equals("admin"))
+                            {
+                                _logger.LogInformation("User logged in.");
+                                return LocalRedirect("/admin/");
+                            }
+                            if (item.Equals("user"))
+                            {
+                                _logger.LogInformation("User logged in.");
+                                return LocalRedirect("/user/");
+                            }
+                        }
+                    }
+
+
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
                 }
@@ -110,7 +152,7 @@ namespace ThongNhat_Hospital.Areas.Identity.Pages.Account
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    ModelState.AddModelError(string.Empty, "Sai thông thông tin đăng nhập hoặc mật khẩu");
                     return Page();
                 }
             }

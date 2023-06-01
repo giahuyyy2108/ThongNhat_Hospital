@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +11,8 @@ using ThongNhat_Hospital.Models;
 
 namespace ThongNhat_Hospital.Controllers.Admin
 {
+    [Authorize(Roles = "admin")]
+
     public class LoaiHangController : Controller
     {
         private readonly DataBaseContext _context;

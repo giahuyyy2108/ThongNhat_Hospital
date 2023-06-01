@@ -11,7 +11,8 @@ using ThongNhat_Hospital.Models;
 
 namespace ThongNhat_Hospital.Areas.Identity.Pages.Account.Manage1
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "admin")]
+
     public class SetPasswordModel : PageModel
     {
         private readonly UserManager<User> _userManager;
@@ -33,14 +34,14 @@ namespace ThongNhat_Hospital.Areas.Identity.Pages.Account.Manage1
 
         public class InputModel
         {
-            [Required]
+            [Required(ErrorMessage ="Phải nhập mật khẩu")]
             [StringLength(100, ErrorMessage = "{0} Phải từ {2} đến {1} ký tự.", MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "Nhập mật khẩu mới")]
             public string NewPassword { get; set; }
 
+            [Required(ErrorMessage = "Phải nhập mật khẩu")]
+
             [DataType(DataType.Password)]
-            [Display(Name = "Xác nhận mật khẩu")]
             [Compare("NewPassword", ErrorMessage = "Mật khẩu xác nhận không trùng khớp.")]
             public string ConfirmPassword { get; set; }
         }

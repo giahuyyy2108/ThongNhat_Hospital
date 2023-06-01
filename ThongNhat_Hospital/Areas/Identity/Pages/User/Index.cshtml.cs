@@ -10,7 +10,8 @@ using ThongNhat_Hospital.Models;
 
 namespace ThongNhat_Hospital.Areas.Identity.Pages.User1
 {
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "admin")]
+
     public class IndexModel : PageModel
     {
 

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ThongNhat_Hospital.Controllers.Admin
 {
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "admin")]
     [Authorize]
     public class AdminController : Controller
     {

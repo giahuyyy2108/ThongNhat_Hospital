@@ -13,7 +13,8 @@ using ThongNhat_Hospital.Models.ViewModel;
 
 namespace ThongNhat_Hospital.Controllers.Admin
 {
-    [Authorize]
+    [Authorize(Roles = "admin")]
+
     public class CTDHController : Controller
     {
         private readonly DataBaseContext _context;
@@ -83,13 +84,13 @@ namespace ThongNhat_Hospital.Controllers.Admin
             cTDH_Giao.Id_User = User.FindFirstValue(ClaimTypes.NameIdentifier);
             cTDH_Giao.Id_HinhThuc = "1";
             cTDH_Giao.chuky = cTDH_Nhan.chuky;
+            cTDH_Giao.Thoigian = DateTime.Now;
 
 
             cTDH_Nhan.Id = Guid.NewGuid().ToString();
             cTDH_Nhan.Id_PhieuGiao = phieugiao.Id;
             cTDH_Nhan.Id_HinhThuc = "2";
             cTDH_Nhan.chuky = null;
-            cTDH_Nhan.Thoigian = DateTime.Now;
 
             if (ModelState.IsValid)
             {

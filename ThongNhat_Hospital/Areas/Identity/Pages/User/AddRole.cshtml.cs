@@ -14,7 +14,7 @@ using ThongNhat_Hospital.Models;
 
 namespace ThongNhat_Hospital.Areas.Identity.Pages.Account.Manage1
 {
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "admin")]
     public class AddRoleModel : PageModel
     {
         private readonly UserManager<User> _userManager;
@@ -31,7 +31,7 @@ namespace ThongNhat_Hospital.Areas.Identity.Pages.Account.Manage1
             _roleManager = roleManager;
         }
 
-      
+
 
         [TempData]
         public string StatusMessage { get; set; }
@@ -39,7 +39,7 @@ namespace ThongNhat_Hospital.Areas.Identity.Pages.Account.Manage1
 
         [BindProperty]
         public string[] Rolename { get; set; }
-       
+
         public User user { get; set; }
 
         public SelectList allRoles { get; set; }
@@ -57,7 +57,7 @@ namespace ThongNhat_Hospital.Areas.Identity.Pages.Account.Manage1
                 return NotFound($"Không thấy user có ID: {id}");
             }
 
-            Rolename= ( await _userManager.GetRolesAsync(user)).ToArray<string>();
+            Rolename = (await _userManager.GetRolesAsync(user)).ToArray<string>();
 
 
             List<string> rolenames = await _roleManager.Roles.Select(x => x.Name).ToListAsync();
@@ -84,12 +84,12 @@ namespace ThongNhat_Hospital.Areas.Identity.Pages.Account.Manage1
 
             var deleteRole = oldRole.Where(r => !Rolename.Contains(r));
 
-            var addRole = Rolename.Where(r=> !oldRole.Contains(r));
+            var addRole = Rolename.Where(r => !oldRole.Contains(r));
 
             List<string> rolenames = await _roleManager.Roles.Select(x => x.Name).ToListAsync();
             allRoles = new SelectList(rolenames);
 
-            var resultDelete= await _userManager.RemoveFromRolesAsync(user,deleteRole);
+            var resultDelete = await _userManager.RemoveFromRolesAsync(user, deleteRole);
             if (!resultDelete.Succeeded)
             {
                 resultDelete.Errors.ToList().ForEach(erro =>

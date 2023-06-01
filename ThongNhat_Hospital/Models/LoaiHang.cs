@@ -12,6 +12,7 @@ namespace ThongNhat_Hospital.Models
         [StringLength(400)]
         public string Id { get; set; }
 
+        [Required(ErrorMessage ="Phải nhập thông tin")]
         [Column(TypeName = "nvarchar")]
         [StringLength(50)]
         public string Name { get; set; }
