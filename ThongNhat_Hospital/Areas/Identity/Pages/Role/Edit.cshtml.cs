@@ -1,13 +1,17 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using ThongNhat_Hospital.Models;
 
 namespace ThongNhat_Hospital.Areas.Identity.Pages.Role
 {
+    [Authorize(Roles = "admin")]
+
     public class EditModel : UserPageModel
     {
         public EditModel(RoleManager<IdentityRole> rolemanager, DataBaseContext context) : base(rolemanager, context)

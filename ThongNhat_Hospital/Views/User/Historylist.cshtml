@@ -1,0 +1,108 @@
+﻿@using System.Globalization;
+@model IEnumerable<ThongNhat_Hospital.Models.CTDH>
+
+@{
+    ViewData["Title"] = "Historylist";
+    Layout = "~/Views/Shared/User/_LayoutUser.cshtml";
+}
+
+<h2>Lịch sử</h2>
+
+<link href="https://cdn.datatables.net/v/dt/dt-1.13.4/datatables.min.css" rel="stylesheet" />
+
+
+<table class="table table-bordered table-striped" id="table1">
+    <thead>
+        <tr>
+            <th>
+                STT
+            </th>
+            <th>
+                Mã phiếu
+            </th>
+            
+            <th>
+                Xác nhận
+            </th>
+
+            <th>
+                Cập nhật
+            </th>
+
+
+            
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int stt = 1;
+        }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @stt
+                </td>
+                @if(item.phieugiao.tinhtrang == 1)
+                {
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item.Id_PhieuGiao">@Html.DisplayFor(modelItem => item.Id_PhieuGiao)</a>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        @Html.DisplayFor(modelItem => item.phieugiao.Id)
+                    </td>
+                }
+                
+
+                @if(item.phieugiao.tinhtrang == 0)
+                {
+                    <td>
+                        Chưa xác nhận
+                    </td>
+                    <td>
+                    </td>
+                                
+                }
+                else
+                {
+                    <td>
+                        Đã xác nhận
+                    </td>
+                    <td>
+                        @item.Thoigian.ToString("dd/MM/yyyy H:mm",CultureInfo.GetCultureInfo("vi-VN"))
+                    </td>
+                                
+                }
+
+            </tr>
+            stt = stt + 1;
+        }
+    </tbody>
+</table>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<script src="https://cdn.datatables.net/1.10.8/js/jquery.dataTables.min.js" defer="defer"></script>
+
+
+<script type="text/javascript">
+
+
+    $(document).ready(function () {
+        $('#table1').DataTable({
+            bPaginate: true
+        })
+
+    });
+    $(document).ready(function () {
+        $('#table2').DataTable({
+            bPaginate: true
+        })
+
+    });
+
+
+</script>
+

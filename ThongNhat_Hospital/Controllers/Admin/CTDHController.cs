@@ -13,7 +13,8 @@ using ThongNhat_Hospital.Models.ViewModel;
 
 namespace ThongNhat_Hospital.Controllers.Admin
 {
-    [Authorize]
+    [Authorize(Roles = "admin")]
+
     public class CTDHController : Controller
     {
         private readonly DataBaseContext _context;

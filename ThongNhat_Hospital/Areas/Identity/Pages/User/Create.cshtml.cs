@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.WebUtilities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
@@ -15,6 +17,8 @@ using static ThongNhat_Hospital.Areas.Identity.Pages.User1.IndexModel;
 
 namespace ThongNhat_Hospital.Areas.Identity.Pages.User1
 {
+    [Authorize(Roles = "admin")]
+
     public class CreateModel : PageModel
     {
         private readonly UserManager<User> _userManager;

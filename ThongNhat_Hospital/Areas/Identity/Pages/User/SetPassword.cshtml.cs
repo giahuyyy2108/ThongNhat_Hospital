@@ -11,7 +11,8 @@ using ThongNhat_Hospital.Models;
 
 namespace ThongNhat_Hospital.Areas.Identity.Pages.Account.Manage1
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "admin")]
+
     public class SetPasswordModel : PageModel
     {
         private readonly UserManager<User> _userManager;

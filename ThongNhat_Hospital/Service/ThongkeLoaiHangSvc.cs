@@ -35,7 +35,7 @@ namespace ThongNhat_Hospital.Service
                 new SqlParameter { ParameterName = "@ngaykethuc", Value= ngayKetThuc },
             };
 
-            var result = await _context.ThongkeViewModel.FromSqlRaw("EXEC GetReportLoaiHangByDate @ngaybatdau,@ngaykethuc", parameter.ToArray()).ToListAsync();
+            var result = await _context.ThongkeViewModel.FromSqlRaw("EXEC GetReportLoaiHangByDate @ngaybatdau, @ngaykethuc", parameter.ToArray()).ToListAsync();
             return result;
             
         }

@@ -27,11 +27,11 @@ namespace ThongNhat_Hospital.Controllers
         [HttpGet]
         public async Task<ContentResult> GetLoaiHang(DateTime? ngayBatDau, DateTime? ngayKetThuc)
         {
-            if (ngayBatDau == null && ngayKetThuc == null)
-            {
-                ngayBatDau = DateTime.Now.AddMonths(-4);
-                ngayKetThuc = DateTime.Now;
-            }
+            //if (ngayBatDau == null && ngayKetThuc == null)
+            //{
+            //    ngayBatDau = DateTime.Now.AddMonths(-4);
+            //    ngayKetThuc = DateTime.Now.AddDays(1);
+            //}
             var listmodel = await _service.ThongkeLoaiHang((DateTime)ngayBatDau, (DateTime)ngayKetThuc);
 
             List<DataPoint> dataPoints = new List<DataPoint>();

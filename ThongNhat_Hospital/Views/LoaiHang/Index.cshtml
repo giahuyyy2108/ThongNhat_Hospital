@@ -92,11 +92,9 @@
     <section class="content">
         <div class="row">
             <div class="col-xs-12">
-
                 <div class="box">
                     <div class="box-header">
                         <h3 class="box-title">Loại hàng</h3>
-
                         <div class="col-md-12 box">
                             <div class="box-item">
                                 <p>Ngày bắt đầu:</p>
@@ -104,7 +102,7 @@
                             </div>
                         <div class="box-item">
                                 <p>Ngày kết thúc:</p>
-                                <input value="@DateTime.Now.ToString("yyyy-MM-dd")" id="ngayKetThuc" type="date" class="form-control"  aria-describedby="basic-addon1">
+                                <input value="@DateTime.Now.AddDays(1).ToString("yyyy-MM-dd")" id="ngayKetThuc" type="date" class="form-control"  aria-describedby="basic-addon1">
                         </div>
                         <div class="box-item">
 
@@ -119,59 +117,54 @@
                             <div class="box-item" style="width: 50%;">
                                       <div id="chartContainer1" style="height: 270px; width: auto;"></div>
                             </div>
-                          
                         </div>
-
-
                         <div class="col-md-12 box" >
-
                             <div class="box-item" style="width: 100%;">
-                            <table class="table table-bordered table-striped" id="table1" style="width:100%">
-                                <thead>
-                                    <tr>
-                                        <td colspan="2">
-                                            <a onclick="showInPopup('@Url.Action("Create","LoaiHang",null,Context.Request.Scheme)','Thêm loại hàng')" class="btn btn-success text-white" style="width: 100%;"><i class="fas fa-add"></i> Thêm loại hàng</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th style="width: 70%;">
-                                            @Html.DisplayNameFor(model => model.Name)
-                                        </th>
-                                        <th>Chức năng</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @{
-                                        int stt = 1;
-                                    }
-                                    
-                                    @foreach (var item in Model)
-                                    {
+                                <table class="table table-bordered table-striped" id="table1" style="width:100%">
+                                    <thead>
                                         <tr>
-                                            <td style="width: 70%;">
-                                                @Html.DisplayFor(modelItem => item.Name)
-                                            </td>
-                                            <td>
-                                                <div style="display:flex; flex-direction:row;">
-                                                    <a onclick="showInPopup('@Url.Action("Edit","LoaiHang",new {id=item.Id},Context.Request.Scheme)','Chỉnh sửa loại hàng')" class="btn btn-info text-white"><i class="fas fa-pencil-alt"></i> Cập nhật</a>
-                                                    <form asp-action="Delete" asp-route-id="@item.Id" onsubmit="return jQueryAjaxDelete(this)" class="d-inline" style="margin-left:10px;">
-                                                        <input type="hidden" asp-for="@item.Id" />
-                                                        <input type="submit" value="Xóa" class="btn btn-danger" />
-                                                    </form>
-                                                </div>
+                                            <td colspan="2">
+                                                <a onclick="showInPopup('@Url.Action("Create","LoaiHang",null,Context.Request.Scheme)','Thêm loại hàng')" class="btn btn-success text-white" style="width: 100%;"><i class="fas fa-add"></i> Thêm loại hàng</a>
                                             </td>
                                         </tr>
-                                        stt = stt + 1;
-                                    }
-                                </tbody>
-                            </table>
+                                        <tr>
+                                            <th style="width: 70%;">
+                                                @Html.DisplayNameFor(model => model.Name)
+                                            </th>
+                                            <th>Chức năng</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{
+                                            int stt = 1;
+                                        }
+                                    
+                                        @foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                <td style="width: 70%;">
+                                                    @Html.DisplayFor(modelItem => item.Name)
+                                                </td>
+                                                <td>
+                                                    <div style="display:flex; flex-direction:row;">
+                                                        <a onclick="showInPopup('@Url.Action("Edit","LoaiHang",new {id=item.Id},Context.Request.Scheme)','Chỉnh sửa loại hàng')" class="btn btn-info text-white"><i class="fas fa-pencil-alt"></i> Cập nhật</a>
+                                                        <form asp-action="Delete" asp-route-id="@item.Id" onsubmit="return jQueryAjaxDelete(this)" class="d-inline" style="margin-left:10px;">
+                                                            <input type="hidden" asp-for="@item.Id" />
+                                                            <input type="submit" value="Xóa" class="btn btn-danger" />
+                                                        </form>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            stt = stt + 1;
+                                        }
+                                    </tbody>
+                                </table>
                             </div>
-                            </div>
-                            </div>
-                    </div><!-- /.box-body -->
-                </div><!-- /.box -->
-            </div><!-- /.col -->
-        </div><!-- /.row -->
+                        </div>
+                    </div>
+                </div><!-- /.box-body -->
+             </div><!-- /.box -->
+        </div><!-- /.col -->
     </section><!-- /.content -->
     <div class="modal" tabindex="-1" role="dialog" id="form-modal">
         <div class="modal-dialog" role="document">

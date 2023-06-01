@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +17,8 @@ using ThongNhat_Hospital.Models.ViewModel;
 
 namespace ThongNhat_Hospital.Controllers.Admin
 {
+    [Authorize(Roles = "admin")]
+
     public class PhieuGiaoHangController : Controller
     {
         private readonly DataBaseContext _context;
@@ -45,6 +48,7 @@ namespace ThongNhat_Hospital.Controllers.Admin
             var phieuGiaoHang = await _context.ChiTietDonHang
                 .Include(p=>p.user)
                 .Include(p=>p.phieugiao)
+                .Include(p =>p.phieugiao.loaihang)
                 .Where(p=>p.Id_PhieuGiao == id) 
                 .ToListAsync();
             string usergui = "";

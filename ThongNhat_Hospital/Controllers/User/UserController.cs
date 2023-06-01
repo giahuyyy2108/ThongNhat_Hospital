@@ -8,9 +8,15 @@ using ThongNhat_Hospital.Models;
 using ThongNhat_Hospital.Models.ViewModel;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
+using System.Collections.Generic;
+using System.Globalization;
 
 namespace ThongNhat_Hospital.Controllers.User1
 {
+    [Authorize(Roles = "admin,user")]
+
     public class UserController : Controller
     {
 
@@ -41,7 +47,7 @@ namespace ThongNhat_Hospital.Controllers.User1
         {
             ViewData["Id_HinhThuc"] = new SelectList(_context.HinhThuc, "Id", "Name");
             ViewData["Id_PhieuGiao"] = new SelectList(_context.PhieuGiaoHang, "Id", "Id");
-            ViewData["Id_User"] = new SelectList(_context.user, "Id", "UserName");
+            ViewData["Id_User"] = new SelectList(_context.user.Where(p=>p.Id != (User.FindFirstValue(ClaimTypes.NameIdentifier))), "Id", "UserName");
             ViewData["Id_LoaiHang"] = new SelectList(_context.LoaiHang, "Id", "Name");
             return View();
         }
@@ -74,6 +80,11 @@ namespace ThongNhat_Hospital.Controllers.User1
             cTDH_Nhan.Id_PhieuGiao = phieugiao.Id;
             cTDH_Nhan.Id_HinhThuc = "2";
             cTDH_Nhan.chuky = null;
+
+            if(cTDH_Nhan.Id_User == cTDH_Giao.Id_User)
+            {
+                ModelState.AddModelError(string.Empty, "Không được gửi cho bản thân");
+            }
 
             if (ModelState.IsValid)
             {
@@ -152,6 +163,84 @@ namespace ThongNhat_Hospital.Controllers.User1
         private bool CTDHExists(string id)
         {
             return _context.ChiTietDonHang.Any(e => e.Id == id);
+        }
+
+
+
+        public async Task<IActionResult> Historylist()
+        {
+            var dataBaseContext = await _context.ChiTietDonHang
+                .Include(p=> p.phieugiao)
+                .Include(p=> p.user)
+                .Where(p=> p.Id_HinhThuc == "2")
+                .ToListAsync();
+            
+
+            return View(dataBaseContext);
+        }
+
+
+        public async Task<IActionResult> Details(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var phieuGiaoHang = await _context.ChiTietDonHang
+                .Include(p => p.user)
+                .Include(p => p.phieugiao)
+                .Where(p => p.Id_PhieuGiao == id)
+                .ToListAsync();
+            string usergui = "";
+            string usernhan = "";
+            string chuky_gui = "";
+            string chuky_nhan = "";
+            string email_gui = "";
+            string email_nhan = "";
+            string ngay_nhan = "";
+            string ngay_gui = "";
+
+
+            foreach (var item in phieuGiaoHang)
+            {
+                if (item.Id_HinhThuc == "1")
+                {
+                    usergui = item.user.hoten;
+                    chuky_gui = item.chuky;
+                    email_gui = item.user.Email;
+                    ngay_gui = item.Thoigian.ToString("dd/MM/yyyy H:mm", CultureInfo.GetCultureInfo("vi-VN"));
+
+                }
+                else if (item.Id_HinhThuc == "2")
+                {
+                    usernhan = item.user.hoten;
+                    chuky_nhan = item.chuky;
+                    email_nhan = item.user.Email;
+                    ngay_nhan = item.Thoigian.ToString("dd/MM/yyyy H:mm", CultureInfo.GetCultureInfo("vi-VN"));
+                }
+            }
+
+
+            PhieuViewModel phieuView = new PhieuViewModel()
+            {
+                CTphieu = phieuGiaoHang,
+                nguoigui = usergui,
+                nguoinhan = usernhan,
+                chuky_usergui = chuky_gui,
+                chuky_usernhan = chuky_nhan,
+                email_usergui = email_gui,
+                email_usernhan = email_nhan,
+                ngay_usergui = ngay_gui,
+                ngay_usernhan = ngay_nhan,
+            };
+
+            if (phieuGiaoHang == null)
+            {
+                return NotFound();
+            }
+
+            return View(phieuView);
         }
     }
 }
