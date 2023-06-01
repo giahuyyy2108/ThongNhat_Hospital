@@ -190,6 +190,7 @@ namespace ThongNhat_Hospital.Controllers.User1
             var phieuGiaoHang = await _context.ChiTietDonHang
                 .Include(p => p.user)
                 .Include(p => p.phieugiao)
+                .Include(p=>p.phieugiao.loaihang)
                 .Where(p => p.Id_PhieuGiao == id)
                 .ToListAsync();
             string usergui = "";

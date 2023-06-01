@@ -24,46 +24,44 @@
         {
             <section class="invoice">
                 <!-- title row -->
-                <div class="row">
-                    <div class="col-xs-12">
-                        <h2 class="page-header">
-                            @*<i class="fa fa-globe"></i> Bệnh viện Thống Nhất.*@
-                            <img src="~/images/bvtn_logo.png" />
-                            <p>Địa chỉ: Số 1 Lý Thường Kiệt, Phường 7, Quận Tân Bình, TP Hồ Chí Minh</p>
-                            <p>Điện thoại: 028 3869 0277    |   Kế Hoạch Tổng Hợp: 028 38642 142   |   Fax: 028 3865 6715</p>
-                            <p>Email: thongnhathospital@bvtn.org.vn</p>
+                <div class="row invoice-info" style="padding-bottom:30px">
+                    <div class="col-xs-7 col-md-7 ">
 
-                        </h2>
-                        <h1>ĐƠN GỬI HÀNG</h1>
+                        <img src="~/images/bvtn_logo.png" style="padding-bottom: 20px;" />
                     </div><!-- /.col -->
+                    <div class="col-xs-5 col-md-5">
+                        <h1><b>ĐƠN GỬI HÀNG</b></h1>
+                        <p>Địa chỉ: Số 1 Lý Thường Kiệt, Phường 7, Quận Tân Bình, TP Hồ Chí Minh</p>
+                        <p>Điện thoại: 028 3869 0277    |   Kế Hoạch Tổng Hợp: 028 38642 142   |   Fax: 028 3865 6715</p>
+                        <p>Email: thongnhathospital@bvtn.org.vn</p>
+                    </div>
                 </div>
                 <!-- info row -->
                 <div class="row invoice-info">
                     <div class="col-sm-4 invoice-col">
                         Người gửi
                         <address>
-                            <strong>@Model.nguoigui</strong><br>
-                            @Model.email_usergui<br>
-                            Ngày giao: @Model.ngay_usergui
+                            <strong>Họ tên</strong> @Model.nguoigui<br>
+                            <strong>Email:</strong> @Model.email_usergui<br>
+                            <strong>Ngày giao:</strong> @Model.ngay_usergui
                         </address>
 
 
                     </div><!-- /.col -->
                     <div class="col-sm-4 invoice-col">
                         Người nhận
-
                         <address>
-                            <strong>@Model.nguoinhan</strong><br>
-                            @Model.email_usernhan<br>
-                            Ngày nhận: @Model.ngay_usernhan
+                            <strong>Họ tên</strong> @Model.nguoinhan<br>
+                            <strong>Email:</strong> @Model.email_usernhan<br>
+                            <strong>Ngày nhận:</strong> @Model.ngay_usernhan
                         </address>
 
                     </div><!-- /.col -->
                     <div class="col-sm-4 invoice-col">
-                        <br />
                         <b>Mã đơn hàng:</b> @item.Id_PhieuGiao.Substring(24)<br />
                         <b>Ngày lập phiếu:</b> @item.phieugiao.ngaygiao.ToString("dd/MM/yyyy H:mm",CultureInfo.GetCultureInfo("vi-VN"))<br />
-                        @*<b>Account:</b> 968-34567*@
+                        <b>Loại hàng:</b> @item.phieugiao.loaihang.Name <br />
+                        <b>Ghi chú:</b> @item.phieugiao.Note
                     </div><!-- /.col -->
                 </div><!-- /.row -->
                 <!-- Table row -->
@@ -72,17 +70,28 @@
                         <table class="table ">
                             <thead>
                                 <tr>
-                                    <th>    Chữ ký người gửi </th>
-                                    <th>    Chữ ký người nhận </th>
+                                    <th style="text-align: center;">    Chữ ký người gửi </th>
+                                    <th></th>
+                                    <th style="text-align: center;">    Chữ ký người nhận </th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td>
-                                        <img src="@Model.chuky_usergui" width=400 height=200 />
+                                        <img src="@Model.chuky_usergui" width=400 height=200 style="display: block; margin-left: auto; margin-right: auto;" />
                                     </td>
+                                    <td></td>
                                     <td>
-                                        <img src="@Model.chuky_usernhan" width=400 height=200 />
+                                        <img src="@Model.chuky_usernhan" width=400 height=200 style="display: block; margin-left: auto; margin-right: auto;" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center">
+                                        <b>@Model.nguoigui</b>
+                                    </td>
+                                    <td></td>
+                                    <td style="text-align:center">
+                                        <b>@Model.nguoinhan</b>
                                     </td>
                                 </tr>
                             </tbody>

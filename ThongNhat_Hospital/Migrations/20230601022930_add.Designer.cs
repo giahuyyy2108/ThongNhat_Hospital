@@ -10,8 +10,8 @@ using ThongNhat_Hospital.Models;
 namespace ThongNhat_Hospital.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    [Migration("20230525064630_init")]
-    partial class init
+    [Migration("20230601022930_add")]
+    partial class add
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -206,6 +206,7 @@ namespace ThongNhat_Hospital.Migrations
                         .HasColumnType("varchar(400)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
@@ -310,6 +311,15 @@ namespace ThongNhat_Hospital.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("ThongNhat_Hospital.Models.ViewModel.ThongkeViewModel", b =>
+                {
+                    b.Property<int>("count")
+                        .HasColumnType("int");
+
+                    b.Property<string>("name")
+                        .HasColumnType("nvarchar(max)");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

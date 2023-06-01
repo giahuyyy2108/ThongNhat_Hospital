@@ -24,20 +24,20 @@
         {
             <section class="invoice">
                 <!-- title row -->
-                <div class="row invoice-info">
+                <div class="row invoice-info" style="padding-bottom:30px">
                     <div class="col-xs-7 col-md-7 ">
                         
                         <img src="~/images/bvtn_logo.png" style="padding-bottom: 20px;" />
                     </div><!-- /.col -->
                     <div class="col-xs-5 col-md-5">
-                        <h1>ĐƠN GỬI HÀNG</h1>
+                        <h1><b>ĐƠN GỬI HÀNG</b></h1>
                         <p>Địa chỉ: Số 1 Lý Thường Kiệt, Phường 7, Quận Tân Bình, TP Hồ Chí Minh</p>
                         <p>Điện thoại: 028 3869 0277    |   Kế Hoạch Tổng Hợp: 028 38642 142   |   Fax: 028 3865 6715</p>
                         <p>Email: thongnhathospital@bvtn.org.vn</p>
                     </div>
                 </div>
                 <!-- info row -->
-                <div class="row invoice-info">
+                <div class="row invoice-info" >
                     <div class="col-sm-4 invoice-col">
                         Người gửi
                         <address>
@@ -83,6 +83,15 @@
                                     <td></td>
                                     <td >
                                         <img src="@Model.chuky_usernhan" width=400 height=200 style="display: block; margin-left: auto; margin-right: auto;" />
+                                    </td>
+                                </tr>
+                                <tr >
+                                    <td style="text-align:center">
+                                        <b>@Model.nguoigui</b>
+                                    </td>
+                                    <td></td>
+                                    <td style="text-align:center">
+                                        <b>@Model.nguoinhan</b>
                                     </td>
                                 </tr>
                             </tbody>
