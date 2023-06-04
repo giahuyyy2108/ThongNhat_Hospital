@@ -10,8 +10,8 @@ using ThongNhat_Hospital.Models;
 namespace ThongNhat_Hospital.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    [Migration("20230601022930_add")]
-    partial class add
+    [Migration("20230602012120_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
