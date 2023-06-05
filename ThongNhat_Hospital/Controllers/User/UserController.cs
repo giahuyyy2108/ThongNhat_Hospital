@@ -172,7 +172,8 @@ namespace ThongNhat_Hospital.Controllers.User1
             var dataBaseContext = await _context.ChiTietDonHang
                 .Include(p=> p.phieugiao)
                 .Include(p=> p.user)
-                .Where(p=> p.Id_HinhThuc == "2")
+                .Include(p=> p.hinhthuc)
+                .Where(p=> p.Id_User == User.FindFirstValue(ClaimTypes.NameIdentifier))
                 .ToListAsync();
             
 
