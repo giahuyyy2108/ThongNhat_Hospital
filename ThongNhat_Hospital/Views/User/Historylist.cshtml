@@ -47,12 +47,12 @@
                 </td>
                 @if(item.phieugiao.tinhtrang == 1)
                 {
-                    @*<td>
-                        <a asp-action="Details" asp-route-id="@item.Id_PhieuGiao">@Html.DisplayFor(modelItem => item.Id_PhieuGiao)</a>
-                    </td>*@
                     <td>
-                        @Html.DisplayFor(modelItem => item.Id_PhieuGiao)
+                        <a asp-action="Details" asp-route-id="@item.Id_PhieuGiao">@Html.DisplayFor(modelItem => item.Id_PhieuGiao)</a>
                     </td>
+                    @*<td>
+                        @Html.DisplayFor(modelItem => item.Id_PhieuGiao)
+                    </td>*@
                 }
                 else
                 {

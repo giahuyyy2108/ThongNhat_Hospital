@@ -41,6 +41,10 @@ namespace ThongNhat_Hospital
 
 
             });
+
+            //Swagger
+
+            services.AddSwaggerGen();
             //Đăng ký Identity 
             //services.AddIdentity<User, IdentityRole>()
             //    .AddEntityFrameworkStores<DataBaseContext>()
@@ -51,7 +55,6 @@ namespace ThongNhat_Hospital
                 .AddEntityFrameworkStores<DataBaseContext>()
                 .AddDefaultTokenProviders();
             
-
 
             // Truy cập IdentityOptions
             services.Configure<IdentityOptions>(options => {
@@ -110,9 +113,11 @@ namespace ThongNhat_Hospital
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
+            //Swagger
+            app.UseSwaggerUI();
 
-
-
+            app.UseSwagger(x => x.SerializeAsV2 = true);
+            //
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
