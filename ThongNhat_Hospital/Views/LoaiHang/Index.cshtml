@@ -15,54 +15,54 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap.min.css">
 <style>
     .box {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background-color: #f8f9fa;
-      padding: 20px;
-      border-radius: 5px;
-      box-shadow: 0 1px 4px rgba(0, 0, 0, .05);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, .05);
     }
 
     .box-item {
-      margin-right: 15px;
+        margin-right: 15px;
     }
 
-    .box-item input.form-control {
-      height: 38px;
-    }
+        .box-item input.form-control {
+            height: 38px;
+        }
 
-    
+
 
     /*.btn-primary:hover {
-      background-color: #0069d9;
-      border-color: #0062cc;
-    }*/
+          background-color: #0069d9;
+          border-color: #0062cc;
+        }*/
 
     .content-wrapper {
-      padding: 20px;
+        padding: 20px;
     }
 
     .table-responsive {
-      overflow-x: auto;
+        overflow-x: auto;
     }
 
     th {
-      text-align: center;
+        text-align: center;
     }
 
     .modal-header {
-      border-bottom: 0 none;
+        border-bottom: 0 none;
     }
 
     .modal-footer {
-      border-top: 0 none;
-      text-align: right;
+        border-top: 0 none;
+        text-align: right;
     }
 
-    .modal-footer button {
-      margin-left: 10px;
-    }
+        .modal-footer button {
+            margin-left: 10px;
+        }
 </style>
 
 @*
@@ -76,10 +76,6 @@
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-
-        
-
-
     </section>
     <!-- Main content -->
     <section class="content">
@@ -91,27 +87,27 @@
                         <div class="col-md-12 box">
                             <div class="box-item">
                                 <p>Ngày bắt đầu:</p>
-                                 <input value="@DateTime.Now.AddDays(-7).ToString("yyyy-MM-dd")" id="ngayBatDau" type="date" class="form-control" aria-describedby="basic-addon1">
+                                <input value="@DateTime.Now.AddDays(-7).ToString("yyyy-MM-dd")" id="ngayBatDau" type="date" class="form-control" aria-describedby="basic-addon1">
                             </div>
-                        <div class="box-item">
+                            <div class="box-item">
                                 <p>Ngày kết thúc:</p>
-                                <input value="@DateTime.Now.AddDays(1).ToString("yyyy-MM-dd")" id="ngayKetThuc" type="date" class="form-control"  aria-describedby="basic-addon1">
-                        </div>
-                        <div class="box-item">
+                                <input value="@DateTime.Now.AddDays(1).ToString("yyyy-MM-dd")" id="ngayKetThuc" type="date" class="form-control" aria-describedby="basic-addon1">
+                            </div>
+                            <div class="box-item">
 
-                            <button class="btn btn-primary" style="margin-right: 30px;" onclick="ReloadPage()"><i class="fa fa-eye text-white"></i>&nbsp;Thống kê</button>
-                             </div>
-                         </div>
-                        <div class="col-md-12 box">
-                            
-                                <div class="box-item" style="width: 50%;">
-                                    <div id="chartContainer" style="height: 270px; width: auto;"></div>
-                                 </div>
-                            <div class="box-item" style="width: 50%;">
-                                      <div id="chartContainer1" style="height: 270px; width: auto;"></div>
+                                <button class="btn btn-primary" style="margin-right: 30px;" onclick="ReloadPage()"><i class="fa fa-eye text-white"></i>&nbsp;Thống kê</button>
                             </div>
                         </div>
-                        <div class="col-md-12 box" >
+                        <div class="col-md-12 box">
+
+                            <div class="box-item" style="width: 50%;">
+                                <div id="chartContainer" style="height: 270px; width: auto;"></div>
+                            </div>
+                            <div class="box-item" style="width: 50%;">
+                                <div id="chartContainer1" style="height: 270px; width: auto;"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 box">
                             <div class="box-item" style="width: 100%;">
                                 <table class="table table-bordered table-striped" id="table1" style="width:100%">
                                     <thead>
@@ -131,7 +127,7 @@
                                         @{
                                             int stt = 1;
                                         }
-                                    
+
                                         @foreach (var item in Model)
                                         {
                                             <tr>
@@ -156,7 +152,7 @@
                         </div>
                     </div>
                 </div><!-- /.box-body -->
-             </div><!-- /.box -->
+            </div><!-- /.box -->
         </div><!-- /.col -->
     </section><!-- /.content -->
     <div class="modal" tabindex="-1" role="dialog" id="form-modal">
@@ -191,18 +187,18 @@
     $(document).ready(function () {
         debugger;
         $('#table1').DataTable({
-            bPaginate:true
+            bPaginate: true
         })
 
     });
 </script>
 
 <script>
-   document.addEventListener("DOMContentLoaded", function() {
-   
-    ReloadPage();
-});
-     function ReloadPage() {
+    document.addEventListener("DOMContentLoaded", function () {
+
+        ReloadPage();
+    });
+    function ReloadPage() {
 
         var dataPoints = [];
 
@@ -215,7 +211,7 @@
                 dataPoints: dataPoints
             }]
         });
-        
+
         var chart1 = new CanvasJS.Chart("chartContainer1", {
             animationEnabled: true,
             theme: "light2", // "light1", "dark1", "dark2"
@@ -225,7 +221,7 @@
                 dataPoints: dataPoints
             }]
         });
-        
+
 
         function addData(dataPoints, data) {
             for (var i = 0; i < data.length; i++) {
