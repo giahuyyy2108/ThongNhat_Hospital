@@ -13,11 +13,11 @@
   -ms-user-select: none;
   user-select: none;
 }
-img {
+/*img {
   position: absolute;
   left: 0;
   top: 0;
-}
+}*/
 
 .signature-pad {
   position: absolute;
@@ -29,8 +29,8 @@ img {
 </style>
 <div class="col-md-12">
     <div class="panel panel-info">
-        <div class="panel-heading">
-            Điền thông tin phiếu giao hàng
+        <div class="panel-heading" style="font-size: x-large; font-weight: bold;">
+            Điền thông tin phiếu nhận tài liệu
         </div>
         <div class="panel-body">
             <form role="form" asp-action="Create" id="myform">
@@ -44,10 +44,16 @@ img {
                     <label>Chữ ký</label>
                     <input asp-for="chuky" class="form-control hidden" id="signature-data"/>
                     <span asp-validation-for="chuky" class="text-danger" ></span>
+                    <input type="button" value="Reset" class="btn btn-primary" id="clear" />
                 </div>
                 <div class="wrapper">
-                    <img src="" width=400 height=200 />
-                    <canvas id="signature-pad" class="signature-pad" width=400 height=200></canvas>
+                    
+                    <img style="background-color:white;  position: absolute; left: 0;top: 0;" width=400 height=200 />
+                        <canvas id="signature-pad" class="signature-pad" width=400 height=200></canvas>
+                    
+                    
+                   
+                    
                 </div>
                 <div class="form-group">
                     <label>Loại hàng</label>
@@ -65,7 +71,7 @@ img {
                     
                     <input asp-for="files[0].filename" class="form-control hidden" id="filename0">
                     <input asp-for="files[0].file" class="form-control hidden" id="filendata0">
-                    <input type="file" id="files0" accept=".pdf" class="form-control" multiple/>
+                    <input type="file" id="files0" accept=".pdf" class="form-control" />
 
                     @*<button id="btndowload1" onclick="dowloadFile()">Dowload</button>*@
                     <input asp-for="files[1].filename" class="form-control hidden" id="filename1">
@@ -82,8 +88,8 @@ img {
                     
                 </div>
 
-                <input type="button" value="Xác nhận" class="btn btn-default" id="save" />
-                <input type="button" value="Reset" class="btn btn-default" id="clear" />
+                <input type="button" value="Xác nhận" class="btn btn-success" id="save" />
+               
 
             </form>
 

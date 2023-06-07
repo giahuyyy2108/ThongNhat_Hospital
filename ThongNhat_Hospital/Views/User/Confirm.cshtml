@@ -14,11 +14,19 @@
   -ms-user-select: none;
   user-select: none;
 }
-img {
+    h3 {
+            font-size: 30px;
+            font-weight: bold;
+            color: #0190df;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #1261b0;
+            margin-bottom: 10px;
+        }
+/*img {
   position: absolute;
   left: 0;
   top: 0;
-}
+}*/
 
 .signature-pad {
   position: absolute;
@@ -29,8 +37,8 @@ img {
 }
 </style>
 
+<h3>Xác nhận phiếu giao tài liệu</h3>
 
-<hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Confirm" id="myform">
@@ -49,7 +57,7 @@ img {
                 <span asp-validation-for="Id_User" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label class="control-label">Xác nhận</label>
+                
                 <input asp-for="chuky" class="form-control hidden" id="signature-data" />
                 <span asp-validation-for="chuky" class="text-danger"></span>
             </div>
@@ -66,7 +74,7 @@ img {
             Ký tên dưới đây
         </h1>
         <div class="wrapper">
-            <img src="" width=400 height=200 />
+            <img style="background-color:white;  position: absolute; left: 0;top: 0;" width=400 height=200 />
             <canvas id="signature-pad" class="signature-pad" width=400 height=200></canvas>
         </div>
         

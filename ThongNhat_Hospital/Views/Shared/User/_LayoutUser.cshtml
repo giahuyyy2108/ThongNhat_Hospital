@@ -1,4 +1,10 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@using ThongNhat_Hospital.Models
+
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
@@ -51,21 +57,21 @@
                     <li>
                          <li class="dropdown user user-menu">
                         <a href="#" class="user-img-div" data-toggle="dropdown">
-                            <img src="dist/img/user2-160x160.jpg" class="img-thumbnail" alt="User Image" />
-                                <div class="inner-text">User</div>
+                            <img src="/images/final.png" class="img-thumbnail" alt="User Image" />
+                            <div class="inner-text">@UserManager.GetUserName(User)</div>
                 </a>
 
                     </li>
 
-
+                    
                     <li>
-                        <a class="active-menu" href="/User/Create"><i class="fa fa-paper-plane"></i>Giao hàng</a>
+                        <a href="/User/Create" id="create-menu"><i class="fa fa-paper-plane"></i>Giao hàng</a>
                     </li>
                     <li>
-                        <a class="menu" href="/User/ListNhanHang"><i class="fa fa-list-alt"></i>Nhận hàng</a>
+                        <a href="/User/ListNhanHang" id="list-menu"><i class="fa fa-list-alt"></i>Nhận hàng</a>
                     </li>
                     <li>
-                        <a class="menu" href="/User/Historylist"><i class="fa fa-history"></i>Xem lịch sử</a>
+                        <a href="/User/Historylist" id="history-menu"><i class="fa fa-history"></i>Xem lịch sử</a>
                     </li>
                    
                 </ul>
@@ -105,6 +111,23 @@
 
 
 </html>
+<script>
+$(document).ready(function() {
+    // Lấy đường dẫn hiện tại
+    var currentUrl = window.location.pathname.toLowerCase();
+    // Lấy ID của menu tương ứng với đường dẫn hiện tại
+    var currentMenuId;
+        if (currentUrl.includes("/User/Create")) {
+        currentMenuId = "create-menu";
+        } else if (currentUrl.includes("/User/ListNhanHang")) {
+        currentMenuId = "list-menu";
+        } else if (currentUrl.includes("/User/Historylist")) {
+        currentMenuId = "history-menu";
+    }
+    // Thêm class active-menu cho menu hiện tại
+    $("#" + currentMenuId).addClass("active-menu");
+});
+</script>
 <script>
 $(document).ready(function() {
     $('.sidebar-toggle').click(function () {
