@@ -9,8 +9,26 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/User/_LayoutUser.cshtml";
 }
+<style>
+    h3{
+        
+        font-size: 30px;
+       font-weight:bold;
+        color: #0190df;
+        
+        padding-bottom: 20px;
+        border-bottom: 2px solid #1261b0;
+        margin-bottom: 10px;
+    }
+    thead{
+        background-color: #1261b0;
+        color:#fff;
 
-<h2>Xem đơn hàng trong ngày</h2>
+        
+
+    }
+</style>
+<h3>Xem đơn nhận tài liệu trong ngày</h3>
 
 <link href="https://cdn.datatables.net/v/dt/dt-1.13.4/datatables.min.css" rel="stylesheet" />
 
@@ -97,7 +115,7 @@
 
 
 
-<h2>Xem đơn gửi trong ngày</h2>
+<h3>Xem đơn gửi tài liệu trong ngày</h3>
 
 
 <table class="table table-bordered table-striped" id="table2">
