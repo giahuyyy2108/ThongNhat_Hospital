@@ -121,7 +121,8 @@ namespace ThongNhat_Hospital.Controllers.User1
             }
             ViewData["Id_HinhThuc"] = new SelectList(_context.HinhThuc, "Id", "Id", cTDH_Nhan.Id_HinhThuc);
             ViewData["Id_PhieuGiao"] = new SelectList(_context.PhieuGiaoHang, "Id", "Id", cTDH_Nhan.Id_PhieuGiao);
-            ViewData["Id_User"] = new SelectList(_context.user, "Id", "Id", cTDH_Nhan.Id_User);
+            ViewData["Id_User"] = new SelectList(_context.user, "Id", "UserName", cTDH_Nhan.Id_User);
+            ViewData["Id_LoaiHang"] = new SelectList(_context.LoaiHang, "Id", "Name");
             return View(cTDH_Nhan);
         }
         public async Task<IActionResult> Confirm(string id)

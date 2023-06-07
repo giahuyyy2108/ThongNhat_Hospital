@@ -12,6 +12,7 @@ namespace ThongNhat_Hospital.Models
         public string Id { get; set; }
         public string Id_HinhThuc { get; set; }
         public string Id_PhieuGiao { get; set; }
+        [Required(ErrorMessage = "Phải chọn người nhận")]
         public string Id_User { get; set; }
         public string chuky { set; get; }
 

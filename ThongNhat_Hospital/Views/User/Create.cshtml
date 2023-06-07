@@ -37,7 +37,8 @@
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
                     <label>Người dùng:</label>
-                    <select asp-for="Id_User" class="form-control" asp-items="ViewBag.Id_User"></select>
+                    <select asp-for="Id_User" class="form-control" asp-items="ViewBag.Id_User" id="userid"></select>
+                    <span asp-validation-for="Id_User" class="text-danger"></span>
                 </div>
 
                 <div class="form-group">
@@ -58,6 +59,7 @@
                 <div class="form-group">
                     <label>Loại hàng</label>
                     <select asp-for="id_LoaiHang" class="form-control" asp-items="ViewBag.Id_LoaiHang"></select>
+                    <span asp-validation-for="id_LoaiHang" class="text-danger"></span>
                 </div>
 
                 <div class="form-group">
@@ -203,6 +205,7 @@
     
     saveButton.addEventListener('click', function (event) {
         var data = signaturePad.toDataURL('image/png');
+        var user = document.getElementById('userid');
         console.log(data);
         signatureData.value = data;
         if (signaturePad.isEmpty()) {
@@ -217,3 +220,4 @@
         signaturePad.clear();
     });
 </script>
+<partial name="_ValidationScriptsPartial" />

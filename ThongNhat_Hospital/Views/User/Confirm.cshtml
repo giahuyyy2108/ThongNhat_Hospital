@@ -65,12 +65,13 @@
             {
                 foreach (var item in ViewData["File"] as List<ChiTietHang>)
                 {
-                            <tr>
-                                <td style="font-family:Verdana; font-size:12px;">@item.filename</td>
-                                <td style="font-family:Verdana; font-size:12px;">
-                                    <button id="btndowload1" onclick="dowloadFile('@item.file','@item.filename')">Tải</button>
-                                    </td>
-                            </tr>
+                    <tr>
+                        <td style="font-family:Verdana; font-size:12px;">@item.filename</td>
+                        <td style="font-family:Verdana; font-size:12px;">
+                            <button id="btndowload1" onclick="dowloadFile('@item.file','@item.filename')">Tải</button>
+                                    <button onclick="abc('@item.file')" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Xem</button>
+                        </td>
+                    </tr>
                 }
             }
         }
@@ -121,6 +122,23 @@
         
     </div>
 </div>
+<!-- Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    @*<div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Modal Header</h4>
+                    </div>*@
+                    <div class="modal-body">
+                        <iframe frameborder="0" id="frame1" height="700" width="870"></iframe>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
 
 
@@ -165,5 +183,8 @@
 
     function dowloadFile(data, filename) {
         DowloadPDF(data, filename);
+    }
+    function abc(data1) {
+        document.getElementById("frame1").src = data1;
     }
 </script>
