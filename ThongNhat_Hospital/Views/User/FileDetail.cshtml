@@ -4,17 +4,31 @@
     ViewData["Title"] = "FileDetail";
     Layout = "~/Views/Shared/User/_LayoutUser.cshtml";
 }
+<style>
+    h3 {
+        font-size: 30px;
+        font-weight: bold;
+        color: #0190df;
+        padding-bottom: 20px;
+        border-bottom: 2px solid #1261b0;
+        margin-bottom: 10px;
+    }
 
-<h2>FileDetail</h2>
+    thead {
+        background-color: #1261b0;
+        color: #fff;
+    }
+</style>
+<h3>File đính kèm</h3>
 
-<table class="table">
+<table class="table table-bordered table-striped">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.filename)
+            <th style="font-family:Verdana; font-size:14px; font-weight:bold; width:70%;">
+                Tên file
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.file)
+            <th style="font-family:Verdana; font-size:14px; font-weight:bold; width:30%;">
+                Thao tác
             </th>
             
         </tr>
@@ -27,8 +41,8 @@
             </td>
             <td>
                 @*<input class="form-control hidden" id="@item.id;" value="@Html.DisplayFor(modelItem => item.file)">*@
-                <button id="btndowload1" onclick="dowloadFile('@item.file','@item.filename')">Dowload</button>
-                <button onclick="abc('@item.file')" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Large Modal</button>
+                <button class="btn btn-primary" id="btndowload1" onclick="dowloadFile('@item.file','@item.filename')">Tải</button>
+                <button onclick="abc('@item.file')" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Xem</button>
             </td>
 
   

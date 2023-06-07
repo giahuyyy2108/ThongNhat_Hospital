@@ -48,13 +48,13 @@
         color: #fff;
     }
 </style>
-<h3> Danh sách file nhận</h3>
+<h3> Danh sách file đính kèm</h3>
 <div class="col-md-12">
     <table class="table table-bordered table-striped">
     <thead>
     <tr>
         <td style="font-family:Verdana; font-size:14px; font-weight:bold; width:70%;">Tên File</td>
-        <td style="font-family:Verdana; font-size:14px; font-weight:bold; width:20%;">Xem</td>
+        <td style="font-family:Verdana; font-size:14px; font-weight:bold; width:20%;">Thao tác</td>
     </tr>
     </thead>
     <tbody>
@@ -68,8 +68,8 @@
                     <tr>
                         <td style="font-family:Verdana; font-size:12px;">@item.filename</td>
                         <td style="font-family:Verdana; font-size:12px;">
-                            <button id="btndowload1" onclick="dowloadFile('@item.file','@item.filename')">Tải</button>
-                                    <button onclick="abc('@item.file')" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Xem</button>
+                            <button class="btn btn-primary" id="btndowload1" onclick="dowloadFile('@item.file','@item.filename')">Tải</button>
+                                    <button  onclick="abc('@item.file')" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Xem</button>
                         </td>
                     </tr>
                 }
