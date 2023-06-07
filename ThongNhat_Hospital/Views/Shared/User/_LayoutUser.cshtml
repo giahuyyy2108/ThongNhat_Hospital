@@ -16,28 +16,31 @@
     <!-- GOOGLE FONTS-->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
 </head>
+<style>
+    #page-wrapper {
+    min-height: 900px;
+    }
+    .active-menu {
+        background-color: #1c558e!important;
+    }
+</style>
 <body>
     <div id="wrapper">
-        <nav class="navbar navbar-default navbar-cls-top " role="navigation" style="margin-bottom: 0; background-color: #fff;">
-            <div class="navbar-header" style="background-color: #fff;">
+        <nav class="navbar navbar-default navbar-cls-top " role="navigation" style="margin-bottom: 0; background-color: #1261b0;">
+            <div class="navbar-header" style="background-color: #1261b0;">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <img src="https://th.bing.com/th/id/OIP.fbzJVyOIFpnuOH-_9S0E8AAAAA?pid=ImgDet&rs=1" class="brand" style="width:260px ; background-color: aliceblue;" />
-                
+                <img src="/images/bvtn_logoo.png" class="brand" style="width:260px ; background-color: #1c558e;" />
+                <a href="#" class="sidebar-toogle" data-toggle="offcanvas" role="button">
+                    <span class="sr-only">Toggle navigation</span>
+                </a>
             </div>
 
             <div class="header-right pull-right">
-@*               <p style="color: black; font-size:13px; "> BỆNH VIỆN THỐNG NHẤT<br />
-Địa chỉ: Số 1 Lý Thường Kiệt, Phường 7, Quận Tân Bình, TP Hồ Chí Minh<br />
-
-Điện thoại: 028 3869 0277 | Kế Hoạch Tổng Hợp: 028 38642 142 | Fax: 028 3865 6715<br />
-
-Email: thongnhathospital@bvtn.org.vn </p>*@
-
             </div> 
         </nav>
         <!-- /. NAV TOP  -->
@@ -55,13 +58,13 @@ Email: thongnhathospital@bvtn.org.vn </p>*@
 
 
                     <li>
-                        <a class="active-menu" href="/User/Create"><i class="fas fa-circle-o"></i>Giao hàng</a>
+                        <a class="active-menu" href="/User/Create"><i class="fa fa-paper-plane"></i>Giao hàng</a>
                     </li>
                     <li>
-                        <a class="menu" href="/User/ListNhanHang"><i class="fas fa-circle-o"></i>Nhận hàng</a>
+                        <a class="menu" href="/User/ListNhanHang"><i class="fa fa-list-alt"></i>Nhận hàng</a>
                     </li>
                     <li>
-                        <a class="menu" href="/User/Historylist"><i class="fas fa-circle-o"></i>Xem lịch sử</a>
+                        <a class="menu" href="/User/Historylist"><i class="fa fa-history"></i>Xem lịch sử</a>
                     </li>
                    
                 </ul>
@@ -79,77 +82,12 @@ Email: thongnhathospital@bvtn.org.vn </p>*@
 
                     </div>
                 </div>
-                <!-- /. ROW  -->
-                <div class="row">
-                    <div class="col-md-4">
-                        
-                    </div>
-                    <div class="col-md-4">
-                        
-                    </div>
-                    <div class="col-md-4">
-                        
-                        </div>
-                    </div>
-
                 </div>
-                <!-- /. ROW  -->
-
-                <div class="row">
-                    <div class="col-md-8">
-                        <div class="row">
-                            <div class="col-md-12">
-
-                                
-                                    <!--INDICATORS-->
-                                  
-                                    <!--PREVIUS-NEXT BUTTONS-->
-
-                                </div>
-
-                            </div>
-
-                        </div>
-                        <!-- /. ROW  -->
-                        <hr />
-
-                        <div class="panel panel-default">
-
-                            
-
-                                
-                                <!--INDICATORS-->
-                               
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /.REVIEWS &  SLIDESHOW  -->
-                   
-                    <!--/.Chat Panel End-->
-                </div>
-                <!-- /. ROW  -->
-
-
-                
-                <!--/.Row-->
-              
-                
-                    
-                </div>
-                <!--/.Row-->
-             
-              
-                <!--/.ROW-->
-
-            </div>
-            <!-- /. PAGE INNER  -->
         </div>
-        <!-- /. PAGE WRAPPER  -->
-    </div>
-    <!-- /. WRAPPER  -->
+</body>
 
-    <div id="footer-sec">
-        &copy; 2014 YourCompany | Design By : <a href="http://www.binarytheme.com/" target="_blank">BinaryTheme.com</a>
+<div id="footer-sec">
+    &copy; 2023 - Double H - Vũ Quốc Gia Huy & Mã Phúc Huy
     </div>
     <!-- /. FOOTER  -->
     <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
@@ -164,6 +102,16 @@ Email: thongnhathospital@bvtn.org.vn </p>*@
     
    
 
-</body>
-</html>
 
+</html>
+<script>
+$(document).ready(function() {
+    $('.sidebar-toggle').click(function () {
+        if ($('#wrapper').hasClass('toggled')) {
+            $('#wrapper').removeClass('toggled');
+        } else {
+            $('#wrapper').addClass('toggled');
+        }
+    });
+});
+</script>
