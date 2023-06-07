@@ -28,7 +28,7 @@ namespace ThongNhat_Hospital.Models
 
         public ICollection<CTDH> CTDH { get; set; }
 
+        public ICollection<ChiTietHang> ChiTietHang { get; set; }
 
-        
     }
 }

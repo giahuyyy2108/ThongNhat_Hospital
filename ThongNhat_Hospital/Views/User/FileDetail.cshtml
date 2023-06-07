@@ -1,0 +1,55 @@
+﻿@model IEnumerable<ThongNhat_Hospital.Models.ChiTietHang>
+
+@{
+    ViewData["Title"] = "FileDetail";
+    Layout = "~/Views/Shared/User/_LayoutUser.cshtml";
+}
+
+<h2>FileDetail</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.filename)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.file)
+            </th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.filename)
+            </td>
+            <td>
+                @*<input class="form-control hidden" id="@item.id;" value="@Html.DisplayFor(modelItem => item.file)">*@
+                <button id="btndowload1" onclick="dowloadFile('@item.file','@item.filename')">Dowload</button>
+            </td>
+           
+           
+        </tr>
+}
+    </tbody>
+</table>
+<script type="text/javascript">
+    function DowloadPDF(data,filename){
+        const link = data;
+        const dowloadlink = document.createElement('a');
+        const filename1 = filename;
+
+        dowloadlink.href = link;
+        dowloadlink.download = filename1;
+        dowloadlink.click();
+    }
+
+    function dowloadFile(data, filename) {
+        DowloadPDF(data, filename);
+    }
+</script>
