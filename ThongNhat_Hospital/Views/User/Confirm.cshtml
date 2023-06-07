@@ -35,13 +35,29 @@
   width:400px;
   height:200px;
 }
+    h3 {
+            font-size: 30px;
+            font-weight: bold;
+            color: #0190df;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #1261b0;
+            margin-bottom: 10px;
+        }
+    thead {
+        background-color: #1261b0;
+        color: #fff;
+    }
 </style>
-
-<table>
+<h3> Danh sách file nhận</h3>
+<div class="col-md-12">
+    <table class="table table-bordered table-striped">
+    <thead>
     <tr>
-        <td style="font-family:Verdana; font-size:14px; font-weight:bold;">File</td>
-        <td style="font-family:Verdana; font-size:14px; font-weight:bold;">Xem</td>
+        <td style="font-family:Verdana; font-size:14px; font-weight:bold; width:70%;">Tên File</td>
+        <td style="font-family:Verdana; font-size:14px; font-weight:bold; width:20%;">Xem</td>
     </tr>
+    </thead>
+    <tbody>
     @{
         if (ViewData["File"] != null)
         {
@@ -49,17 +65,19 @@
             {
                 foreach (var item in ViewData["File"] as List<ChiTietHang>)
                 {
-                    <tr>
-                        <td style="font-family:Verdana; font-size:12px;">@item.filename</td>
-                        <td style="font-family:Verdana; font-size:12px;">
-                            <button id="btndowload1" onclick="dowloadFile('@item.file','@item.filename')">Tải</button>
-                            </td>
-                    </tr>
+                            <tr>
+                                <td style="font-family:Verdana; font-size:12px;">@item.filename</td>
+                                <td style="font-family:Verdana; font-size:12px;">
+                                    <button id="btndowload1" onclick="dowloadFile('@item.file','@item.filename')">Tải</button>
+                                    </td>
+                            </tr>
                 }
             }
         }
     }
+    </tbody>
 </table>
+</div>
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Confirm" id="myform">
@@ -81,30 +99,30 @@
                 
                 <input asp-for="chuky" class="form-control hidden" id="signature-data" />
                 <span asp-validation-for="chuky" class="text-danger"></span>
+                
             </div>
             <div class="form-group">
                 <input asp-for="Thoigian" class="form-control hidden" />
                 <span asp-validation-for="Thoigian" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="button" value="Xác nhận" class="btn btn-default" id="save"/>
-                <input type="button" value="Reset" class="btn btn-default" id="clear" />
-            </div>
+            
         </form>
-        <h1>
-            Ký tên dưới đây
-        </h1>
+        <h5>
+            Ký tên để xác nhận đơn hàng <input type="button" value="Reset" class="btn btn-primary" id="clear" />
+        </h5>
         <div class="wrapper">
             <img style="background-color:white;  position: absolute; left: 0;top: 0;" width=400 height=200 />
             <canvas id="signature-pad" class="signature-pad" width=400 height=200></canvas>
+        </div>
+        <div class="form-group">
+            <input type="button" value="Xác nhận" class="btn btn-success" id="save" />
+
         </div>
         
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
 
 @*@section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
