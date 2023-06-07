@@ -158,17 +158,21 @@
                                                         <td>
                                                             Chưa hoàn thành
                                                         </td>
+                                                        <td>
+
+                                                        </td>
                                                     }
                                                     else
                                                     {
                                                         <td>
                                                             Hoàn thành
                                                         </td>
+                                                        <td>
+                                                            <a asp-action="Details" asp-route-id="@item.Id">Chi Tiết</a> @*|*@
+                                                            @*<a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
+                                                        </td>
                                                     }
-                                                    <td>
-                                                        <a asp-action="Details" asp-route-id="@item.Id">Chi Tiết</a> @*|*@
-                                                        @*<a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
-                                                    </td>
+                                                    
                                                 </tr>
                                             }
                                         </tbody>
