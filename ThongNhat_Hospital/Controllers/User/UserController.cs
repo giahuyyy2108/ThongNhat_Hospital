@@ -131,7 +131,8 @@ namespace ThongNhat_Hospital.Controllers.User1
                 return NotFound();
             }
 
-            var cTDH = await _context.ChiTietDonHang.FindAsync(id);
+            var cTDH = await _context.ChiTietDonHang
+                .FindAsync(id);
             if (cTDH == null)
             {
                 return NotFound();
@@ -139,6 +140,10 @@ namespace ThongNhat_Hospital.Controllers.User1
             ViewData["Id_HinhThuc"] = new SelectList(_context.HinhThuc, "Id", "Name", cTDH.Id_HinhThuc);
             ViewData["Id_PhieuGiao"] = new SelectList(_context.PhieuGiaoHang, "Id", "Id", cTDH.Id_PhieuGiao);
             ViewData["Id_User"] = new SelectList(_context.user, "Id", "UserName", cTDH.Id_User);
+            List<ChiTietHang> listcth = await _context.ChiTietHang
+                                                .Where(p => p.Id_PhieuGiao == cTDH.Id_PhieuGiao)
+                                                .ToListAsync();
+            ViewData["File"] = listcth;
             return View(cTDH);
         }
 

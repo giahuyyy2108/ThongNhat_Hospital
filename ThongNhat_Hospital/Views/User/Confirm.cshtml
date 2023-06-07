@@ -29,7 +29,29 @@ img {
 }
 </style>
 
-
+<table>
+    <tr>
+        <td style="font-family:Verdana; font-size:14px; font-weight:bold;">File</td>
+        <td style="font-family:Verdana; font-size:14px; font-weight:bold;">Xem</td>
+    </tr>
+    @{
+        if (ViewData["File"] != null)
+        {
+            if (ViewData.Values != null && ViewData.Values.Count() > 0)
+            {
+                foreach (var item in ViewData["File"] as List<ChiTietHang>)
+                {
+                    <tr>
+                        <td style="font-family:Verdana; font-size:12px;">@item.filename</td>
+                        <td style="font-family:Verdana; font-size:12px;">
+                            <button id="btndowload1" onclick="dowloadFile('@item.file','@item.filename')">Tải</button>
+                            </td>
+                    </tr>
+                }
+            }
+        }
+    }
+</table>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -104,4 +126,19 @@ img {
     cancelButton.addEventListener('click', function(event) {
         signaturePad.clear();
 });
+</script>
+<script type="text/javascript">
+    function DowloadPDF(data, filename) {
+        const link = data;
+        const dowloadlink = document.createElement('a');
+        const filename1 = filename;
+
+        dowloadlink.href = link;
+        dowloadlink.download = filename1;
+        dowloadlink.click();
+    }
+
+    function dowloadFile(data, filename) {
+        DowloadPDF(data, filename);
+    }
 </script>
