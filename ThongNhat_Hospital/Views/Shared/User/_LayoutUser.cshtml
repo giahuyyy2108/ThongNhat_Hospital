@@ -31,9 +31,54 @@
     .active-menu {
         background-color: #1c558e!important;
     }
+
+    .preloaderBg {
+        position: fixed;
+        z-index: 10;
+        top: 0;
+        background: #fff;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+    }
+
+    .preloader {
+        margin: auto;
+        background: url('/images/bvtn_logo.png') no-repeat center;
+        background-size: 200px;
+        width: 400px;
+        height: 800px;
+    }
+
+
+    .preloader2 {
+        border: 5px solid #f3f3f3;
+        border-top: 5px solid #008ee0;
+        border-radius: 50%;
+        width: 250px;
+        height: 250px;
+        animation: spin 1s ease-in-out infinite;
+        position: relative;
+        margin: auto;
+        top: -520px;
+    }
+
+    @@keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
 </style>
 <body>
     <div id="wrapper">
+        <div class="preloaderBg" id="preloader" onload="preloader()">
+            <div class="preloader"></div>
+            <div class="preloader2"></div>
+        </div>
         <nav class="navbar navbar-default navbar-cls-top " role="navigation" style="margin-bottom: 0; background-color: #1261b0;">
             <div class="navbar-header" style="background-color: #1261b0;">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
@@ -101,6 +146,7 @@
                 </div>
                 </div>
         </div>
+        </d
 </body>
 
 <div id="footer-sec">
@@ -139,6 +185,14 @@ $(document).ready(function() {
 });
 </script>
 <script>
+
+
+    setTimeout(function () {
+        document.getElementById("preloader").style.display = "none";
+    }, 1000);
+</script>
+<script>
+
 $(document).ready(function() {
     $('.sidebar-toggle').click(function () {
         if ($('#wrapper').hasClass('toggled')) {
