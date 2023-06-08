@@ -1,7 +1,7 @@
 ﻿@using System.Globalization;
 @model IEnumerable<ThongNhat_Hospital.Models.PhieuGiaoHang>
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Đơn hàng";
     Layout = "Admin/_Dashboard";
 }
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap.min.css">
@@ -99,85 +99,85 @@
                         </div>
                         <div class="col-md-12">
                             
-                                <div class="box-item" style="width:100%">
-                                    <table class="table table-bordered table-striped" id="table1" style="width:100%">
-                                        <thead>
+                            <div class="box-item" style="width:100%">
+                                <table class="table table-bordered table-striped" id="table1" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                STT
+                                            </th>
+                                            <th>
+                                                Số phiếu
+                                            </th>
+                                            <th>
+                                                Ngày
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.Note)
+                                            </th>
+                                            <th>
+                                                Loại hàng
+                                            </th>
+                                            <th>
+                                                Tình trạng
+                                            </th>
+                                            <th>
+
+                                            </th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{
+                                            int stt = 1;
+                                        }
+                                        @foreach (var item in Model)
+                                        {
                                             <tr>
-                                                <th>
-                                                    STT
-                                                </th>
-                                                <th>
-                                                    Số phiếu
-                                                </th>
-                                                <th>
-                                                    Ngày
-                                                </th>
-                                                <th>
-                                                    @Html.DisplayNameFor(model => model.Note)
-                                                </th>
-                                                <th>
-                                                    Loại hàng
-                                                </th>
-                                                <th>
-                                                    Tình trạng
-                                                </th>
-                                                <th>
+                                                <td>
+                                                    @stt
+                                                </td>
+                                                @{
+                                                    stt += 1;
+                                                }
+                                                <td>
+                                                    <a asp-action="Edit" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Id)</a>
+                                                </td>
+                                                <td>
+                                                    @item.ngaygiao.ToString("dd/MM/yyyy H:mm",CultureInfo.GetCultureInfo("vi-VN"))
+                                                    @*@Html.DisplayFor(modelItem => item.ngaygiao)*@
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Note)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.loaihang.Name)
+                                                </td>
+                                                @if (item.tinhtrang == 0)
+                                                {
+                                                    <td>
+                                                        Chưa hoàn thành
+                                                    </td>
+                                                    <td>
 
-                                                </th>
-
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @{
-                                                int stt = 1;
-                                            }
-                                            @foreach (var item in Model)
-                                            {
-                                                <tr>
-                                                    <td>
-                                                        @stt
                                                     </td>
-                                                    @{
-                                                        stt += 1;
-                                                    }
+                                                }
+                                                else
+                                                {
                                                     <td>
-                                                        <a asp-action="Edit" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Id)</a>
+                                                        Hoàn thành
                                                     </td>
                                                     <td>
-                                                        @item.ngaygiao.ToString("dd/MM/yyyy H:mm",CultureInfo.GetCultureInfo("vi-VN"))
-                                                        @*@Html.DisplayFor(modelItem => item.ngaygiao)*@
+                                                        <a asp-action="Details" asp-route-id="@item.Id">Chi Tiết</a> @*|*@
+                                                        @*<a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
                                                     </td>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.Note)
-                                                    </td>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.loaihang.Name)
-                                                    </td>
-                                                    @if (item.tinhtrang == 0)
-                                                    {
-                                                        <td>
-                                                            Chưa hoàn thành
-                                                        </td>
-                                                        <td>
-
-                                                        </td>
-                                                    }
-                                                    else
-                                                    {
-                                                        <td>
-                                                            Hoàn thành
-                                                        </td>
-                                                        <td>
-                                                            <a asp-action="Details" asp-route-id="@item.Id">Chi Tiết</a> @*|*@
-                                                            @*<a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
-                                                        </td>
-                                                    }
+                                                }
                                                     
-                                                </tr>
-                                            }
-                                        </tbody>
-                                    </table>
-                                </div><!-- /.box-body -->
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div><!-- /.box-body -->
                            
                         </div><!-- /.col -->
                     </div>

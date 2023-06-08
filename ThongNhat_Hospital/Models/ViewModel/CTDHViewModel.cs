@@ -7,6 +7,7 @@ namespace ThongNhat_Hospital.Models.ViewModel
 {
     public class CTDHViewModel : CTDH 
     {
+        [Required(ErrorMessage ="Phải chọn loại hàng")]
         public string id_LoaiHang { get; set; }
 
         public string note { get; set; }
