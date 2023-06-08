@@ -121,20 +121,23 @@
         </div><!-- /.row -->
     </section><!-- /.content -->
 
-
-<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-
-<script src="https://cdn.datatables.net/1.10.8/js/jquery.dataTables.min.js" defer="defer"></script>
+</div>
 
 
+@section Scripts {
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 
-<script type="text/javascript">
-    $(document).ready(function () {
-        debugger;
-        $('#table1').DataTable({
-            bPaginate:true
-        })
+    <script src="https://cdn.datatables.net/1.10.8/js/jquery.dataTables.min.js" defer="defer"></script>
+    
+    <script type="text/javascript">
+        $(document).ready(function () {
+            debugger;
+            $('#table1').DataTable({
+                bPaginate:true
+            })
 
-    });
-</script>
+        });
+    </script>
+
+}
 

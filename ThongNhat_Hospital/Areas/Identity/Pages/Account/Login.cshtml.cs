@@ -113,7 +113,7 @@ namespace ThongNhat_Hospital.Areas.Identity.Pages.Account
                             if (item.Equals("user"))
                             {
                                 _logger.LogInformation("User logged in.");
-                                return LocalRedirect("/user/");
+                                return LocalRedirect("/user/ListNhanHang");
                             }
                         }
                     }

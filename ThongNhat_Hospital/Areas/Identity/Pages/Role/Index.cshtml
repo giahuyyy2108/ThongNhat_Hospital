@@ -84,17 +84,20 @@
 </div><!-- /.content-wrapper -->
 
 <!-- page script -->
-<script type="text/javascript">
-    $(function () {
-        $("#example1").dataTable();
-        $('#example2').dataTable({
-            "bPaginate": true,
-            "bLengthChange": false,
-            "bFilter": false,
-            "bSort": true,
-            "bInfo": true,
-            "bAutoWidth": false
+@section scripts{
+        <script type="text/javascript">
+        $(function () {
+            $("#example13").dataTable();
+            $('#example1').dataTable({
+                "bPaginate": true,
+                "bLengthChange": false,
+                "bFilter": false,
+                "bSort": true,
+                "bInfo": true,
+                "bAutoWidth": false
+            });
         });
-    });
-</script>
+    </script>
+}
+
 

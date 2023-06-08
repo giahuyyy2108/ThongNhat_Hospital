@@ -37,7 +37,9 @@
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
                     <label>Người dùng:</label>
-                    <select asp-for="Id_User" class="form-control" asp-items="ViewBag.Id_User" id="userid"></select>
+                    <select asp-for="Id_User" class="form-control" asp-items="ViewBag.Id_User" id="userid" >
+                        <option value="">--Chọn người dùng--</option>
+                    </select>
                     <span asp-validation-for="Id_User" class="text-danger"></span>
                 </div>
 
@@ -53,12 +55,12 @@
                         <canvas id="signature-pad" class="signature-pad" width=400 height=200></canvas>
                     
                     
-                   
-                    
                 </div>
                 <div class="form-group">
                     <label>Loại hàng</label>
-                    <select asp-for="id_LoaiHang" class="form-control" asp-items="ViewBag.Id_LoaiHang"></select>
+                    <select asp-for="id_LoaiHang" class="form-control" asp-items="ViewBag.Id_LoaiHang">
+                        <option value="">--Chọn loại hàng--</option>
+                    </select>
                     <span asp-validation-for="id_LoaiHang" class="text-danger"></span>
                 </div>
 
@@ -69,24 +71,22 @@
                 </div>
                 <div class="form-group">
                     <label>File</label>
-                    @*<span asp-validation-for="abc" class="text-danger"></span>*@
                     
                     <input asp-for="files[0].filename" class="form-control hidden" id="filename0">
                     <input asp-for="files[0].file" class="form-control hidden" id="filendata0">
-                    <input type="file" id="files0" accept=".pdf" class="form-control" />
+                    <input type="file" id="files0" accept=".pdf" />
 
-                    @*<button id="btndowload1" onclick="dowloadFile()">Dowload</button>*@
                     <input asp-for="files[1].filename" class="form-control hidden" id="filename1">
                     <input asp-for="files[1].file" class="form-control hidden" id="filendata1">
-                    <input type="file" id="files1" accept=".pdf" class="form-control" />
+                    <input type="file" id="files1" accept=".pdf" />
 
                     <input asp-for="files[2].filename" class="form-control hidden" id="filename2">
                     <input asp-for="files[2].file" class="form-control hidden" id="filendata2">
-                    <input type="file" id="files2" accept=".pdf" class="form-control" />
+                    <input type="file" id="files2" accept=".pdf"/>
 
                     <input asp-for="files[3].filename" class="form-control hidden" id="filename3">
                     <input asp-for="files[3].file" class="form-control hidden" id="filendata3">
-                    <input type="file" id="files3" accept=".pdf" class="form-control" />
+                    <input type="file" id="files3" accept=".pdf"/>
                     
                 </div>
 

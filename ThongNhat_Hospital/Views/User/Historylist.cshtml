@@ -64,8 +64,9 @@
                 @if(item.phieugiao.tinhtrang == 1)
                 {
                     <td>
-                        <a asp-action="FileDetail" asp-route-id="@item.Id_PhieuGiao">@Html.DisplayFor(modelItem => item.Id_PhieuGiao)</a>
+                        <a asp-action="Details" asp-route-id="@item.Id_PhieuGiao">@Html.DisplayFor(modelItem => item.Id_PhieuGiao)</a>
                     </td>
+                    
                     @*<td>
                         @Html.DisplayFor(modelItem => item.Id_PhieuGiao)
                     </td>*@
@@ -87,6 +88,8 @@
                     </td>
                     <td>
                     </td>
+                    <td>
+                    </td>
                                 
                 }
                 else
@@ -97,11 +100,12 @@
                     <td>
                         @item.Thoigian.ToString("dd/MM/yyyy H:mm",CultureInfo.GetCultureInfo("vi-VN"))
                     </td>
+                    <td>
+                        <a asp-action="FileDetail" asp-route-id="@item.Id_PhieuGiao">Xem</a>
+                    </td>
                                 
                 }
-                <td>
-                    <a asp-action="Details" asp-route-id="@item.Id_PhieuGiao">Xem</a>
-                </td>
+                
             </tr>
             stt = stt + 1;
         }
