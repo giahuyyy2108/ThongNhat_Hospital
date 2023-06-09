@@ -86,20 +86,30 @@
 </div><!-- /.content-wrapper -->
 
 <!-- page script -->
-@section scripts{
-        <script type="text/javascript">
-        $(function () {
-            $("#example13").dataTable();
-            $('#example1').dataTable({
-                "bPaginate": true,
-                "bLengthChange": false,
-                "bFilter": false,
-                "bSort": true,
-                "bInfo": true,
-                "bAutoWidth": false
-            });
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <!--datatable-->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+
+    <script src="https://cdn.datatables.net/1.10.8/js/jquery.dataTables.min.js" defer="defer"></script>
+
+
+<script type="text/javascript">
+    $(function () {
+        $("#example13").dataTable();
+        $('#example1').dataTable({
+            "bPaginate": true,
+            "bLengthChange": false,
+            "bFilter": false,
+            "bSort": true,
+            "bInfo": true,
+            "bAutoWidth": false
         });
-    </script>
-}
+    });
+</script>
+
 
 

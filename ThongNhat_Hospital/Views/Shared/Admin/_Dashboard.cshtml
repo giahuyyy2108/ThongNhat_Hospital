@@ -366,9 +366,9 @@
                 <!-- /.search form -->
                 <!-- sidebar menu: : style can be found in sidebar.less -->
                 <ul class="sidebar-menu">
-                    <li class="header">Dashboard</li>
+                    <li class="header">Người dùng</li>
 
-                    <li class="treeview active">
+                    @*<li class="treeview">
                         <a href="#">
                             <i class="fa fa-edit"></i> <span>Quản lý người dùng</span> <i class="fa fa-angle-left pull-right"></i>
                         </a>
@@ -377,15 +377,27 @@
                             <li><a href="/admin/role"><i class="fa fa-circle-o"></i> Role</a></li>
 
                         </ul>
+                    </li>*@
+                    <li class="treeview ">
+                        <a href="/admin/user">
+                            <i class="fa fa-table"></i> <span>Người dùng</span>
+                        </a>
+
                     </li>
-                    <li class="treeview">
+                    <li class="treeview ">
+                        <a href="/admin/role">
+                            <i class="fa fa-table"></i> <span>Role</span>
+                        </a>
+
+                    </li>
+                    <li class="treeview ">
                         <a href="/LoaiHang/Index">
                             <i class="fa fa-table"></i> <span>Loại hàng</span>
                         </a>
 
                     </li>
                    
-                    <li class="treeview">
+                    <li class="treeview ">
                         <a href="/PhieuGiaoHang/Index">
                             <i class="fa fa-table"></i> <span>Đơn hàng</span>
                         </a>
@@ -395,6 +407,7 @@
             </section>
             <!-- /.sidebar -->
         </aside>
+       
         
       @RenderBody()
         
@@ -406,6 +419,15 @@
       </footer>
     </div><!-- ./wrapper -->
     <!-- jQuery 2.1.3 -->
+
+    <script>
+        $(document).ready(function() {
+        $('.sidebar-menu').find('[href="' + window.location.pathname + '"]').parent().addClass('active');
+
+
+    }); 
+    </script>
+
     <script src="/plugins/jQuery/jQuery-2.1.3.min.js"></script>
     <!-- jQuery UI 1.11.2 -->
     <script src="http://code.jquery.com/ui/1.11.2/jquery-ui.min.js" type="text/javascript"></script>
@@ -446,6 +468,9 @@
     <!-- AdminLTE for demo purposes -->
     <script src="/dist/js/demo.js" type="text/javascript"></script>
 
+
+
+
     @await RenderSectionAsync("Scripts", required: false)
   </body>
 
@@ -455,5 +480,8 @@
     setTimeout(function () {
         document.getElementById("preloader").style.display = "none";
     }, 1000);
+
+    
   </script>
+
 </html>
