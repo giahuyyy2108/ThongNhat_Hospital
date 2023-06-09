@@ -33,7 +33,7 @@
 <link href="https://cdn.datatables.net/v/dt/dt-1.13.4/datatables.min.css" rel="stylesheet" />
 
 
-<table class="table table-bordered table-striped" id="table1">
+<table class="table table-bordered table-striped" id="table1" style="width:100%">
     <thead>
         <tr>
             <th>
@@ -118,7 +118,7 @@
 <h3>Xem đơn gửi tài liệu trong ngày</h3>
 
 
-<table class="table table-bordered table-striped" id="table2">
+<table class="table table-bordered table-striped" id="table2" style="width:100%">
     <thead>
         <tr>
             <th>
@@ -207,7 +207,8 @@
 
     $(document).ready(function () {
         $('#table1').DataTable({
-            bPaginate: true
+            bPaginate: true,
+            responsive: true
             
         })
 
@@ -215,6 +216,7 @@
     $(document).ready(function () {
         $('#table2').DataTable({
             bPaginate: true,
+            responsive: true
         })
 
     });
