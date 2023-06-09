@@ -12,64 +12,6 @@
     ViewData["Title"] = "Loại hàng";
     Layout = "~/Views/Shared/Admin/_Dashboard.cshtml";
 }
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap.min.css">
-<style>
-    .box {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background-color: #f8f9fa;
-        padding: 20px;
-        border-radius: 5px;
-        box-shadow: 0 1px 4px rgba(0, 0, 0, .05);
-    }
-
-    .box-item {
-        margin-right: 15px;
-    }
-
-        .box-item input.form-control {
-            height: 38px;
-        }
-
-
-
-    /*.btn-primary:hover {
-          background-color: #0069d9;
-          border-color: #0062cc;
-        }*/
-
-    .content-wrapper {
-        padding: 20px;
-    }
-
-    .table-responsive {
-        overflow-x: auto;
-    }
-
-    th {
-        text-align: center;
-    }
-
-    .modal-header {
-        border-bottom: 0 none;
-    }
-
-    .modal-footer {
-        border-top: 0 none;
-        text-align: right;
-    }
-
-        .modal-footer button {
-            margin-left: 10px;
-        }
-</style>
-
-@*
-<p>
-    <a asp-action="Create">Create New</a>
-</p>*@
-
 
 
 <!-- Right side column. Contains the navbar and content of the page -->
@@ -83,74 +25,64 @@
             <div class="col-xs-12">
                 <div class="box">
                     <div class="box-header">
+
+                    </div>
+                     <div class="box-body">
                         <h3 class="box-title">Loại hàng</h3>
-                        <div class="col-md-12 box">
-                            <div class="box-item">
-                                <p>Ngày bắt đầu:</p>
-                                <input value="@DateTime.Now.AddDays(-7).ToString("yyyy-MM-dd")" id="ngayBatDau" type="date" class="form-control" aria-describedby="basic-addon1">
-                            </div>
-                            <div class="box-item">
-                                <p>Ngày kết thúc:</p>
-                                <input value="@DateTime.Now.AddDays(1).ToString("yyyy-MM-dd")" id="ngayKetThuc" type="date" class="form-control" aria-describedby="basic-addon1">
-                            </div>
-                            <div class="box-item">
-
-                                <button class="btn btn-primary" style="margin-right: 30px;" onclick="ReloadPage()"><i class="fa fa-eye text-white"></i>&nbsp;Thống kê</button>
-                            </div>
+                        <div class="box-item" style="margin:10px">
+                            <p>Ngày bắt đầu:</p>
+                            <input value="@DateTime.Now.AddDays(-7).ToString("yyyy-MM-dd")" id="ngayBatDau" type="date" class="form-control" aria-describedby="basic-addon1">
+                            <p>Ngày kết thúc:</p>
+                            <input value="@DateTime.Now.AddDays(1).ToString("yyyy-MM-dd")" id="ngayKetThuc" type="date" class="form-control" aria-describedby="basic-addon1">
+                            <button class="btn btn-primary" style="margin-right: 30px;" onclick="ReloadPage()"><i class="fa fa-eye text-white"></i>&nbsp;Thống kê</button>
                         </div>
-                        <div class="col-md-12 box">
-
-                            <div class="box-item" style="width: 50%;">
-                                <div id="chartContainer" style="height: 270px; width: auto;"></div>
-                            </div>
-                            <div class="box-item" style="width: 50%;">
-                                <div id="chartContainer1" style="height: 270px; width: auto;"></div>
-                            </div>
+                        <div class="box-item" style="width: 100%; display:flex;">
+                            <div id="chartContainer" style="height: 270px; width: 50%;"></div>
+                            <div id="chartContainer1" style="height: 270px; width: 50%;"></div>
                         </div>
-                        <div class="col-md-12 box">
-                            <div class="box-item" style="width: 100%;">
-                                <table class="table table-bordered table-striped" id="table1" style="width:100%">
-                                    <thead>
+
+                        <div class="box-item" style="width: 100%;">
+                            <table class="table table-bordered table-striped" id="table1" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <td colspan="2">
+                                            <a onclick="showInPopup('@Url.Action("Create","LoaiHang",null,Context.Request.Scheme)','Thêm loại hàng')" class="btn btn-block btn-primary" style="width: 100%;"><i class="fas fa-add"></i> Thêm loại hàng</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th style="width: 70%;">
+                                            @Html.DisplayNameFor(model => model.Name)
+                                        </th>
+                                        <th>Chức năng</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        int stt = 1;
+                                    }
+
+                                    @foreach (var item in Model)
+                                    {
                                         <tr>
-                                            <td colspan="2">
-                                                <a onclick="showInPopup('@Url.Action("Create","LoaiHang",null,Context.Request.Scheme)','Thêm loại hàng')" class="btn btn-block btn-primary" style="width: 100%;"><i class="fas fa-add"></i> Thêm loại hàng</a>
+                                            <td style="width: 70%;">
+                                                @Html.DisplayFor(modelItem => item.Name)
+                                            </td>
+                                            <td>
+                                                <div style="display:flex; flex-direction:row;">
+                                                    <a onclick="showInPopup('@Url.Action("Edit","LoaiHang",new {id=item.Id},Context.Request.Scheme)','Chỉnh sửa loại hàng')" class="btn btn-success btn-sm"><i class="fas fa-pencil-alt"></i> Cập nhật</a>
+                                                    <form asp-action="Delete" asp-route-id="@item.Id" onsubmit="return jQueryAjaxDelete(this)" class="d-inline" style="margin-left:10px;">
+                                                        <input type="hidden" asp-for="@item.Id" />
+                                                        <input type="submit" value="Xóa" class="btn btn-danger " />
+                                                    </form>
+                                                </div>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <th style="width: 70%;">
-                                                @Html.DisplayNameFor(model => model.Name)
-                                            </th>
-                                            <th>Chức năng</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @{
-                                            int stt = 1;
-                                        }
-
-                                        @foreach (var item in Model)
-                                        {
-                                            <tr>
-                                                <td style="width: 70%;">
-                                                    @Html.DisplayFor(modelItem => item.Name)
-                                                </td>
-                                                <td>
-                                                    <div style="display:flex; flex-direction:row;">
-                                                        <a onclick="showInPopup('@Url.Action("Edit","LoaiHang",new {id=item.Id},Context.Request.Scheme)','Chỉnh sửa loại hàng')" class="btn btn-success btn-sm"><i class="fas fa-pencil-alt"></i> Cập nhật</a>
-                                                        <form asp-action="Delete" asp-route-id="@item.Id" onsubmit="return jQueryAjaxDelete(this)" class="d-inline" style="margin-left:10px;">
-                                                            <input type="hidden" asp-for="@item.Id" />
-                                                            <input type="submit" value="Xóa" class="btn btn-danger " />
-                                                        </form>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            stt = stt + 1;
-                                        }
-                                    </tbody>
-                                </table>
-                            </div>
+                                        stt = stt + 1;
+                                    }
+                                </tbody>
+                            </table>
                         </div>
-                    </div>
+                     </div>
                 </div><!-- /.box-body -->
             </div><!-- /.box -->
         </div><!-- /.col -->
@@ -174,23 +106,34 @@
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>
-<!--datatable-->
-<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 
-<script src="https://cdn.datatables.net/1.10.8/js/jquery.dataTables.min.js" defer="defer"></script>
 
 <!--Canvas chart-->
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
 
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js" defer="defer"></script>
+
+<script src="https://cdn.datatables.net/rowreorder/1.3.3/js/dataTables.rowReorder.min.js" defer="defer"></script>
+
+<script src="https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js" defer="defer"></script>
+
+
 <script type="text/javascript">
+
     $(document).ready(function () {
-        debugger;
         $('#table1').DataTable({
+            rowReorder: {
+            selector: 'td:nth-child(2)'
+            },
+            responsive: true,
             bPaginate: true
         })
 
     });
+
 </script>
 
 <script>
