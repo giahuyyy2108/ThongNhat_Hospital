@@ -33,12 +33,10 @@
 <link href="https://cdn.datatables.net/v/dt/dt-1.13.4/datatables.min.css" rel="stylesheet" />
 
 
-<table class="table table-bordered table-striped" id="table1" style="width:100%">
+<table class="table table-bordered table-striped" id="table1" style="max-width:100%;height:auto;">
     <thead>
         <tr>
-            <th>
-                STT
-            </th>
+            
             <th>
                 Mã phiếu
             </th>
@@ -67,11 +65,9 @@
                     @if( item.phieugiao.ngaygiao.Date == DateTime.Now.Date )
                     {
                         <tr>
+                            
                             <td>
-                                @stt
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.phieugiao.Id)
+                                @item.phieugiao.Id.Substring(24)
                             </td>
                             
 
@@ -95,7 +91,7 @@
                                     Đã xác nhận
                                 </td>
                                 <td>
-                                    @item.Thoigian.ToString("dd/MM/yyyy H:mm",CultureInfo.GetCultureInfo("vi-VN"))
+                                    @item.Thoigian.ToString("H:mm",CultureInfo.GetCultureInfo("vi-VN"))
                                 </td>
                                 <td>
                                 @*<a asp-action="Confirm" asp-route-id="@item.Id">Xác nhận</a>*@
@@ -122,9 +118,6 @@
     <thead>
         <tr>
             <th>
-                STT
-            </th>
-            <th>
                 Mã phiếu
             </th>
             <th>
@@ -150,11 +143,9 @@
                     @if (item.phieugiao.ngaygiao.Date == DateTime.Now.Date)
                     {
                         <tr>
+                            
                             <td>
-                                @s
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.phieugiao.Id)
+                                @item.phieugiao.Id.Substring(24)
                             </td>
 
 
@@ -186,10 +177,9 @@
                                 </td>*@
                             }
                             <td>
-                                @item.phieugiao.ngaygiao.ToString("dd/MM/yyyy H:mm",CultureInfo.GetCultureInfo("vi-VN"))
+                                @item.phieugiao.ngaygiao.ToString("H:mm",CultureInfo.GetCultureInfo("vi-VN"))
                             </td>
                         </tr>
-                        s = s + 1;
                     }
                 }
             }

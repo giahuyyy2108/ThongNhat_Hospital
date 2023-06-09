@@ -19,13 +19,13 @@
   top: 0;
 }*/
 
-.signature-pad {
+/*.signature-pad {
   position: absolute;
   left: 0;
   top: 0;
   width:400px;
   height:200px;
-}
+}*/
 </style>
 <div class="col-md-12">
     <div class="panel panel-info">
@@ -49,12 +49,9 @@
                     <span asp-validation-for="chuky" class="text-danger" ></span>
                     <input type="button" value="Reset" class="btn btn-primary" id="clear" />
                 </div>
-                <div class="wrapper">
-                    
-                    <img style="background-color:white;  position: absolute; left: 0;top: 0;" width=400 height=200 />
-                        <canvas id="signature-pad" class="signature-pad" width=400 height=200></canvas>
-                    
-                    
+                <div >
+                    <img style="background-color:white;  position: absolute; left: 0;top: 0;max-width:100%;height:auto;"/>
+                    <canvas id="signature-pad" class="signature-pad" style="max-width:100%;height:auto;border-style:ridge;border-color:black; "></canvas>
                 </div>
                 <div class="form-group">
                     <label>Loại hàng</label>

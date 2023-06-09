@@ -25,7 +25,7 @@
 <link href="https://cdn.datatables.net/v/dt/dt-1.13.4/datatables.min.css" rel="stylesheet" />
 
 
-<table class="table table-bordered table-striped" id="table1" style="width:100%">
+<table class="table table-bordered table-striped" id="table1" style="max-width:100%;height:auto;">
     <thead>
         <tr>
             <th>
@@ -64,7 +64,9 @@
                 @if(item.phieugiao.tinhtrang == 1)
                 {
                     <td>
-                        <a asp-action="Details" asp-route-id="@item.Id_PhieuGiao">@Html.DisplayFor(modelItem => item.Id_PhieuGiao)</a>
+                        <a asp-action="Details" asp-route-id="@item.Id_PhieuGiao">
+                            @item.phieugiao.Id.Substring(24)
+                        </a>
                     </td>
                     
                     @*<td>
@@ -74,7 +76,7 @@
                 else
                 {
                     <td>
-                        @Html.DisplayFor(modelItem => item.phieugiao.Id)
+                        @item.phieugiao.Id.Substring(24)
                     </td>
                 }
                 
@@ -98,7 +100,7 @@
                         Đã xác nhận
                     </td>
                     <td>
-                        @item.Thoigian.ToString("dd/MM/yyyy H:mm",CultureInfo.GetCultureInfo("vi-VN"))
+                        @item.Thoigian.ToString("dd/MM/yyyy HH:mm",CultureInfo.GetCultureInfo("vi-VN"))
                     </td>
                     <td>
                         <a asp-action="FileDetail" asp-route-id="@item.Id_PhieuGiao">Xem</a>
@@ -111,29 +113,22 @@
         }
     </tbody>
 </table>
+
+
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 
 <script src="https://cdn.datatables.net/1.10.8/js/jquery.dataTables.min.js" defer="defer"></script>
 
-
 <script type="text/javascript">
-
 
     $(document).ready(function () {
         $('#table1').DataTable({
-           responsive: true
-            bPaginate: true
-        })
-
-    });
-    $(document).ready(function () {
-        $('#table2').DataTable({
+            bPaginate: true,
             responsive: true
-            bPaginate: true
+            
         })
 
     });
-
 
 </script>
 

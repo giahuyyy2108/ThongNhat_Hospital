@@ -22,19 +22,8 @@
             border-bottom: 2px solid #1261b0;
             margin-bottom: 10px;
         }
-/*img {
-  position: absolute;
-  left: 0;
-  top: 0;
-}*/
 
-.signature-pad {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width:400px;
-  height:200px;
-}
+
     h3 {
             font-size: 30px;
             font-weight: bold;
@@ -113,9 +102,9 @@
         <h5>
             Ký tên để xác nhận đơn hàng <input type="button" value="Reset" class="btn btn-primary" id="clear" />
         </h5>
-        <div class="wrapper">
-            <img style="background-color:white;  position: absolute; left: 0;top: 0;" width=400 height=200 />
-            <canvas id="signature-pad" class="signature-pad" width=400 height=200></canvas>
+        <div>
+            <img style="background-color:white;  position: absolute; left: 0;top: 0;max-width:100%;height:auto;" />
+            <canvas id="signature-pad" class="signature-pad" style="max-width:100%;height:auto;border-style:ridge;border-color:black; "></canvas>
         </div>
         <div class="form-group">
             <input type="button" value="Xác nhận" class="btn btn-success" id="save" />
