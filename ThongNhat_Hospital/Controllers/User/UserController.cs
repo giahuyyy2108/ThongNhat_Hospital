@@ -19,7 +19,7 @@ namespace ThongNhat_Hospital.Controllers.User1
 
     public class UserController : Controller
     {
-
+        
         private readonly DataBaseContext _context;
         private readonly UserManager<User> _userManager;
         
@@ -36,6 +36,40 @@ namespace ThongNhat_Hospital.Controllers.User1
                                             .Include(c => c.phieugiao)
                                             .Include(c => c.user);
             return View(await dataBaseContext.ToListAsync());
+        }
+
+
+        public ActionResult GetListNhanhang()
+        {
+            var dataBaseContext = _context.ChiTietDonHang
+                                            .Include(c => c.hinhthuc)
+                                            .Include(c => c.phieugiao)
+                                            .Where(c=>c.user.UserName == User.Identity.Name)
+                                            .Where(c=>c.Id_HinhThuc == "2")
+                                            .Where(c=>c.phieugiao.ngaygiao.Date == DateTime.Now.Date)
+                                            .ToList();
+            int stt = 1;
+            List<DonNhanTrongNgayViewModel> list = new List<DonNhanTrongNgayViewModel>();
+            foreach (var item in dataBaseContext)
+            {
+                DonNhanTrongNgayViewModel don = new DonNhanTrongNgayViewModel();
+                don.Id = stt;
+                stt++;
+                don.Id_Phieu = item.phieugiao.Id;
+                if(item.phieugiao.tinhtrang == 0)
+                {
+                    don.trangthai = "Chưa xác nhận";
+                }
+                else
+                {
+                    don.trangthai = "Đã xác nhận";
+                    don.capnhat = item.Thoigian.ToString("dd/MM/yyyy", CultureInfo.GetCultureInfo("vi-VN"));
+                }
+                don.id_CT = item.Id;
+                list.Add(don);
+            }
+
+            return Json(new {data = list }, new Newtonsoft.Json.JsonSerializerSettings());
         }
 
         public IActionResult Index()
@@ -117,7 +151,7 @@ namespace ThongNhat_Hospital.Controllers.User1
                 _context.Add(cTDH_Giao);
                 _context.Add(cTDH_Nhan);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return LocalRedirect("/user/ListNhanHang");
             }
             ViewData["Id_HinhThuc"] = new SelectList(_context.HinhThuc, "Id", "Id", cTDH_Nhan.Id_HinhThuc);
             ViewData["Id_PhieuGiao"] = new SelectList(_context.PhieuGiaoHang, "Id", "Id", cTDH_Nhan.Id_PhieuGiao);
@@ -198,16 +232,56 @@ namespace ThongNhat_Hospital.Controllers.User1
 
 
 
-        public async Task<IActionResult> Historylist()
+        public ActionResult Historylist()
+        {
+            return View();
+        }
+        public async Task<IActionResult> GetHistorylist()
         {
             var dataBaseContext = await _context.ChiTietDonHang
-                .Include(p=> p.phieugiao)
-                .Include(p=> p.user)
-                .Include(p=> p.hinhthuc)
-                .Where(p=> p.Id_User == User.FindFirstValue(ClaimTypes.NameIdentifier))
+                .Include(p => p.phieugiao)
+                .Include(p => p.user)
+                .Include(p => p.hinhthuc)
+                .Where(p => p.Id_User == User.FindFirstValue(ClaimTypes.NameIdentifier))
                 .ToListAsync();
-            
 
+            int stt = 1;
+            List<HistoryViewModel> history = new List<HistoryViewModel>();
+            foreach (var item in dataBaseContext)
+            {
+                HistoryViewModel model = new HistoryViewModel();
+                model.stt = stt;
+                stt++;
+                model.id_phieu = item.Id_PhieuGiao;
+                if (item.hinhthuc.Id == "1")
+                {
+                    model.hinhthuc = "Giao Hàng";
+                } else
+                {
+                    model.hinhthuc = "Nhận hàng";
+                }
+                if (item.phieugiao.tinhtrang == 0)
+                {
+                    model.trangthai = "Chưa hoàn thành";
+                }
+                else
+                {
+                    model.trangthai = "Hoàn thành";
+                    model.capnhat = item.Thoigian.ToString("dd/MM/yyyy - HH:mm", CultureInfo.GetCultureInfo("vi-VN"));
+                }
+                model.id_CT = item.Id_PhieuGiao;
+                history.Add(model);
+            }
+            return Json(new {data = history }, new Newtonsoft.Json.JsonSerializerSettings());
+        }
+
+        public async Task<IActionResult> FileDetail(string id)
+        {
+            var dataBaseContext = await _context.ChiTietHang
+                .Include(p => p.phieugiao)
+                .Include(p => p.phieugiao.ChiTietHang)
+                .Where(p => p.Id_PhieuGiao == id)
+                .ToListAsync();
             return View(dataBaseContext);
         }
 

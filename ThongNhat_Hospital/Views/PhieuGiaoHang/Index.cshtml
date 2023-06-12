@@ -23,24 +23,69 @@
             <div class="col-xs-12">
                 <div class="box">
                     <div class="box-header">
+                        <h3 class="box-title">Đơn hàng</h3>
+                        <div class="col-md-12 box">
+                            <div class="box-item">
+                                <p>Ngày bắt đầu:</p>
+                                <input value="@DateTime.Now.AddDays(-7).ToString("yyyy-MM-dd")" id="ngayBatDau" type="date" class="form-control" aria-describedby="basic-addon1">
+                            </div>
+                            <div class="box-item">
+                                <p>Ngày kết thúc:</p>
+                                <input value="@DateTime.Now.AddHours(12).ToString("yyyy-MM-dd")" id="ngayKetThuc" type="date" class="form-control" aria-describedby="basic-addon1">
+                            </div>
+                            @*<div class="box-item">
+                                <div class="form-group">
+                                    <label>Date and time range:</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-clock-o"></i>
+                                        </div>
+                                        <input type="text" class="form-control pull-right" id="reservationtime"/>
+                                    </div><!-- /.input group -->
+                                  </div><!-- /.form group -->
+                            </div>*@
+                            <div class="box-item">
+
+                                <button class="btn btn-primary" style="margin-right: 30px;" onclick="ReloadPage()"><i class="fa fa-eye text-white"></i>&nbsp;Thống kê</button>
+                            </div>
+                        </div>
+                        <div class="col-md-12 box">
+
+                            <div class="box-item" style="width: 50%;">
+                                <div id="chartContainer" style="height: 270px; width: auto;"></div>
+                            </div>
+                            <div class="box-item" style="width: 50%;">
+                                <div id="chartContainer1" style="height: 270px; width: auto;"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="box">
+                                <div class="box-item" style="width:100%">
+                                    <table id="table1" class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    STT
+                                                </th>
+                                                <th>
+                                                    Số phiếu
+                                                </th>
+                                                <th>
+                                                    Ngày
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => model.Note)
+                                                </th>
+                                                <th>
+                                                    Loại hàng
+                                                </th>
+                                                <th>
+                                                    Tình trạng
+                                                </th>
+                                                <th>
                         @*<h3 class="box-title">Thống kê phiếu giao hàng</h3>*@
                     </div>
-
                     <div class="box-body">
-                        <div class="box-item">
-                            <p>Ngày bắt đầu:</p>
-                            <input value="@DateTime.Now.AddDays(-7).ToString("yyyy-MM-dd")" id="ngayBatDau" type="date" class="form-control" aria-describedby="basic-addon1">
-                        </div>
-                        <div class="box-item">
-                            <p>Ngày kết thúc:</p>
-                            <input value="@DateTime.Now.AddHours(12).ToString("yyyy-MM-dd")" id="ngayKetThuc" type="date" class="form-control" aria-describedby="basic-addon1">
-                        </div>
-
-                        <div class="box-item">
-
-                            <button class="btn btn-primary" style="margin-right: 30px;" onclick="ReloadPage()"><i class="fa fa-eye text-white"></i>&nbsp;Thống kê</button>
-                        </div>
-
                         <div class="box-item" style="width: 100%; display:flex">
                             <div id="chartContainer" style="height: 270px; width: 50%;"></div>
                             <div id="chartContainer1" style="height: 270px; width: 50%;"></div>

@@ -54,62 +54,7 @@
             </th>
         </tr>
     </thead>
-    <tbody>
-        @{
-            int stt = 1;
-        }
-        @foreach (var item in Model)
-        {
-            @if (item.user.UserName == User.Identity.Name)
-            {
-                @if (item.Id_HinhThuc == "2")
-                {
-                    @if (item.phieugiao.ngaygiao.Date == DateTime.Now.Date)
-                    {
-                        <tr>
-                            <td>
-                                @stt
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.phieugiao.Id)
-                            </td>
-
-
-                            @if (item.phieugiao.tinhtrang == 0)
-                            {
-                                <td>
-                                    Chưa xác nhận
-                                </td>
-                                <td>
-                                </td>
-                                <td>
-                                    <a asp-action="Confirm" asp-route-id="@item.Id">Xác nhận</a>
-                                    @*<a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
-                                </td>
-                            }
-                            else
-                            {
-                                <td>
-                                    Đã xác nhận
-                                </td>
-                                <td>
-                                    @item.Thoigian.ToString("dd/MM/yyyy H:mm",CultureInfo.GetCultureInfo("vi-VN"))
-                                </td>
-                                <td>
-                                    @*<a asp-action="Confirm" asp-route-id="@item.Id">Xác nhận</a>*@
-                                    @*<a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
-                                </td>
-                            }
-
-                        </tr>
-                        stt = stt + 1;
-                    }
-                }
-            }
-        }
-    </tbody>
+    
 </table>
 
 
@@ -209,15 +154,35 @@
     
 
     $(document).ready(function () {
-        $('#table1').DataTable({
+        $('#table1').DataTable(
+            {
+            "ajax":{
+                "url": "/User/GetListNhanhang",
+                "type" : "GET",
+                "datatype": "json"
+            },
+            "columns": [
+                    { "data": "Id" },
+                    { "data": "Id_Phieu" },
+                    { "data": "trangthai" },
+                    { "data": "capnhat" },
+                    { "data": "id_CT" ,"render": function(data) {
+                        return '<a href = "/User/Confirm/'+data+'" > Xác nhận </a>'
+                    }}
+                ],
             rowReorder: {
-            selector: 'td:nth-child(2)'
+            selector: 'td:nth-child(3)'
             },
             responsive: true,
             bPaginate: true
-        })
+        });
 
+        setInterval(function () {
+            $('#table1').DataTable().ajax.reload(null, false);
+        }, 5000);
     });
+
+
     $(document).ready(function () {
         $('#table2').DataTable({
             rowReorder: {
@@ -230,8 +195,10 @@
     });
 
 
-    setTimeout(function () {
-        window.location.reload();
-    }, 10000);
+    
+
+    //setTimeout(function () {
+    //    window.location.reload();
+    //}, 10000);
 </script>
 
