@@ -1,7 +1,7 @@
 ﻿@model ThongNhat_Hospital.Models.CTDH
 
 @{
-    ViewData["Title"] = "Confirm";
+    ViewData["Title"] = "Xác nhận ";
     Layout = "~/Views/Shared/User/_LayoutUser.cshtml";
 }
 <style>
@@ -14,23 +14,62 @@
   -ms-user-select: none;
   user-select: none;
 }
-img {
-  position: absolute;
-  left: 0;
-  top: 0;
-}
+    h3 {
+            font-size: 30px;
+            font-weight: bold;
+            color: #0190df;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #1261b0;
+            margin-bottom: 10px;
+        }
 
-.signature-pad {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width:400px;
-  height:200px;
-}
+
+    h3 {
+            font-size: 30px;
+            font-weight: bold;
+            color: #0190df;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #1261b0;
+            margin-bottom: 10px;
+        }
+    thead {
+        background-color: #1261b0;
+        color: #fff;
+    }
 </style>
-
-
-<hr />
+<h3> Danh sách file đính kèm</h3>
+<div class="col-md-12">
+    <table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+        <td style="font-family:Verdana; font-size:14px; font-weight:bold; width:70%;">Tên File</td>
+        <td style="font-family:Verdana; font-size:14px; font-weight:bold; width:20%;">Thao tác</td>
+    </tr>
+    </thead>
+    <tbody>
+    @{
+        if (ViewData["File"] != null)
+        {
+            if (ViewData.Values != null && ViewData.Values.Count() > 0)
+            {
+                foreach (var item in ViewData["File"] as List<ChiTietHang>)
+                {
+                    <tr>
+                        <td style="font-family:Verdana; font-size:12px;">@item.filename</td>
+                        <td style="font-family:Verdana; font-size:12px;">
+                            <button class="btn btn-primary" id="btndowload1" onclick="dowloadFile('@item.file','@item.filename')">Tải</button>
+                                    <button  onclick="abc('@item.file')" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Xem</button>
+                        </td>
+                    </tr>
+                }
+            }
+            
+        }
+        
+    }
+    </tbody>
+</table>
+</div>
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Confirm" id="myform">
@@ -49,33 +88,50 @@ img {
                 <span asp-validation-for="Id_User" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label class="control-label">Xác nhận</label>
+                
                 <input asp-for="chuky" class="form-control hidden" id="signature-data" />
                 <span asp-validation-for="chuky" class="text-danger"></span>
+                
             </div>
             <div class="form-group">
                 <input asp-for="Thoigian" class="form-control hidden" />
                 <span asp-validation-for="Thoigian" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="button" value="Xác nhận" class="btn btn-default" id="save"/>
-                <input type="button" value="Reset" class="btn btn-default" id="clear" />
-            </div>
+            
         </form>
-        <h1>
-            Ký tên dưới đây
-        </h1>
-        <div class="wrapper">
-            <img src="" width=400 height=200 />
-            <canvas id="signature-pad" class="signature-pad" width=400 height=200></canvas>
+        <h5>
+            Ký tên để xác nhận đơn hàng <input type="button" value="Reset" class="btn btn-primary" id="clear" />
+        </h5>
+        <div>
+            <img style="background-color:white;  position: absolute; left: 0;top: 0;max-width:100%;height:auto;" />
+            <canvas id="signature-pad" class="signature-pad" style="max-width:100%;height:auto;border-style:ridge;border-color:black; "></canvas>
+        </div>
+        <div class="form-group">
+            <input type="button" value="Xác nhận" class="btn btn-success" id="save" />
+
         </div>
         
     </div>
 </div>
+<!-- Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    @*<div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Modal Header</h4>
+                    </div>*@
+                    <div class="modal-body">
+                        <iframe frameborder="0" id="frame1" style="height:500px; width:300px; min-width:100%;min-height:100%"></iframe>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
 
 @*@section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
@@ -104,4 +160,22 @@ img {
     cancelButton.addEventListener('click', function(event) {
         signaturePad.clear();
 });
+</script>
+<script type="text/javascript">
+    function DowloadPDF(data, filename) {
+        const link = data;
+        const dowloadlink = document.createElement('a');
+        const filename1 = filename;
+
+        dowloadlink.href = link;
+        dowloadlink.download = filename1;
+        dowloadlink.click();
+    }
+
+    function dowloadFile(data, filename) {
+        DowloadPDF(data, filename);
+    }
+    function abc(data1) {
+        document.getElementById("frame1").src = data1;
+    }
 </script>

@@ -1,8 +1,51 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+<style>
+    .text-center {
+        margin-top: 10rem;
+        
+       
+    }
 
+    .display-4 {
+        background: white;
+        text-shadow: 1px 1px #fff;
+        color: #1c558e;
+        font-weight: bold;
+        font-size: 3.5rem;
+        margin-bottom: 1rem;
+    }
+
+
+    #clock {
+        background-color: white;
+        font-size: 3rem;
+        font-weight: bold;
+        color: #333; /* Đổi màu chữ tại đây */
+        text-shadow: 1px 1px #fff; /* Tạo hiệu ứng bóng cho chữ */
+        letter-spacing: .1em; /* Tăng khoảng cách giữa các chữ số */
+        font-family: Arial, sans-serif; /* Chọn font chữ */
+    }
+
+</style>
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Welcome to Thong Nhat Hospital</h1>
+
+    <div id="clock"></div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    setInterval(() => {
+        const clock = document.getElementById('clock');
+        if (clock) {
+            const date = new Date();
+            const hours = date.getHours() < 10 ? `0${date.getHours()}` : date.getHours();
+            const minutes = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
+            const seconds = date.getSeconds() < 10 ? `0${date.getSeconds()}` : date.getSeconds();
+            clock.innerText = `${hours}:${minutes}:${seconds}`;
+        }
+    }, 1000); // update every second
+});
+</script>

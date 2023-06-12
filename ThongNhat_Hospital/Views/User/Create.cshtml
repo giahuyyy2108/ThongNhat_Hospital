@@ -1,6 +1,6 @@
 ﻿@model ThongNhat_Hospital.Models.ViewModel.CTDHViewModel
 @{
-    ViewData["Title"] = "GIAO HÀNG ";
+    ViewData["Title"] = "Giao hàng ";
     Layout = "~/Views/Shared/User/_LayoutUser.cshtml";
 }
 <style>
@@ -13,45 +13,52 @@
   -ms-user-select: none;
   user-select: none;
 }
-img {
+/*img {
   position: absolute;
   left: 0;
   top: 0;
-}
+}*/
 
-.signature-pad {
+/*.signature-pad {
   position: absolute;
   left: 0;
   top: 0;
   width:400px;
   height:200px;
-}
+}*/
 </style>
 <div class="col-md-12">
     <div class="panel panel-info">
-        <div class="panel-heading">
-            Điền thông tin phiếu giao hàng
+        <div class="panel-heading" style="font-size: x-large; font-weight: bold;">
+            Điền thông tin phiếu nhận tài liệu
         </div>
         <div class="panel-body">
             <form role="form" asp-action="Create" id="myform">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
                     <label>Người dùng:</label>
-                    <select asp-for="Id_User" class="form-control" asp-items="ViewBag.Id_User"></select>
+                    <select asp-for="Id_User" class="form-control" asp-items="ViewBag.Id_User" id="userid" >
+                        <option value="">--Chọn người dùng--</option>
+                    </select>
+                    <span asp-validation-for="Id_User" class="text-danger"></span>
                 </div>
 
                 <div class="form-group">
                     <label>Chữ ký</label>
                     <input asp-for="chuky" class="form-control hidden" id="signature-data"/>
                     <span asp-validation-for="chuky" class="text-danger" ></span>
+                    <input type="button" value="Reset" class="btn btn-primary" id="clear" />
                 </div>
-                <div class="wrapper">
-                    <img src="" width=400 height=200 />
-                    <canvas id="signature-pad" class="signature-pad" width=400 height=200></canvas>
+                <div >
+                    <img style="background-color:white;  position: absolute; left: 0;top: 0;max-width:100%;height:auto;"/>
+                    <canvas id="signature-pad" class="signature-pad" style="max-width:100%;height:auto;border-style:ridge;border-color:black; "></canvas>
                 </div>
                 <div class="form-group">
                     <label>Loại hàng</label>
-                    <select asp-for="id_LoaiHang" class="form-control" asp-items="ViewBag.Id_LoaiHang"></select>
+                    <select asp-for="id_LoaiHang" class="form-control" asp-items="ViewBag.Id_LoaiHang">
+                        <option value="">--Chọn loại hàng--</option>
+                    </select>
+                    <span asp-validation-for="id_LoaiHang" class="text-danger"></span>
                 </div>
 
                 <div class="form-group">
@@ -59,9 +66,29 @@ img {
                     <textarea asp-for="note" class="form-control" rows="3"></textarea>
                     <span asp-validation-for="note" class="text-danger"></span>
                 </div>
+                <div class="form-group">
+                    <label>File</label>
+                    
+                    <input asp-for="files[0].filename" class="form-control hidden" id="filename0">
+                    <input asp-for="files[0].file" class="form-control hidden" id="filendata0">
+                    <input type="file" id="files0" accept=".pdf" />
 
-                <input type="button" value="Xác nhận" class="btn btn-default" id="save" />
-                <input type="button" value="Reset" class="btn btn-default" id="clear" />
+                    <input asp-for="files[1].filename" class="form-control hidden" id="filename1">
+                    <input asp-for="files[1].file" class="form-control hidden" id="filendata1">
+                    <input type="file" id="files1" accept=".pdf" />
+
+                    <input asp-for="files[2].filename" class="form-control hidden" id="filename2">
+                    <input asp-for="files[2].file" class="form-control hidden" id="filendata2">
+                    <input type="file" id="files2" accept=".pdf"/>
+
+                    <input asp-for="files[3].filename" class="form-control hidden" id="filename3">
+                    <input asp-for="files[3].file" class="form-control hidden" id="filendata3">
+                    <input type="file" id="files3" accept=".pdf"/>
+                    
+                </div>
+
+                <input type="button" value="Xác nhận" class="btn btn-success" id="save" />
+               
 
             </form>
 
@@ -73,17 +100,109 @@ img {
 </div>
 <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
 
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#files0').on('change',function (e){
+            var file = e.target.files[0];
+            if (this.files[0].size > 3000000) {
+               alert("File is too big!");
+               this.value = "";
+            };
+            var reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function () {
+                var inputdata = reader.result;
+                var replayvalue =(inputdata.split(',')[0]);
+                var base64string = inputdata.replace(replayvalue + ",","");
+                $('#filendata0').val(`data:application/pdf;base64,${base64string}`);
+                $('#filename0').val(e.target.files[0].name);
+                //console.log(e.target.files[0].name);
+            }
+        });
+    });
+
+    $(document).ready(function() {
+        $('#files1').on('change',function (e){
+            var file = e.target.files[0];
+            if (this.files[0].size > 3000000) {
+               alert("File is too big!");
+               this.value = "";
+            };
+            var reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function () {
+                var inputdata = reader.result;
+                var replayvalue =(inputdata.split(',')[0]);
+                var base64string = inputdata.replace(replayvalue + ",","");
+                $('#filendata1').val(`data:application/pdf;base64,${base64string}`);
+                $('#filename1').val(e.target.files[0].name);
+
+                //console.log(`data:application/pdf;base64,${base64string}`);
+            }
+        });
+    });
+
+    $(document).ready(function() {
+        $('#files2').on('change',function (e){
+            var file = e.target.files[0];
+            if (this.files[0].size > 3000000) {
+               alert("File is too big!");
+               this.value = "";
+            };
+            var reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function () {
+                var inputdata = reader.result;
+                var replayvalue =(inputdata.split(',')[0]);
+                var base64string = inputdata.replace(replayvalue + ",","");
+                $('#filendata2').val(`data:application/pdf;base64,${base64string}`);
+                $('#filename2').val(e.target.files[0].name);
+
+                //console.log(`data:application/pdf;base64,${base64string}`);
+            }
+        });
+    });
+
+    $(document).ready(function () {
+        $('#files3').on('change', function (e) {
+            var file = e.target.files[0];
+            if (this.files[0].size > 3000000) {
+               alert("File is too big!");
+               this.value = "";
+            };
+            var reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function () {
+                var inputdata = reader.result;
+                var replayvalue = (inputdata.split(',')[0]);
+                var base64string = inputdata.replace(replayvalue + ",", "");
+                $('#filendata3').val(`data:application/pdf;base64,${base64string}`);
+                $('#filename3').val(e.target.files[0].name);
+
+                //console.log(`data:application/pdf;base64,${base64string}`);
+            }
+        });
+    });
+    
+</script>
+
 <script>
     var signaturePad = new SignaturePad(document.getElementById('signature-pad'), {
         backgroundColor: 'rgba(255, 255, 255, 0)',
         penColor: 'rgb(0, 0, 0)'
     });
+    var signatureData = document.getElementById('files');
+
+
     var signatureData = document.getElementById('signature-data');
     var saveButton = document.getElementById('save');
     var cancelButton = document.getElementById('clear');
 
+
+    
     saveButton.addEventListener('click', function (event) {
         var data = signaturePad.toDataURL('image/png');
+        var user = document.getElementById('userid');
         console.log(data);
         signatureData.value = data;
         if (signaturePad.isEmpty()) {
@@ -98,3 +217,4 @@ img {
         signaturePad.clear();
     });
 </script>
+<partial name="_ValidationScriptsPartial" />

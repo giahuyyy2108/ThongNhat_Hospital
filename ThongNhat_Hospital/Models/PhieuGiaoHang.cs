@@ -19,7 +19,7 @@ namespace ThongNhat_Hospital.Models
         public string Note { get; set; }
 
         public int tinhtrang { get; set; }
-
+        [Required(ErrorMessage ="Phải chọn loại hàng")]
         public string Id_LoaiHang { get; set; }
 
 
@@ -28,7 +28,7 @@ namespace ThongNhat_Hospital.Models
 
         public ICollection<CTDH> CTDH { get; set; }
 
+        public ICollection<ChiTietHang> ChiTietHang { get; set; }
 
-        
     }
 }

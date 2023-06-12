@@ -1,6 +1,13 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@using ThongNhat_Hospital.Models
+
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+    <title>@ViewData["Title"] - Bệnh viện Thống Nhất</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
    
@@ -15,29 +22,79 @@
     <link href="~/assets/css/custom.css" rel="stylesheet" />
     <!-- GOOGLE FONTS-->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 </head>
+<style>
+    #page-wrapper {
+    min-height: 900px;
+    }
+    .active-menu {
+        background-color: #1c558e!important;
+    }
+
+    .preloaderBg {
+        position: fixed;
+        z-index: 10;
+        top: 0;
+        background: #fff;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+    }
+
+    .preloader {
+        margin: auto;
+        background: url('/images/bvtn_logo.png') no-repeat center;
+        background-size: 200px;
+        width: 400px;
+        height: 800px;
+    }
+
+
+    .preloader2 {
+        border: 5px solid #f3f3f3;
+        border-top: 5px solid #008ee0;
+        border-radius: 50%;
+        width: 250px;
+        height: 250px;
+        animation: spin 1s ease-in-out infinite;
+        position: relative;
+        margin: auto;
+        top: -520px;
+    }
+
+    @@keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+</style>
 <body>
     <div id="wrapper">
-        <nav class="navbar navbar-default navbar-cls-top " role="navigation" style="margin-bottom: 0; background-color: #fff;">
-            <div class="navbar-header" style="background-color: #fff;">
+        <div class="preloaderBg" id="preloader" onload="preloader()">
+            <div class="preloader"></div>
+            <div class="preloader2"></div>
+        </div>
+        <nav class="navbar navbar-default navbar-cls-top " role="navigation" style="margin-bottom: 0; background-color: #1261b0;">
+            <div class="navbar-header" style="background-color: #1261b0;">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <img src="https://th.bing.com/th/id/OIP.fbzJVyOIFpnuOH-_9S0E8AAAAA?pid=ImgDet&rs=1" class="brand" style="width:260px ; background-color: aliceblue;" />
-                
+                <img src="/images/bvtn_logoo.png" class="brand" style="width:260px ; background-color: #1c558e;" />
+                <a href="#" class="sidebar-toogle" data-toggle="offcanvas" role="button">
+                    <span class="sr-only">Toggle navigation</span>
+                </a>
             </div>
 
             <div class="header-right pull-right">
-@*               <p style="color: black; font-size:13px; "> BỆNH VIỆN THỐNG NHẤT<br />
-Địa chỉ: Số 1 Lý Thường Kiệt, Phường 7, Quận Tân Bình, TP Hồ Chí Minh<br />
-
-Điện thoại: 028 3869 0277 | Kế Hoạch Tổng Hợp: 028 38642 142 | Fax: 028 3865 6715<br />
-
-Email: thongnhathospital@bvtn.org.vn </p>*@
-
             </div> 
         </nav>
         <!-- /. NAV TOP  -->
@@ -47,23 +104,32 @@ Email: thongnhathospital@bvtn.org.vn </p>*@
                     <li>
                          <li class="dropdown user user-menu">
                         <a href="#" class="user-img-div" data-toggle="dropdown">
-                            <img src="dist/img/user2-160x160.jpg" class="img-thumbnail" alt="User Image" />
-                                <div class="inner-text">User</div>
-                </a>
+                            <img src="/images/final.png" class="img-thumbnail" alt="User Image" />
+                            <div class="inner-text">@UserManager.GetUserName(User)</div>
+                        </a>
 
                     </li>
 
+                    
+                    <li>
+                        <a href="/User/Create" id="create-menu"><i class="fa fa-paper-plane"></i>Giao hàng</a>
+                    </li>
+                    <li>
+                        <a href="/User/ListNhanHang" id="list-menu"><i class="fa fa-list-alt"></i>Nhận hàng</a>
+                    </li>
+                    <li>
+                        <a href="/User/Historylist" id="history-menu"><i class="fa fa-history"></i>Xem lịch sử</a>
+                    </li>
+                    <li>
+                        <a href="/ChangePassword/" id="history-menu"><i class="fa fa-cogs"></i>Đổi mật khẩu</a>
+                    </li>
+                    <li>
+                        <a href="javascript: submit();" id="logout" ><i class="fa fa-sign-out"></i>Đăng xuất</a>
 
-                    <li>
-                        <a class="active-menu" href="/User/Create"><i class="fas fa-circle-o"></i>Giao hàng</a>
+                        <form id="logoutForm" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                        </form> 
                     </li>
-                    <li>
-                        <a class="menu" href="/User/ListNhanHang"><i class="fas fa-circle-o"></i>Nhận hàng</a>
-                    </li>
-                    <li>
-                        <a class="menu" href="/User/Historylist"><i class="fas fa-circle-o"></i>Xem lịch sử</a>
-                    </li>
-                   
+                    
                 </ul>
 
             </div>
@@ -79,81 +145,26 @@ Email: thongnhathospital@bvtn.org.vn </p>*@
 
                     </div>
                 </div>
-                <!-- /. ROW  -->
-                <div class="row">
-                    <div class="col-md-4">
-                        
-                    </div>
-                    <div class="col-md-4">
-                        
-                    </div>
-                    <div class="col-md-4">
-                        
-                        </div>
-                    </div>
-
                 </div>
-                <!-- /. ROW  -->
-
-                <div class="row">
-                    <div class="col-md-8">
-                        <div class="row">
-                            <div class="col-md-12">
-
-                                
-                                    <!--INDICATORS-->
-                                  
-                                    <!--PREVIUS-NEXT BUTTONS-->
-
-                                </div>
-
-                            </div>
-
-                        </div>
-                        <!-- /. ROW  -->
-                        <hr />
-
-                        <div class="panel panel-default">
-
-                            
-
-                                
-                                <!--INDICATORS-->
-                               
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /.REVIEWS &  SLIDESHOW  -->
-                   
-                    <!--/.Chat Panel End-->
-                </div>
-                <!-- /. ROW  -->
-
-
-                
-                <!--/.Row-->
-              
-                
-                    
-                </div>
-                <!--/.Row-->
-             
-              
-                <!--/.ROW-->
-
-            </div>
-            <!-- /. PAGE INNER  -->
         </div>
-        <!-- /. PAGE WRAPPER  -->
-    </div>
-    <!-- /. WRAPPER  -->
+        </d
+</body>
 
-    <div id="footer-sec">
-        &copy; 2014 YourCompany | Design By : <a href="http://www.binarytheme.com/" target="_blank">BinaryTheme.com</a>
+<div id="footer-sec">
+    &copy; 2023 - Double H - Vũ Quốc Gia Huy & Mã Phúc Huy
     </div>
     <!-- /. FOOTER  -->
     <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
     <!-- JQUERY SCRIPTS -->
+
+    <script>
+        $(document).ready(function () {
+        $('.nav').find('[href="' + window.location.pathname + '"]').addClass('active-menu');
+
+
+        });
+    </script>
+
     <script src="~/assets/js/jquery-1.10.2.js"></script>
     <!-- BOOTSTRAP SCRIPTS -->
     <script src="~/assets/js/bootstrap.js"></script>
@@ -161,9 +172,53 @@ Email: thongnhathospital@bvtn.org.vn </p>*@
     <script src="~/assets/js/jquery.metisMenu.js"></script>
        <!-- CUSTOM SCRIPTS -->
     <script src="~/assets/js/custom.js"></script>
-    
+    @await RenderSectionAsync("Scripts", required: false)
    
 
-</body>
-</html>
 
+</html>
+<script>
+$(document).ready(function() {
+    // Lấy đường dẫn hiện tại
+    var currentUrl = window.location.pathname.toLowerCase();
+    // Lấy ID của menu tương ứng với đường dẫn hiện tại
+    var currentMenuId;
+        if (currentUrl.includes("/User/Create")) {
+        currentMenuId = "create-menu";
+        } else if (currentUrl.includes("/User/ListNhanHang")) {
+        currentMenuId = "list-menu";
+        } else if (currentUrl.includes("/User/Historylist")) {
+        currentMenuId = "history-menu";
+    }
+    // Thêm class active-menu cho menu hiện tại
+    $("#" + currentMenuId).addClass("active-menu");
+});
+</script>
+<script>
+
+
+    setTimeout(function () {
+        document.getElementById("preloader").style.display = "none";
+    }, 1000);
+
+
+    setTimeout(function load () {
+        document.getElementById("preloader").style.display = "display";
+    }, 1000);
+</script>
+<script>
+
+$(document).ready(function() {
+    $('.sidebar-toggle').click(function () {
+        if ($('#wrapper').hasClass('toggled')) {
+            $('#wrapper').removeClass('toggled');
+        } else {
+            $('#wrapper').addClass('toggled');
+        }
+    });
+});
+
+    function submit() {
+        document.forms["logoutForm"].submit();
+    }
+</script>

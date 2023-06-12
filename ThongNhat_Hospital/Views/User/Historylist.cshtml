@@ -2,16 +2,36 @@
 @model IEnumerable<ThongNhat_Hospital.Models.CTDH>
 
 @{
-    ViewData["Title"] = "Historylist";
+    ViewData["Title"] = "Lịch sử ";
     Layout = "~/Views/Shared/User/_LayoutUser.cshtml";
 }
+<style>
+    h3 {
+        font-size: 30px;
+        font-weight: bold;
+        color: #0190df;
+        padding-bottom: 20px;
+        border-bottom: 2px solid #1261b0;
+        margin-bottom: 10px;
+    }
 
-<h2>Lịch sử</h2>
+    thead {
+        background-color: #1261b0;
+        color: #fff;
+    }
+</style>
+<h3>Lịch sử giao nhận hàng</h3>
 
 <link href="https://cdn.datatables.net/v/dt/dt-1.13.4/datatables.min.css" rel="stylesheet" />
 
+<link href="https://cdn.datatables.net/rowreorder/1.3.3/css/rowReorder.dataTables.min.css" rel="stylesheet" />
 
-<table class="table table-bordered table-striped" id="table1">
+<link href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.dataTables.min.css" rel="stylesheet" />
+
+
+
+
+<table class="table table-bordered table-striped" id="table1" style="max-width:100%;height:auto;">
     <thead>
         <tr>
             <th>
@@ -24,13 +44,15 @@
                 Hình thức
             </th>
             <th>
-                Xác nhận
+                Trạng thái
             </th>
 
             <th>
                 Cập nhật
             </th>
-
+            <th>
+                Xem lại phiếu
+            </th>
 
             
         </tr>
@@ -48,8 +70,11 @@
                 @if(item.phieugiao.tinhtrang == 1)
                 {
                     <td>
-                        <a asp-action="Details" asp-route-id="@item.Id_PhieuGiao">@Html.DisplayFor(modelItem => item.Id_PhieuGiao)</a>
+                        <a asp-action="Details" asp-route-id="@item.Id_PhieuGiao">
+                            @item.phieugiao.Id.Substring(24)
+                        </a>
                     </td>
+                    
                     @*<td>
                         @Html.DisplayFor(modelItem => item.Id_PhieuGiao)
                     </td>*@
@@ -57,7 +82,7 @@
                 else
                 {
                     <td>
-                        @Html.DisplayFor(modelItem => item.phieugiao.Id)
+                        @item.phieugiao.Id.Substring(24)
                     </td>
                 }
                 
@@ -71,6 +96,8 @@
                     </td>
                     <td>
                     </td>
+                    <td>
+                    </td>
                                 
                 }
                 else
@@ -79,37 +106,44 @@
                         Đã xác nhận
                     </td>
                     <td>
-                        @item.Thoigian.ToString("dd/MM/yyyy H:mm",CultureInfo.GetCultureInfo("vi-VN"))
+                        @item.Thoigian.ToString("dd/MM/yyyy HH:mm",CultureInfo.GetCultureInfo("vi-VN"))
+                    </td>
+                    <td>
+                        <a asp-action="FileDetail" asp-route-id="@item.Id_PhieuGiao">Xem</a>
                     </td>
                                 
                 }
-
+                
             </tr>
             stt = stt + 1;
         }
     </tbody>
 </table>
+
+
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 
-<script src="https://cdn.datatables.net/1.10.8/js/jquery.dataTables.min.js" defer="defer"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js" defer="defer"></script>
+
+<script src="https://cdn.datatables.net/rowreorder/1.3.3/js/dataTables.rowReorder.min.js" defer="defer"></script>
+
+<script src="https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js" defer="defer"></script>
+
+
 
 
 <script type="text/javascript">
 
-
     $(document).ready(function () {
         $('#table1').DataTable({
+            rowReorder: {
+            selector: 'td:nth-child(2)'
+            },
+            responsive: true,
             bPaginate: true
         })
 
     });
-    $(document).ready(function () {
-        $('#table2').DataTable({
-            bPaginate: true
-        })
-
-    });
-
 
 </script>
 

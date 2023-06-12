@@ -44,5 +44,7 @@ namespace ThongNhat_Hospital.Models
 
         public virtual DbSet<ThongkeViewModel> ThongkeViewModel { get; set;}
 
+        public DbSet<ChiTietHang> ChiTietHang { set; get; }
+
     }
 }

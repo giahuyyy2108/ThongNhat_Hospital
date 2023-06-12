@@ -9,6 +9,8 @@
 @inject UserManager<User> UserManager
 
 @{
+    ViewData["Title"] = "Quản lý Role";
+
     Layout = "Admin/_Dashboard";
 }
 
@@ -30,13 +32,12 @@
     <section class="content">
         <div class="row">
             <div class="col-xs-12">
-
                 <div class="box">
                     <div class="box-header">
-                        <h3 class="box-title">Bảng vai trò nhân viên</h3>
+                        
                     </div><!-- /.box-header -->
                     <div class="box-body">
-                        <table id="example1" class="table table-bordered table-striped">
+                        <table id="table1" class="table table-bordered table-striped" width="100%">
                             <thead>
                                 <tr>
                                     <th>STT</th>
@@ -84,17 +85,35 @@
 </div><!-- /.content-wrapper -->
 
 <!-- page script -->
-<script type="text/javascript">
-    $(function () {
-        $("#example1").dataTable();
-        $('#example2').dataTable({
-            "bPaginate": true,
-            "bLengthChange": false,
-            "bFilter": false,
-            "bSort": true,
-            "bInfo": true,
-            "bAutoWidth": false
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <!--datatable-->
+     <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js" defer="defer"></script>
+
+    <script src="https://cdn.datatables.net/rowreorder/1.3.3/js/dataTables.rowReorder.min.js" defer="defer"></script>
+
+    <script src="https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js" defer="defer"></script>
+
+    
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $('#table1').DataTable({
+                rowReorder: {
+                    selector: 'td:nth-child(2)'
+                },
+                responsive: true,
+                bPaginate: true
+            })
+
         });
-    });
-</script>
+
+    </script>
+
+
+
 

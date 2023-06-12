@@ -57,7 +57,7 @@ namespace ThongNhat_Hospital.Controllers.User1
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id_User,chuky,id_LoaiHang,note")] CTDHViewModel cTDH_Nhan)
+        public async Task<IActionResult> Create([Bind("Id_User,chuky,id_LoaiHang,note,files")] CTDHViewModel cTDH_Nhan)
         {
 
             PhieuGiaoHang phieugiao = new PhieuGiaoHang();
@@ -74,6 +74,31 @@ namespace ThongNhat_Hospital.Controllers.User1
             cTDH_Giao.Id_HinhThuc = "1";
             cTDH_Giao.chuky = cTDH_Nhan.chuky;
             cTDH_Giao.Thoigian = DateTime.Now;
+
+            foreach (var item in cTDH_Nhan.files)
+            {
+                ChiTietHang chiTietHang = new ChiTietHang();
+                if (item.file != null)
+                {
+                    chiTietHang.filename = item.filename;
+                    chiTietHang.file = item.file;
+                    chiTietHang.Id_PhieuGiao = phieugiao.Id;
+                    chiTietHang.id = Guid.NewGuid().ToString();
+                    _context.Add(chiTietHang);
+                }
+            }
+
+            //for (int i = 0; i < cTDH_Nhan.files.Count; i++)
+            //{
+            //    ChiTietHang chiTietHang = new ChiTietHang();
+            //    if (cTDH_Nhan.files[i] != null)
+            //    {
+            //        chiTietHang.file = cTDH_Nhan.files[i];
+            //        chiTietHang.Id_PhieuGiao = phieugiao.Id;
+            //        chiTietHang.id = Guid.NewGuid().ToString();
+            //        _context.Add(chiTietHang);
+            //    }
+            //}
 
 
             cTDH_Nhan.Id = Guid.NewGuid().ToString();
@@ -96,7 +121,8 @@ namespace ThongNhat_Hospital.Controllers.User1
             }
             ViewData["Id_HinhThuc"] = new SelectList(_context.HinhThuc, "Id", "Id", cTDH_Nhan.Id_HinhThuc);
             ViewData["Id_PhieuGiao"] = new SelectList(_context.PhieuGiaoHang, "Id", "Id", cTDH_Nhan.Id_PhieuGiao);
-            ViewData["Id_User"] = new SelectList(_context.user, "Id", "Id", cTDH_Nhan.Id_User);
+            ViewData["Id_User"] = new SelectList(_context.user, "Id", "UserName", cTDH_Nhan.Id_User);
+            ViewData["Id_LoaiHang"] = new SelectList(_context.LoaiHang, "Id", "Name");
             return View(cTDH_Nhan);
         }
         public async Task<IActionResult> Confirm(string id)
@@ -106,7 +132,8 @@ namespace ThongNhat_Hospital.Controllers.User1
                 return NotFound();
             }
 
-            var cTDH = await _context.ChiTietDonHang.FindAsync(id);
+            var cTDH = await _context.ChiTietDonHang
+                .FindAsync(id);
             if (cTDH == null)
             {
                 return NotFound();
@@ -114,6 +141,10 @@ namespace ThongNhat_Hospital.Controllers.User1
             ViewData["Id_HinhThuc"] = new SelectList(_context.HinhThuc, "Id", "Name", cTDH.Id_HinhThuc);
             ViewData["Id_PhieuGiao"] = new SelectList(_context.PhieuGiaoHang, "Id", "Id", cTDH.Id_PhieuGiao);
             ViewData["Id_User"] = new SelectList(_context.user, "Id", "UserName", cTDH.Id_User);
+            List<ChiTietHang> listcth = await _context.ChiTietHang
+                                                .Where(p => p.Id_PhieuGiao == cTDH.Id_PhieuGiao)
+                                                .ToListAsync();
+            ViewData["File"] = listcth;
             return View(cTDH);
         }
 
@@ -177,6 +208,17 @@ namespace ThongNhat_Hospital.Controllers.User1
                 .ToListAsync();
             
 
+            return View(dataBaseContext);
+        }
+
+
+        public async Task<IActionResult> FileDetail(string id)
+        {
+            var dataBaseContext = await _context.ChiTietHang
+                .Include(p => p.phieugiao)
+                .Include(p => p.phieugiao.ChiTietHang)
+                .Where(p => p.Id_PhieuGiao == id)
+                .ToListAsync();
             return View(dataBaseContext);
         }
 
