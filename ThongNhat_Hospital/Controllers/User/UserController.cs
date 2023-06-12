@@ -286,15 +286,7 @@ namespace ThongNhat_Hospital.Controllers.User1
         }
 
 
-        public async Task<IActionResult> FileDetail(string id)
-        {
-            var dataBaseContext = await _context.ChiTietHang
-                .Include(p => p.phieugiao)
-                .Include(p => p.phieugiao.ChiTietHang)
-                .Where(p => p.Id_PhieuGiao == id)
-                .ToListAsync();
-            return View(dataBaseContext);
-        }
+        
 
 
         public async Task<IActionResult> Details(string id)
