@@ -1,5 +1,4 @@
 ﻿@using System.Globalization;
-@model IEnumerable<ThongNhat_Hospital.Models.CTDH>
 
 @{
     ViewData["Title"] = "Lịch sử ";
@@ -51,73 +50,11 @@
                 Cập nhật
             </th>
             <th>
-                Xem lại phiếu
+                Xem Files đính kèm
             </th>
-
-            
         </tr>
     </thead>
-    <tbody>
-        @{
-            int stt = 1;
-        }
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @stt
-                </td>
-                @if(item.phieugiao.tinhtrang == 1)
-                {
-                    <td>
-                        <a asp-action="Details" asp-route-id="@item.Id_PhieuGiao">
-                            @item.phieugiao.Id.Substring(24)
-                        </a>
-                    </td>
-                    
-                    @*<td>
-                        @Html.DisplayFor(modelItem => item.Id_PhieuGiao)
-                    </td>*@
-                }
-                else
-                {
-                    <td>
-                        @item.phieugiao.Id.Substring(24)
-                    </td>
-                }
-                
-                <td>
-                    @Html.DisplayFor(modelItem => item.hinhthuc.Name)
-                </td>
-                @if(item.phieugiao.tinhtrang == 0)
-                {
-                    <td>
-                        Chưa xác nhận
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                                
-                }
-                else
-                {
-                    <td>
-                        Đã xác nhận
-                    </td>
-                    <td>
-                        @item.Thoigian.ToString("dd/MM/yyyy HH:mm",CultureInfo.GetCultureInfo("vi-VN"))
-                    </td>
-                    <td>
-                        <a asp-action="FileDetail" asp-route-id="@item.Id_PhieuGiao">Xem</a>
-                    </td>
-                                
-                }
-                
-            </tr>
-            stt = stt + 1;
-        }
-    </tbody>
+    
 </table>
 
 
@@ -136,13 +73,32 @@
 
     $(document).ready(function () {
         $('#table1').DataTable({
+            "ajax":{
+                "url": "/User/getHistorylist",
+                "type" : "GET",
+                "datatype": "json"
+            },
+            "columns": [
+                { "data": "stt" },
+                { "data": "id_phieu" ,"render": function(data) {
+                        return '<a href = "/User/Details/'+data+'" >'+data+'</a>'
+                }},
+                { "data": "hinhthuc" },
+                { "data": "trangthai" },
+                { "data": "capnhat" },
+                { "data": "id_CT" ,"render": function(data) {
+                        return '<a class="btn btn-primary" href = "/User/FileDetail/'+data+'" >Xem</a>'
+                }}
+            ],
             rowReorder: {
-            selector: 'td:nth-child(2)'
+            selector: 'td:nth-child(3)'
             },
             responsive: true,
             bPaginate: true
         })
-
+        setInterval(function () {
+            $('#table1').DataTable().ajax.reload(null, false);
+        }, 5000);
     });
 
 </script>

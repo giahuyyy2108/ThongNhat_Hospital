@@ -3,6 +3,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using Newtonsoft.Json;
+using System.Runtime.Serialization;
 
 namespace ThongNhat_Hospital.Models
 {
@@ -25,9 +27,11 @@ namespace ThongNhat_Hospital.Models
 
         [ForeignKey("Id_LoaiHang")]
         public LoaiHang loaihang { get; set; }
-
+        [JsonIgnore]
+        [IgnoreDataMember]
         public ICollection<CTDH> CTDH { get; set; }
-
+        [JsonIgnore]
+        [IgnoreDataMember]
         public ICollection<ChiTietHang> ChiTietHang { get; set; }
 
     }

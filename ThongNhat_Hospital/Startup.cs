@@ -33,7 +33,14 @@ namespace ThongNhat_Hospital
 
             services.AddScoped<IReport, ThongkeLoaiHangSvc>();
 
-            services.AddControllersWithViews();
+
+
+            services.AddControllersWithViews()
+                .AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
+
+
             //đăng ký dịch vụ kết nối DB
             services.AddDbContext<DataBaseContext>(options => {
                 string connectstring = Configuration.GetConnectionString("DataContextConnection");
