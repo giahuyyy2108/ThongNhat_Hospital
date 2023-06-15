@@ -12,6 +12,9 @@ using Microsoft.AspNetCore.Authorization;
 using System.Data;
 using System.Collections.Generic;
 using System.Globalization;
+using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore.Storage;
+using System.Net.Http;
 
 namespace ThongNhat_Hospital.Controllers.User1
 {
@@ -22,11 +25,12 @@ namespace ThongNhat_Hospital.Controllers.User1
         
         private readonly DataBaseContext _context;
         private readonly UserManager<User> _userManager;
-        
-        public UserController(DataBaseContext context, UserManager<User> userManager)
+        private readonly HttpClient _httpClient;
+        public UserController(DataBaseContext context, UserManager<User> userManager, HttpClient httpClient)
         {
             _context = context;
             _userManager = userManager;
+            _httpClient = httpClient;
         }
 
         public async Task<IActionResult> ListNhanhang()
@@ -59,13 +63,13 @@ namespace ThongNhat_Hospital.Controllers.User1
                 if(item.phieugiao.tinhtrang == 0)
                 {
                     don.trangthai = "Chưa xác nhận";
+                    don.id_CT = item.Id;
                 }
                 else
                 {
                     don.trangthai = "Đã xác nhận";
-                    don.capnhat = item.Thoigian.ToString("dd/MM/yyyy", CultureInfo.GetCultureInfo("vi-VN"));
+                    don.capnhat = item.Thoigian.ToString("dd/MM/yyyy - HH:mm", CultureInfo.GetCultureInfo("vi-VN"));
                 }
-                don.id_CT = item.Id;
                 list.Add(don);
             }
 
@@ -242,7 +246,8 @@ namespace ThongNhat_Hospital.Controllers.User1
                 .Include(p => p.phieugiao)
                 .Include(p => p.user)
                 .Include(p => p.hinhthuc)
-                .Where(p => p.Id_User == User.FindFirstValue(ClaimTypes.NameIdentifier))
+                .Where(p => p.Id_User == User.FindFirstValue(ClaimTypes.NameIdentifier) )
+                .OrderBy(p=>p.phieugiao.ngaygiao)
                 .ToListAsync();
 
             int stt = 1;
@@ -262,14 +267,28 @@ namespace ThongNhat_Hospital.Controllers.User1
                 }
                 if (item.phieugiao.tinhtrang == 0)
                 {
-                    model.trangthai = "Chưa hoàn thành";
+                    model.trangthai = "0";
                 }
                 else
                 {
-                    model.trangthai = "Hoàn thành";
-                    model.capnhat = item.Thoigian.ToString("dd/MM/yyyy - HH:mm", CultureInfo.GetCultureInfo("vi-VN"));
+                    model.trangthai = "1";
+                    model.capnhat = item.Thoigian.ToString("dd/MM/yyyy", CultureInfo.GetCultureInfo("vi-VN"));
+                    model.id_CT = item.Id_PhieuGiao;
                 }
-                model.id_CT = item.Id_PhieuGiao;
+
+                foreach (var item1 in await _context.ChiTietDonHang.Include(p => p.user).Where(p => p.phieugiao.Id == item.Id_PhieuGiao).Where(p => p.Id_User != item.Id_User).ToListAsync())
+                {
+                    if(item1.Id_HinhThuc == "1")
+                    {
+                        model.nguoinhan = item.user.hoten;
+                        model.nguoigui = item1.user.hoten;
+                    }
+                    if(item1.Id_HinhThuc == "2")
+                    {
+                        model.nguoinhan = item1.user.hoten;
+                        model.nguoigui = item.user.hoten;
+                    }
+                }
                 history.Add(model);
             }
             return Json(new {data = history }, new Newtonsoft.Json.JsonSerializerSettings());
@@ -287,8 +306,29 @@ namespace ThongNhat_Hospital.Controllers.User1
 
 
         
+        public async Task<IActionResult> getBNbyId(string mabn)
+        {
+            string apiUrl = $"https://hsoftapi.bvtn.org.vn/api/upd_hsoft_benhnhan/?ip=192.168.0.75&idbv=79025&mabn={mabn}";
+
+            try
+            {
+                HttpResponseMessage response = await _httpClient.GetAsync(apiUrl);
+                response.EnsureSuccessStatusCode(); // Throw an exception if the request wasn't successful
+
+                string responseBody = await response.Content.ReadAsStringAsync();
+                return Ok(responseBody);
+            }
+            catch (HttpRequestException ex)
+            {
+                return BadRequest($"An error occurred: {ex.Message}");
+            }
+        }
 
 
+        public ActionResult BenhNhan()
+        {
+            return View();
+        }
         public async Task<IActionResult> Details(string id)
         {
             if (id == null)

@@ -14,10 +14,9 @@
         margin-bottom: 10px;
     }
 
-    thead {
-        background-color: #1261b0;
-        color: #fff;
-    }
+    /*thead {
+        
+    }*/
 </style>
 <h3>Lịch sử giao nhận hàng</h3>
 
@@ -27,31 +26,51 @@
 
 <link href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.dataTables.min.css" rel="stylesheet" />
 
+<link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet" />
+
+<link href="https://cdn.datatables.net/datetime/1.4.1/css/dataTables.dateTime.min.css" rel="stylesheet" />
+
+<link href="https://nightly.datatables.net/scroller/css/scroller.dataTables.css?_=cd11977a9e85e84b9a1ebeb03f7b1a10.css" rel="stylesheet" type="text/css" />
 
 
+
+
+
+<table border="0" cellspacing="5" cellpadding="5">
+        <tbody><tr>
+            <td>Minimum date:</td>
+            <td><input type="text" id="min" name="min"></td>
+        </tr>
+        <tr>
+            <td>Maximum date:</td>
+            <td><input type="text" id="max" name="max"></td>
+        </tr>
+    </tbody>
+</table>
 
 <table class="table table-bordered table-striped" id="table1" style="max-width:100%;height:auto;">
-    <thead>
+    <thead style="background-color: #1261b0;color: #fff;">
         <tr>
             <th>
                 STT
             </th>
             <th>
                 Mã phiếu
+            </th>   
+            <th>
+                Người gửi
             </th>
             <th>
-                Hình thức
+                Người nhận
             </th>
             <th>
                 Trạng thái
             </th>
 
             <th>
-                Cập nhật
-            </th>
-            <th>
                 Xem Files đính kèm
             </th>
+            
         </tr>
     </thead>
     
@@ -62,17 +81,63 @@
 
 <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js" defer="defer"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js" defer="defer"></script>
+
+<script src="https://cdn.datatables.net/datetime/1.4.1/js/dataTables.dateTime.min.js" defer="defer"></script>
+
+
 <script src="https://cdn.datatables.net/rowreorder/1.3.3/js/dataTables.rowReorder.min.js" defer="defer"></script>
 
 <script src="https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js" defer="defer"></script>
 
 
+<script src="https://nightly.datatables.net/scroller/js/dataTables.scroller.js?_=cd11977a9e85e84b9a1ebeb03f7b1a10" defer="defer"></script>
 
 
 <script type="text/javascript">
 
+    
+
+    var minDate, maxDate;
+
+    var recentPlatformTable;
+    var api;
+    var curRow = 0;
+    var timer;
+
     $(document).ready(function () {
-        $('#table1').DataTable({
+        // Custom filtering function which will search data in column four between two values
+        $.fn.dataTable.ext.search.push(
+            function (settings, data, dataIndex) {
+                var min = minDate.val();
+                var max = maxDate.val();
+                var date = new Date(data[4]);
+
+                if ((min === null && max === null) || (min === null && date <= max) || (min <= date && max === null) || (min <= date && date <= max)) {
+                    return true;
+                }
+                return false;
+            }
+        );
+
+
+        minDate = new DateTime($('#min'), {
+            format: 'D/M/YYYY'
+        });
+        maxDate = new DateTime($('#max'), {
+            format: 'D/M/YYYY'
+        });
+
+        
+        
+
+        recentPlatformTable = $('#table1')
+        .on('xhr.dt', function (e, settings, json, xhr) {
+            curRow = 0;
+            setTimer();
+        })
+        .DataTable(
+        {
             "ajax":{
                 "url": "/User/getHistorylist",
                 "type" : "GET",
@@ -83,23 +148,73 @@
                 { "data": "id_phieu" ,"render": function(data) {
                         return '<a href = "/User/Details/'+data+'" >'+data+'</a>'
                 }},
-                { "data": "hinhthuc" },
-                { "data": "trangthai" },
-                { "data": "capnhat" },
+                { "data": "nguoigui" },
+                { "data": "nguoinhan"},
+                { "data": "capnhat" ,"render":function(data){
+                    if(data != null)
+                        return ''+data+''
+                    else
+                        return 'Chưa hoàn thành'
+                }},
                 { "data": "id_CT" ,"render": function(data) {
+                    if(data !=null)
                         return '<a class="btn btn-primary" href = "/User/FileDetail/'+data+'" >Xem</a>'
-                }}
+                    else
+                        return '<a class="btn btn-primary disabled" href = "#'+data+'" >Xem</a>'
+                }},
+                
             ],
-            rowReorder: {
-            selector: 'td:nth-child(3)'
-            },
+            
             responsive: true,
-            bPaginate: true
-        })
-        setInterval(function () {
-            $('#table1').DataTable().ajax.reload(null, false);
-        }, 5000);
+            bPaginate: true,
+            "scrollY": "300px",
+            "scrollCollapse": false,
+            scroller: true,
+            "footerCallback": function (row, data, start, end, display) 
+            {
+                api = this.api();
+            },
+        }); 
+
+        //$('#min, #max').on('change', function () {
+        //    table.draw();
+        //});
+
+        //setInterval(function () {
+        //    $('#table1').DataTable().ajax.reload(null, false);
+        //}, 5000);
+
+        function setTimer() {
+            if (timer) {
+                clearInterval(timer);
+            }
+
+            timer = setInterval(function () {
+                if (api === undefined)
+                    return;
+
+                var num_rows = api.page.info().recordsTotal;
+                curRow += 1;
+                //console.log("*****row " + curRow + " of " + num_rows);
+
+                if (curRow > num_rows) {
+                    //console.log("*****Reloading");
+                    clearInterval(timer);
+                    $('#table1').DataTable().ajax.reload();
+                }
+                else {
+                    api.settings().scroller().scrollToRow(curRow, 1000);
+
+                    // removed due to issues with JS BIN
+                    //console.log(api.rows({ page: 'current' }).data());
+                }
+            }, 3000);
+        }
+        
     });
 
+
+
+   
 </script>
 

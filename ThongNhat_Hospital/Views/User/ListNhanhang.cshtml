@@ -167,12 +167,13 @@
                     { "data": "trangthai" },
                     { "data": "capnhat" },
                     { "data": "id_CT" ,"render": function(data) {
-                        return '<a href = "/User/Confirm/'+data+'" > Xác nhận </a>'
+                        if(data != null)
+                            return '<a href = "/User/Confirm/'+data+'" > Xác nhận </a>'
+                        else
+                            return null
                     }}
                 ],
-            rowReorder: {
-            selector: 'td:nth-child(3)'
-            },
+            
             responsive: true,
             bPaginate: true
         });
@@ -185,9 +186,9 @@
 
     $(document).ready(function () {
         $('#table2').DataTable({
-            rowReorder: {
-            selector: 'td:nth-child(2)'
-            },
+            //rowReorder: {
+            //selector: 'td:nth-child(2)'
+            //},
             responsive: true,
             bPaginate: true
         })

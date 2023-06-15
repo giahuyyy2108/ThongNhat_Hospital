@@ -4,6 +4,12 @@
     ViewData["Title"] = "Chi tiết ";
     Layout = "~/Views/Shared/User/_LayoutUser.cshtml";
 }
+
+<link href="https://cdn.datatables.net/v/dt/dt-1.13.4/datatables.min.css" rel="stylesheet" />
+
+<link href="https://cdn.datatables.net/rowreorder/1.3.3/css/rowReorder.dataTables.min.css" rel="stylesheet" />
+
+<link href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.dataTables.min.css" rel="stylesheet" />
 <style>
     h3 {
         font-size: 30px;
@@ -21,7 +27,7 @@
 </style>
 <h3>File đính kèm</h3>
 
-<table class="table table-bordered table-striped">
+<table class="table table-bordered table-striped" id="table1">
     <thead>
         <tr>
             <th style="font-family:Verdana; font-size:14px; font-weight:bold; width:70%;">
@@ -68,6 +74,19 @@
                 </div>
             </div>
         </div>
+
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js" defer="defer"></script>
+
+<script src="https://cdn.datatables.net/rowreorder/1.3.3/js/dataTables.rowReorder.min.js" defer="defer"></script>
+
+<script src="https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js" defer="defer"></script>
+
+
+
+
 <script type="text/javascript">
     function DowloadPDF(data,filename){
         const link = data;
@@ -86,6 +105,21 @@
     function abc(data1){
         document.getElementById("frame1").src = data1;
     }
+
+
+    $(document).ready(function () {
+        $('#table1').DataTable({
+            //rowReorder: {
+            //selector: 'td:nth-child(2)'
+            //},
+            responsive: true,
+            bPaginate: false,
+            bSort: false,
+            bInfo: false,
+            bFilter: false
+        })
+
+    });
 
 
 </script>

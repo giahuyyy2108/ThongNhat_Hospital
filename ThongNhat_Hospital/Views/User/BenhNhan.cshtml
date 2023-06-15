@@ -1,0 +1,65 @@
+﻿@{
+    ViewData["Title"] = "Danh sách";
+    Layout = "~/Views/Shared/User/_LayoutUser.cshtml";
+}
+
+
+
+<div class="col-md-12">
+    <form asp-action="Confirm" id="myform">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <input id="mabn" value="" placeholder="Mã bệnh nhân"  class="form-control "/>
+        </div>
+        <div class="form-group">
+            <input id="hoten" placeholder="Họ tên" class="form-control "/>
+            
+        </div>
+        <div class="form-group">
+            <input id="namsinh" placeholder="Năm sinh" class="form-control " />
+           
+        </div>
+        <div class="form-group">
+            <input id="sothe" placeholder="Số thẻ" class="form-control " />
+
+        </div>
+        <div class="form-group">
+        </div>
+
+    </form>
+
+</div>
+
+<script>
+
+    $(document).ready(function () {
+        $("#mabn").keyup(function() {
+            $.get("/user/getBNbyId", { mabn: $(this).val() }, function (data) {
+                var json = JSON.parse(data);
+                if(data!=null){
+                    $('#hoten').val(json[0].hoten);
+                    $('#namsinh').val(json[0].namsinh);
+                    $('#sothe').val(json[0].sothe);
+                }
+                else if (isEmptyObject(data)) {
+                    $('#hoten').val("");
+                    $('#namsinh').val("");
+                    $('#sothe').val("");
+                }
+            })
+        });
+
+        function isEmptyObject(obj) {
+            for (var prop in obj) {
+                if (Object.prototype.hasOwnProperty.call(obj, prop)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+    })
+
+
+
+</script>

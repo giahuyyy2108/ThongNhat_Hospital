@@ -6,9 +6,19 @@
     ViewData["Title"] = "Thông tin phiếu ";
     Layout = "~/Views/Shared/User/_PrintPage.cshtml";
 }
-
+<style>
+    .noselect {
+        -webkit-touch-callout: none; /* iOS Safari */
+        -webkit-user-select: none; /* Safari */
+        -khtml-user-select: none; /* Konqueror HTML */
+        -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+        user-select: none; /* Non-prefixed version, currently
+                                      supported by Chrome, Edge, Opera and Firefox */
+    }
+</style>
 <!-- Right side column. Contains the navbar and content of the page -->
-<div class="content-wrapper">
+<div class="content-wrapper noselect" oncopy="return false" onpaste="return false" oncut="return false">
     <!-- Content Header (Page header) -->
     <section class="content-header">
 

@@ -16,5 +16,9 @@ namespace ThongNhat_Hospital.Models.ViewModel
         public string capnhat { get; set; }
 
         public string id_CT { get; set; }
+
+        public string nguoigui { get; set; }
+
+        public string nguoinhan { get; set; }
     }
 }

@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ThongNhat_Hospital.Controllers.User1;
 using ThongNhat_Hospital.Interface;
 using ThongNhat_Hospital.Models;
 using ThongNhat_Hospital.Models.ViewModel;
@@ -40,6 +41,8 @@ namespace ThongNhat_Hospital
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
 
+
+            services.AddHttpClient<UserController>();
 
             //đăng ký dịch vụ kết nối DB
             services.AddDbContext<DataBaseContext>(options => {
